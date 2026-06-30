@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vida Fit | Página principal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/indexPaciente.css" />
+</head>
+
+
+<body>
+
+  
+
+        <aside class="sidebar">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="Vida Fit" width="230"></a>
+
+            <nav>
+                <a class="activo">🏠 <b>Inicio</b></a>
+                <a>🍎 <b>Mi Plan Nutricional</b></a>
+                <a>🏋️ <b>Mi Rutina</b></a>
+                <a>📈 <b>Mi Progreso</b></a>
+                <a>📅 <b>Citas</b></a>
+                <a>👤<b>Perfil</b></a>
+                <a>⚙️ <b>Configuración</b></a>
+            </nav>
+
+            <button class="logout">↪ Cerrar sesión</button>
+        </aside>
+
+        <main class="contenido">
+
+            <header class="header">
+                <div>
+                    <h1><b>¡Hola, Sofía!</b></h1>
+                    <p>Bienvenida de nuevo a VidaFit</p>
+                </div>
+
+                <div class="usuario">
+                    <img src="img/usuario.png" alt="Usuario">
+                    <div>
+                        <h4><b>Sofía Martínez</b></h4>
+                        <p>Paciente</p>
+                    </div>
+                </div>
+            </header>
+
+            <section class="cards-superiores">
+                <div class="card">
+                    <div class="icono">⚖️</div>
+                    <div>
+                        <p>Peso actual</p>
+                        <h2>69.0 <span>kg</span></h2>
+                        <small class="verde">↓ 1.2 kg este mes</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icono">📊</div>
+                    <div>
+                        <p>IMC</p>
+                        <h2>23.8</h2>
+                        <small class="estado">Normal</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icono naranja">🎯</div>
+                    <div>
+                        <p>Meta</p>
+                        <h2>70%</h2>
+                        <small>5 kg para tu meta</small>
+                        <div class="barra">
+                            <div style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icono">📅</div>
+                    <div>
+                        <p>Próxima cita</p>
+                        <h2>27 Jun</h2>
+                        <small>Nutricionista</small>
+                        <strong>10:00 AM</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid-principal">
+
+                <div class="panel grafico">
+                    <div class="titulo-panel">
+                        <h3>Progreso de peso</h3>
+                        <button>Último mes⌄</button>
+                    </div>
+                    <canvas id="graficoPeso"></canvas>
+                </div>
+            
+
+                <div class="panel notificaciones">
+                    <div class="titulo-panel">
+                        <h3>Notificaciones</h3>
+                    </div>
+
+                    <div class="noti">
+                        <span>🏋️</span>
+                        <p>Se ha actualizado tu rutina<br><small>Hace 2 horas</small></p>
+                    </div>
+
+                    <div class="noti">
+                        <span>🍎</span>
+                        <p>Nuevo plan nutricional disponible<br><small>Hace 1 día</small></p>
+                    </div>
+
+                    <div class="noti">
+                        <span>📅</span>
+                        <p>Tienes una cita programada<br><small>Hace 2 días</small></p>
+                    </div>
+                </div>
+
+                <div class="panel plan">
+                    <div class="titulo-panel">
+                        <h3>Plan nutricional de hoy</h3>
+                        <a>Ver plan completo</a>
+                    </div>
+
+                    <div class="comida">
+                        <span>🍳</span>
+                        <div>
+                            <h4>Desayuno</h4>
+                            <small>8:00 AM</small>
+                        </div>
+                        <ul>
+                            <li>2 huevos revueltos</li>
+                            <li>1 tortilla integral</li>
+                            <li>1 fruta</li>
+                        </ul>
+                    </div>
+
+                    <div class="comida">
+                        <span>🥗</span>
+                        <div>
+                            <h4>Almuerzo</h4>
+                            <small>1:00 PM</small>
+                        </div>
+                        <ul>
+                            <li>150g de pollo</li>
+                            <li>1 taza de arroz integral</li>
+                            <li>Ensalada mixta</li>
+                        </ul>
+                    </div>
+
+                    <div class="comida">
+                        <span>🍛</span>
+                        <div>
+                            <h4>Cena</h4>
+                            <small>7:00 PM</small>
+                        </div>
+                        <ul>
+                            <li>150g de salmón</li>
+                            <li>Verduras al vapor</li>
+                            <li>1 camote pequeño</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn-secundario"  onclick= "completarPlan(this)"> ✓ Marcar plan como completado</button>
+                </div>
+
+                <div class="panel rutina">
+                    <div class="titulo-panel">
+                        <h3>Rutina de hoy</h3>
+
+                    </div>
+
+                    <div class="rutina-header">
+                        <span>🏋️</span>
+                        <div>
+                            <h4>Pierna y glúteo</h4>
+                            <small>1 hora • 4 ejercicios • Intermedio</small>
+                        </div>
+                    </div>
+
+                    <div class="ejercicio">Sentadilla Smith <small>4 series • 12 repeticiones</small></div>
+                    <div class="ejercicio">Hip thrust <small>4 series • 10 repeticiones</small></div>
+                    <div class="ejercicio">Extensión de cuádriceps <small>5 series • 12 repeticiones</small></div>
+                    <div class="ejercicio">Abductores <small>3 series • 12 repeticiones</small></div>
+                    <div><button class="btn-principal" onclick="manejarRutina(this)">▶ Comenzar rutina</button></div>
+
+                
+                </div>
+
+                <div class="panel agua">
+                    <div class="titulo-panel">
+                        <h3>Hidratación diaria</h3>
+                        <p>2.0 / 2.5 L</p>
+                    </div>
+
+                    <div class="vasos">
+                        <span>🥤</span><span>🥤</span><span>🥤</span><span>🥤</span><span>🥤</span><span
+                            class="gris">🥤</span>
+                    </div>
+
+                    <strong>¡Sigue así!</strong>
+                </div>
+
+                 </section>
+        <footer>
+    <div class="container text-center">
+
+        <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
+
+        
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="imagen-footer" alt="Facebook">
+        </a>
+
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="imagen-footer" alt="Instagram">
+        </a>
+
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/X_logo.jpg" class="imagen-footer" alt="X">
+        </a>
+        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="imagen-footer" alt="Whatsapp">
+        </a>
+
+    </div>
+</footer>
+
+           
+
+        </main>
+
+        <script src="js/indexPaciente.js"></script>
+    </body>
+
+</html>
