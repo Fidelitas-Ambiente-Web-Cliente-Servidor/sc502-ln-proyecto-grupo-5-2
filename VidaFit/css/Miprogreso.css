@@ -1,0 +1,205 @@
+.grid-progreso {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* grafico de fila completa */
+.grid-progreso .panel:first-child {
+    grid-column: span 2;
+}
+
+/* grafico */
+#graficoPeso {
+    width: 100%;
+    height: 260px;
+    display: block;
+}
+
+/* Medidas */
+.medida-fila {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.medida-nombre {
+    width: 70px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #5d6880;
+    flex-shrink: 0;
+}
+
+.medida-barra-wrap {
+    flex: 1;
+}
+
+.medida-barra {
+    height: 8px;
+    background: #e7e7e7;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.medida-relleno {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+.medida-valor {
+    width: 55px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+/* Formulario medida */
+.form-medida {
+    margin-top: 24px;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 18px;
+}
+
+.form-medida h4 {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: #1F2937;
+}
+
+.form-medida select,
+.form-medida input {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: var(--fuente);
+    color: var(--text);
+    background: white;
+}
+
+.form-medida select:focus,
+.form-medida input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* Registro de peso */
+#nuevoPeso,
+#fechaPeso {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0 14px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: var(--fuente);
+    color: var(--text);
+}
+
+#nuevoPeso:focus,
+#fechaPeso:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* Lista de registros de peso */
+.lista-registros {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.registro-peso {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f9fb;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+}
+
+.registro-peso .reg-fecha {
+    color: #5d6880;
+}
+
+.registro-peso .reg-valor {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 16px;
+}
+
+/* Logros */
+.lista-logros {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.logro-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f7f9fb;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.logro-icono {
+    font-size: 28px;
+    width: 52px;
+    height: 52px;
+    background: #d7f2ee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logro-icono.bloqueado {
+    background: #e7e7e7;
+    filter: grayscale(1);
+    opacity: 0.5;
+}
+
+.logro-texto h4 {
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.logro-texto p {
+    font-size: 12px;
+    color: #5d6880;
+}
+
+/*  Errores */
+.error-progreso {
+    color: #F4A261;
+    font-size: 13px;
+    margin-bottom: 8px;
+    min-height: 18px;
+}
+
+@media (max-width: 900px) {
+    .grid-progreso {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-progreso .panel:first-child {
+        grid-column: span 1;
+    }
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vida Fit - Citas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/indexPaciente.css" />
+    <link rel="stylesheet" href="css/citas.css" />
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <a class="navbar-brand" href="#">
+            <img src="img/logo.png" alt="Vida Fit" width="230">
+        </a>
+
+        <nav>
+            <a href="indexPaciente.html">🏠 <b>Inicio</b></a>
+            <a>🍎 <b>Mi Plan Nutricional</b></a>
+            <a>🏋️ <b>Mi Rutina</b></a>
+            <a href="miProgreso.html">📈 <b>Mi Progreso</b></a>
+            <a class="activo">📅 <b>Citas</b></a>
+            <a href="perfil.html">👤 <b>Perfil</b></a>
+            <a href="configuracion.html">⚙️ <b>Configuración</b></a>
+        </nav>
+
+        <button class="logout">↪ Cerrar sesión</button>
+    </aside>
+
+    <main class="contenido">
+
+        <header class="header">
+            <div>
+                <h1><b>Mis Citas</b></h1>
+                <p>Gestiona tus citas con profesionales de la salud</p>
+            </div>
+            <div class="usuario">
+                <img src="img/usuario.png" alt="Usuario">
+                <div>
+                    <h4><b>Sofía Martínez</b></h4>
+                    <p>Paciente</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cards resumen -->
+        <section class="cards-superiores">
+            <div class="card">
+                <div class="icono">📅</div>
+                <div>
+                    <p>Próxima cita</p>
+                    <h2>27 Jun</h2>
+                    <small>10:00 AM</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono naranja">⏳</div>
+                <div>
+                    <p>Citas pendientes</p>
+                    <h2 id="totalPendientes">2</h2>
+                    <small>Este mes</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono">✅</div>
+                <div>
+                    <p>Citas completadas</p>
+                    <h2 id="totalCompletadas">8</h2>
+                    <small>En total</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono">👩‍⚕️</div>
+                <div>
+                    <p>Profesionales</p>
+                    <h2>2</h2>
+                    <small>Asignados</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principal -->
+        <section class="grid-citas">
+
+            <!-- Formulario para agendar cita -->
+            <div class="panel">
+                <div class="titulo-panel">
+                    <h3>Agendar nueva cita</h3>
+                </div>
+
+                <div class="campo-cita">
+                    <label>Profesional</label>
+                    <select id="profesional">
+                        <option value="">-- Seleccionar profesional --</option>
+                        <option value="Dra. Laura Sánchez - Nutricionista">Dra. Laura Sánchez - Nutricionista</option>
+                        <option value="Lic. Carlos Mora - Entrenador">Lic. Carlos Mora - Entrenador</option>
+                    </select>
+                    <span class="error-cita" id="errorProfesional"></span>
+                </div>
+
+                <div class="campo-cita">
+                    <label>Fecha</label>
+                    <input type="date" id="fechaCita" />
+                    <span class="error-cita" id="errorFecha"></span>
+                </div>
+
+                <div class="campo-cita">
+                    <label>Hora</label>
+                    <select id="horaCita">
+                        <option value="">-- Seleccionar hora --</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                    </select>
+                    <span class="error-cita" id="errorHora"></span>
+                </div>
+
+                <div class="campo-cita">
+                    <label>Motivo de consulta</label>
+                    <textarea id="motivoCita" rows="3" placeholder="Describe brevemente el motivo de tu cita..."></textarea>
+                    <span class="error-cita" id="errorMotivo"></span>
+                </div>
+
+                <button class="btn-principal" onclick="agendarCita()">📅 Agendar cita</button>
+
+                <div id="mensajeCita" class="mensaje-exito"></div>
+            </div>
+
+            <!-- Lista de citas -->
+            <div class="panel">
+                <div class="titulo-panel">
+                    <h3>Mis citas</h3>
+                    <div class="filtros-cita">
+                        <button class="filtro-cita activo-cita" onclick="filtrarCitas('todas', this)">Todas</button>
+                        <button class="filtro-cita" onclick="filtrarCitas('pendiente', this)">Pendientes</button>
+                        <button class="filtro-cita" onclick="filtrarCitas('completada', this)">Completadas</button>
+                    </div>
+                </div>
+
+                <div id="listaCitas"> <!-- Las citas se generan desde JS -->
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            <div class="container text-center">
+                <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="imagen-footer" alt="Facebook">
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="imagen-footer" alt="Instagram">
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/X_logo.jpg" class="imagen-footer" alt="X">
+                </a>
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="imagen-footer" alt="Whatsapp">
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/citas.js"></script>
+</body>
+
+</html>
