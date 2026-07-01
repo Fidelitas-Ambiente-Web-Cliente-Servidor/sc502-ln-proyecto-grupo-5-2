@@ -1,17 +1,12 @@
-// configuracion.js — Pagina Configuración
-
-// Guarda la configuracion (muestra confirmacion visual) ──
 function guardarConfig() {
     let msg = document.getElementById('mensajeConfig');
     msg.textContent = '✅ Preferencias guardadas.';
 
-    // Oculta el mensaje despues de 2.5 segundos
     setTimeout(function () {
         msg.textContent = '';
     }, 2500);
 }
 
-// ── Muestra o bien oculta una contrasenna segun su id de campo ──
 function togglePass(idCampo) {
     let input = document.getElementById(idCampo);
     if (input.type === 'password') {
@@ -21,9 +16,7 @@ function togglePass(idCampo) {
     }
 }
 
-// ── Valida y cambia la contrasenna ──
 function cambiarContrasena() {
-    // Limpia mensajes previos
     document.getElementById('errorActual').textContent = '';
     document.getElementById('errorNueva').textContent = '';
     document.getElementById('errorConfirmar').textContent = '';
@@ -35,13 +28,11 @@ function cambiarContrasena() {
 
     let valido = true;
 
-    // Valida contrasenna actual (no puede estar vacia)
     if (actual.trim() === '') {
         document.getElementById('errorActual').textContent = 'Ingrese su contraseña actual.';
         valido = false;
     }
 
-    // Valida nueva contrasenna (minimo 8 caracteres)
     if (nueva.trim() === '') {
         document.getElementById('errorNueva').textContent = 'La nueva contraseña es obligatoria.';
         valido = false;
@@ -50,7 +41,6 @@ function cambiarContrasena() {
         valido = false;
     }
 
-    // Valida que la confirmacion coincida
     if (confirmar.trim() === '') {
         document.getElementById('errorConfirmar').textContent = 'Confirme la nueva contraseña.';
         valido = false;
@@ -61,7 +51,6 @@ function cambiarContrasena() {
 
     if (!valido) return;
 
-    // Limpia los campos y muestra la confirmacion
     document.getElementById('passActual').value = '';
     document.getElementById('passNueva').value = '';
     document.getElementById('passConfirmar').value = '';
@@ -73,7 +62,6 @@ function cambiarContrasena() {
     }, 3000);
 }
 
-// Cierra sesion y redirige al inicio de sesion
 function cerrarSesion() {
     window.location.href = 'inicioSesion.html';
 }

@@ -1,6 +1,3 @@
-// citas.js — Pagina Citas
-
-// Array con las citas existentes
 let citas = [
     {
         id: 1,
@@ -39,12 +36,10 @@ let citas = [
 let filtroActual = 'todas';
 let proximoId = 5;
 
-// Renderiza la lista de citas segun el filtro activo
 function renderCitas() {
     let lista = document.getElementById('listaCitas');
     lista.innerHTML = '';
 
-    // Filtra las citas segun el estado seleccionado
     let citasFiltradas = [];
     citas.forEach(function (cita) {
         if (filtroActual === 'todas') {
@@ -67,7 +62,6 @@ function renderCitas() {
         let card = document.createElement('div');
         card.className = 'cita-card';
 
-        // Icono segun el profesional
         let iconoDiv = document.createElement('div');
         iconoDiv.className = 'cita-icono';
         if (cita.profesional.includes('Entrenador')) {
@@ -77,14 +71,12 @@ function renderCitas() {
             iconoDiv.textContent = '🩺';
         }
 
-        // Informacion de la cita
         let infoDiv = document.createElement('div');
         infoDiv.className = 'cita-info';
 
         let h4 = document.createElement('h4');
         h4.textContent = cita.profesional;
 
-        // Formatea la fecha de yyyy-mm-dd a dd/mm/yyyy
         let partes = cita.fecha.split('-');
         let fechaLegible = partes[2] + '/' + partes[1] + '/' + partes[0];
 
@@ -112,13 +104,11 @@ function renderCitas() {
         card.appendChild(iconoDiv);
         card.appendChild(infoDiv);
 
-        // Boton cancelar solo para citas pendientes
         if (cita.estado === 'pendiente') {
             let btnCancelar = document.createElement('button');
             btnCancelar.className = 'btn-cancelar';
             btnCancelar.textContent = '✕ Cancelar';
 
-            // Guarda el id en el boton para identificar que cita cancelar
             let citaId = cita.id;
             btnCancelar.onclick = function () {
                 cancelarCita(citaId);
@@ -129,15 +119,12 @@ function renderCitas() {
         lista.appendChild(card);
     });
 
-    // Actualiza los contadores en las cards superiores
     actualizarContadores();
 }
 
-// Cambia el filtro activo y re-renderiza
 function filtrarCitas(filtro, boton) {
     filtroActual = filtro;
 
-    // Actualiza el botón activo
     let botones = document.querySelectorAll('.filtro-cita');
     botones.forEach(function (btn) {
         btn.classList.remove('activo-cita');
@@ -147,9 +134,7 @@ function filtrarCitas(filtro, boton) {
     renderCitas();
 }
 
-// Valida y agrega una nueva cita
 function agendarCita() {
-    // Limpia errores previos
     document.getElementById('errorProfesional').textContent = '';
     document.getElementById('errorFecha').textContent = '';
     document.getElementById('errorHora').textContent = '';
@@ -163,13 +148,11 @@ function agendarCita() {
 
     let valido = true;
 
-    // Valida profesional
     if (profesional === '') {
         document.getElementById('errorProfesional').textContent = 'Seleccione un profesional.';
         valido = false;
     }
 
-    // Valida fecha (obligatoria y no pasada)
     if (fecha === '') {
         document.getElementById('errorFecha').textContent = 'Seleccione una fecha.';
         valido = false;
@@ -183,13 +166,11 @@ function agendarCita() {
         }
     }
 
-    // Valida hora
     if (hora === '') {
         document.getElementById('errorHora').textContent = 'Seleccione una hora.';
         valido = false;
     }
 
-    // Valida motivo (obligatorio, al menos 10 caracteres)
     if (motivo === '') {
         document.getElementById('errorMotivo').textContent = 'Describa el motivo de la cita.';
         valido = false;
@@ -200,7 +181,6 @@ function agendarCita() {
 
     if (!valido) return;
 
-    // Crea el objeto de la nueva cita y lo agrega al array
     let nuevaCita = {
         id: proximoId,
         profesional: profesional,
@@ -212,19 +192,16 @@ function agendarCita() {
     proximoId++;
     citas.push(nuevaCita);
 
-    // Limpia el formulario
     document.getElementById('profesional').value = '';
     document.getElementById('fechaCita').value = '';
     document.getElementById('horaCita').value = '';
     document.getElementById('motivoCita').value = '';
 
-    // Muestra confirmacion
     document.getElementById('mensajeCita').textContent = '✅ Cita agendada exitosamente.';
 
     renderCitas();
 }
 
-// Cancela (elimina) una cita por su id 
 function cancelarCita(id) {
     let nuevaLista = [];
     citas.forEach(function (cita) {
@@ -236,7 +213,6 @@ function cancelarCita(id) {
     renderCitas();
 }
 
-// Actualiza los contadores de las cards superiores
 function actualizarContadores() {
     let pendientes = 0;
     let completadas = 0;
@@ -253,7 +229,6 @@ function actualizarContadores() {
     document.getElementById('totalCompletadas').textContent = completadas;
 }
 
-// Inicializacion
 document.addEventListener('DOMContentLoaded', function () {
     renderCitas();
 });

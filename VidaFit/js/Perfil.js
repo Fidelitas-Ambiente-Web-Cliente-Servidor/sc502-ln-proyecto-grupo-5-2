@@ -1,8 +1,5 @@
-// perfil.js — Pagina Perfil
-
 let modoEdicion = false;
 
-// Activa o desactiva el modo edicion
 function toggleEdicion() {
     modoEdicion = !modoEdicion;
 
@@ -14,14 +11,12 @@ function toggleEdicion() {
     mensajePerfil.textContent = '';
 
     if (modoEdicion) {
-        // Activa los campos para editar
         campos.forEach(function (campo) {
             campo.disabled = false;
         });
         botonesEdicion.style.display = 'flex';
         btnEditar.textContent = '← Volver';
     } else {
-        // Desactiva los campos
         campos.forEach(function (campo) {
             campo.disabled = true;
         });
@@ -30,9 +25,7 @@ function toggleEdicion() {
     }
 }
 
-// Valida y guarda los cambios del perfil
 function guardarPerfil() {
-    // Limpia errores previos
     document.getElementById('errorNombre').textContent = '';
     document.getElementById('errorCorreo').textContent = '';
     document.getElementById('errorFecha').textContent = '';
@@ -45,9 +38,8 @@ function guardarPerfil() {
     let telefono = document.getElementById('telefono').value.trim();
 
     let valido = true;
-
-    // Valida nombre: minimo 5 caracteres, solo letras y espacios
     let regexNombre = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{5,}$/;
+
     if (nombre === '') {
         document.getElementById('errorNombre').textContent = 'El nombre es obligatorio.';
         valido = false;
@@ -56,7 +48,6 @@ function guardarPerfil() {
         valido = false;
     }
 
-    // Valida correo con regex
     let regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (correo === '') {
         document.getElementById('errorCorreo').textContent = 'El correo es obligatorio.';
@@ -66,7 +57,6 @@ function guardarPerfil() {
         valido = false;
     }
 
-    // Valida fecha de nacimiento (no puede ser futura)
     if (fecha === '') {
         document.getElementById('errorFecha').textContent = 'La fecha de nacimiento es obligatoria.';
         valido = false;
@@ -80,7 +70,6 @@ function guardarPerfil() {
         }
     }
 
-    // Valida telefono: solo numeros y guiones, entre 8 y 12 caracteres
     let regexTel = /^[\d\-]{8,12}$/;
     if (telefono !== '' && !regexTel.test(telefono)) {
         document.getElementById('errorTelefono').textContent = 'Formato de teléfono inválido (ej: 8888-1234).';
@@ -89,17 +78,12 @@ function guardarPerfil() {
 
     if (!valido) return;
 
-    // Actualiza el nombre mostrado en el panel de avatar
     document.getElementById('nombreMostrado').textContent = nombre;
-
-    // Muestra mensaje de exito
     document.getElementById('mensajePerfil').textContent = '✅ Cambios guardados correctamente.';
 
-    // Sale del modo edicion
     toggleEdicion();
 }
 
-// Cancela la edicion sin guardar
 function cancelarEdicion() {
     modoEdicion = true;
     toggleEdicion();

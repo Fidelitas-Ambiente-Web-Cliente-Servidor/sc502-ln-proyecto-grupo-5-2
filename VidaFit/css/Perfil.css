@@ -5,7 +5,6 @@
     align-items: start;
 }
 
-/* Avatar */
 .perfil-avatar-panel {
     text-align: center;
 }
@@ -130,13 +129,6 @@
     margin-top: 8px;
 }
 
-.botones-edicion .btn-principal,
-.botones-edicion .btn-secundario {
-    flex: 1;
-    height: 46px;
-    font-size: 15px;
-}
-
 .error-perfil {
     display: block;
     color: #F4A261;
@@ -184,7 +176,6 @@
     .grid-perfil {
         grid-template-columns: 1fr 1fr;
     }
-
     .perfil-avatar-panel {
         grid-column: span 2;
     }
@@ -194,11 +185,9 @@
     .grid-perfil {
         grid-template-columns: 1fr;
     }
-
     .perfil-avatar-panel {
         grid-column: span 1;
     }
-
     .fila-dos-campos {
         grid-template-columns: 1fr;
     }

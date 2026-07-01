@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vida Fit - Configuracion</title>
+    <title>Vida Fit - Configuración</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -20,23 +20,23 @@
         </a>
 
         <nav>
-            <a href="indexPaciente.html">🏠 <b>Inicio</b></a>
-            <a>🍎 <b>Mi Plan Nutricional</b></a>
-            <a>🏋️ <b>Mi Rutina</b></a>
-            <a href="miProgreso.html">📈 <b>Mi Progreso</b></a>
-            <a href="citas.html">📅 <b>Citas</b></a>
-            <a href="perfil.html">👤 <b>Perfil</b></a>
-            <a class="activo">⚙️ <b>Configuración</b></a>
+            <a href="indexPaciente.html"><img src="img/inicio.png" alt="Inicio" width="30"> <b>Inicio</b></a>
+            <a><img src="img/plan.png" alt="Plan" width="30"> <b>Mi Plan Nutricional</b></a>
+            <a><img src="img/ejercicio.png" alt="Ejercicio" width="30"> <b>Mi Rutina</b></a>
+            <a href="miProgreso.html"><img src="img/progreso.png" alt="Progreso" width="30"> <b>Mi Progreso</b></a>
+            <a href="citas.html"><img src="img/citas.png" alt="Citas" width="30"> <b>Citas</b></a>
+            <a href="perfil.html"><img src="img/perfil.png" alt="Perfil" width="30"> <b>Perfil</b></a>
+            <a class="activo"><img src="img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
         </nav>
 
-        <button class="logout">↪ Cerrar sesión</button>
+        <button class="logout">Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
 
         <header class="header">
             <div>
-                <h1><b>Configuracion</b></h1>
+                <h1><b>Configuración</b></h1>
                 <p>Personaliza tu experiencia en Vida Fit</p>
             </div>
             <div class="usuario">
@@ -50,10 +50,9 @@
 
         <section class="grid-config">
 
-            <!-- Notificaciones -->
             <div class="panel">
                 <div class="titulo-panel">
-                    <h3>🔔 Notificaciones</h3>
+                    <h3>Notificaciones</h3>
                 </div>
 
                 <div class="config-fila">
@@ -62,7 +61,7 @@
                         <p>Recibe alertas antes de tus citas programadas</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="notifCitas" checked onchange="guardarConfig()" />
+                        <input type="checkbox" id="notifCitas" checked onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -73,7 +72,7 @@
                         <p>Notificaciones de nuevos planes o actualizaciones</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="notifNutricion" checked onchange="guardarConfig()" />
+                        <input type="checkbox" id="notifNutricion" checked onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -84,7 +83,7 @@
                         <p>Recordatorios para completar tu rutina diaria</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="notifRutina" onchange="guardarConfig()" />
+                        <input type="checkbox" id="notifRutina" onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -95,16 +94,15 @@
                         <p>Recordatorios para beber agua durante el día</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="notifAgua" checked onchange="guardarConfig()" />
+                        <input type="checkbox" id="notifAgua" checked onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
 
-            <!-- Privacidad y seguridad -->
             <div class="panel">
                 <div class="titulo-panel">
-                    <h3>🔒 Privacidad y seguridad</h3>
+                    <h3>Privacidad y seguridad</h3>
                 </div>
 
                 <div class="config-fila">
@@ -113,7 +111,7 @@
                         <p>Permite que tus profesionales vean tu perfil completo</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="perfilVisible" checked onchange="guardarConfig()" />
+                        <input type="checkbox" id="perfilVisible" checked onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -124,20 +122,19 @@
                         <p>Comparte tus avances con tu equipo de salud</p>
                     </div>
                     <label class="toggle">
-                        <input type="checkbox" id="compartirProgreso" checked onchange="guardarConfig()" />
+                        <input type="checkbox" id="compartirProgreso" checked onchange="guardarConfig()">
                         <span class="slider"></span>
                     </label>
                 </div>
 
-                <!-- Cambiar contrasenna -->
                 <div class="subtitulo-seccion">Cambiar contraseña</div>
 
                 <div class="campo-config">
                     <label>Contraseña actual</label>
                     <span class="error-config" id="errorActual"></span>
                     <div class="password-container">
-                        <input type="password" id="passActual" placeholder="Tu contraseña actual" />
-                        <span class="eye-icon" onclick="togglePass('passActual')">👁️</span>
+                        <input type="password" id="passActual" placeholder="Tu contraseña actual">
+                        <span class="eye-icon" onclick="togglePass('passActual')">*</span>
                     </div>
                 </div>
 
@@ -145,8 +142,8 @@
                     <label>Nueva contraseña</label>
                     <span class="error-config" id="errorNueva"></span>
                     <div class="password-container">
-                        <input type="password" id="passNueva" placeholder="Mínimo 8 caracteres" />
-                        <span class="eye-icon" onclick="togglePass('passNueva')">👁️</span>
+                        <input type="password" id="passNueva" placeholder="Mínimo 8 caracteres">
+                        <span class="eye-icon" onclick="togglePass('passNueva')">*</span>
                     </div>
                 </div>
 
@@ -154,19 +151,18 @@
                     <label>Confirmar contraseña</label>
                     <span class="error-config" id="errorConfirmar"></span>
                     <div class="password-container">
-                        <input type="password" id="passConfirmar" placeholder="Repite la nueva contraseña" />
-                        <span class="eye-icon" onclick="togglePass('passConfirmar')">👁️</span>
+                        <input type="password" id="passConfirmar" placeholder="Repite la nueva contraseña">
+                        <span class="eye-icon" onclick="togglePass('passConfirmar')">*</span>
                     </div>
                 </div>
 
                 <div id="mensajePass" class="mensaje-exito"></div>
-                <button class="btn-principal" onclick="cambiarContrasena()">🔐 Actualizar contraseña</button>
+                <button class="btn-principal" onclick="cambiarContrasena()">Actualizar contraseña</button>
             </div>
 
-            <!-- Preferencias de la app -->
             <div class="panel">
                 <div class="titulo-panel">
-                    <h3>🎨 Preferencias</h3>
+                    <h3>Preferencias</h3>
                 </div>
 
                 <div class="campo-config">
@@ -197,7 +193,7 @@
 
                 <div id="mensajeConfig" class="mensaje-exito"></div>
 
-                <button class="btn-secundario" style="margin-top: 12px;" onclick="cerrarSesion()">↪ Cerrar sesión</button>
+                <button class="btn-secundario" style="margin-top: 12px;" onclick="cerrarSesion()">Cerrar sesión</button>
             </div>
 
         </section>
@@ -206,16 +202,16 @@
             <div class="container text-center">
                 <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" class="imagen-footer" alt="Facebook">
+                    <img src="img/facebook.png" class="imagen-footer" alt="Facebook">
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="imagen-footer" alt="Instagram">
+                    <img src="img/instagram.png" class="imagen-footer" alt="Instagram">
                 </a>
                 <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/X_logo.jpg" class="imagen-footer" alt="X">
+                    <img src="img/x.png" class="imagen-footer" alt="X">
                 </a>
                 <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="imagen-footer" alt="Whatsapp">
+                    <img src="img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
                 </a>
             </div>
         </footer>
