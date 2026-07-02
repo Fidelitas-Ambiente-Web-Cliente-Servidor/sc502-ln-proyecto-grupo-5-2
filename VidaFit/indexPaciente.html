@@ -16,231 +16,245 @@
 
 <body>
 
-  
 
-        <aside class="sidebar">
-            <a class="navbar-brand" href="#">
-                <img src="img/logo.png" alt="Vida Fit" width="230"></a>
 
-            <nav>
-                <a class="activo"><img src="img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
-                <a><img src="img/plan.png" alt="Inicio" width="30"> <b>Mi Plan Nutricional</b></a>
-                <a><img src="img/ejercicio.png" alt="Inicio" width="30"> <b>Mi Rutina</b></a>
-                <a><img src="img/progreso.png" alt="Inicio" width="30"> <b>Mi Progreso</b></a>
-                <a><img src="img/citas.png" alt="Inicio" width="30"> <b>Citas</b></a>
-                <a><img src="img/perfil.png" alt="Inicio" width="30"><b>Perfil</b></a>
-                <a><img src="img/configuracion.png" alt="Inicio" width="30"> <b>Configuración</b></a>
-            </nav>
+    <aside class="sidebar">
+        <a class="navbar-brand" href="#">
+            <img href= "indexPaciente.html" src="img/logo.png" alt="Vida Fit" width="230"></a>
 
-            <button class="logout">Cerrar sesión</button>
-        </aside>
+        <nav>
+            <a class="activo"><img src="img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a href="PlanNutricional.html"><img src="img/plan.png" alt="Inicio" width="30"> <b>Mi Plan Nutricional</b></a>
+            <a><img src="img/ejercicio.png" alt="Inicio" width="30"> <b>Mi Rutina</b></a>
+            <a href="Miprogreso.html"><img src="img/progreso.png" alt="Inicio" width="30"> <b>Mi Progreso</b></a>
+            <a href="Citas.html"><img src="img/citas.png" alt="Inicio" width="30"> <b>Citas</b></a>
+            <a href="perfil.html"><img src="img/perfil.png" alt="Inicio" width="30"><b>Perfil</b></a>
+            <a href="Configuracion.html"><img src="img/configuracion.png" alt="Inicio" width="30"> <b>Configuración</b></a>
+        </nav>
 
-        <main class="contenido">
+        <button class="logout">Cerrar sesión</button>
+    </aside>
 
-            <header class="header">
+    <main class="contenido">
+
+        <header class="header">
+            <div>
+                <h1><b>¡Hola, Sofía!</b></h1>
+                <p>Bienvenida de nuevo a VidaFit</p>
+            </div>
+
+            <div class="usuario">
+                <img src="img/usuario.png" alt="Usuario">
                 <div>
-                    <h1><b>¡Hola, Sofía!</b></h1>
-                    <p>Bienvenida de nuevo a VidaFit</p>
+                    <h4><b>Sofía Martínez</b></h4>
+                    <p>Paciente</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="cards-superiores">
+            <div class="card">
+                <div class="icono"><img src="img/peso.png" alt="Inicio"></div>
+                <div>
+                    <p>Peso actual</p>
+                    <h2>69.0 <span>kg</span></h2>
+                    <small class="verde">↓ 1.2 kg este mes</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono"><img src="img/imc.png" alt="Inicio"></div>
+                <div>
+                    <p>IMC</p>
+                    <h2>23.8</h2>
+                    <small class="estado">Normal</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono naranja"><img src="img/objetivo.png" alt="Inicio"></div>
+                <div>
+                    <p>Meta</p>
+                    <h2>70%</h2>
+                    <small>5 kg para tu meta</small>
+                    <div class="barra">
+                        <div style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono"><img src="img/citas.png" alt="Inicio"></div>
+                <div>
+                    <p>Próxima cita</p>
+                    <h2>27 Jun</h2>
+                    <small>Nutricionista</small>
+                    <strong>10:00 AM</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-principal">
+
+            <div class="panel grafico">
+                <div class="titulo-panel">
+                    <h3>Progreso de peso</h3>
+                    <button>Último mes⌄</button>
+                </div>
+                <canvas id="graficoPeso"></canvas>
+            </div>
+
+
+            <div class="panel notificaciones">
+                <div class="titulo-panel">
+                    <h3>Notificaciones</h3>
                 </div>
 
-                <div class="usuario">
-                    <img src="img/usuario.png" alt="Usuario">
+                <div class="noti">
+                    <span><img src="img/ejercicio.png" alt="Inicio" width="30"></span>
+                    <p>Se ha actualizado tu rutina<br><small>Hace 2 horas</small></p>
+                </div>
+
+                <div class="noti">
+                    <span><img src="img/plan.png" alt="Inicio" width="30"></span>
+                    <p>Nuevo plan nutricional disponible<br><small>Hace 1 día</small></p>
+                </div>
+
+                <div class="noti">
+                    <span><img src="img/citas.png" alt="Inicio" width="30"></span>
+                    <p>Tienes una cita programada<br><small>Hace 2 días</small></p>
+                </div>
+            </div>
+
+            <div class="panel plan">
+                <div class="titulo-panel">
+                    <h3>Plan nutricional de hoy</h3>
+                    <a>Ver plan completo</a>
+                </div>
+
+                <div class="comida">
+                    <span><img src="img/desayuno.png" alt="Inicio" width="30"></span>
                     <div>
-                        <h4><b>Sofía Martínez</b></h4>
-                        <p>Paciente</p>
+                        <h4>Desayuno</h4>
+                        <small>8:00 AM</small>
                     </div>
+                    <ul>
+                        <li>2 huevos revueltos</li>
+                        <li>1 tortilla integral</li>
+                        <li>1/2 aguacate</li>
+                    </ul>
                 </div>
-            </header>
 
-            <section class="cards-superiores">
-                <div class="card">
-                    <div class="icono"><img src="img/peso.png" alt="Inicio"></div>
+                <div class="comida">
+                    <span><img src="img/almuerzo.png" alt="Inicio" width="30"></span>
                     <div>
-                        <p>Peso actual</p>
-                        <h2>69.0 <span>kg</span></h2>
-                        <small class="verde">↓ 1.2 kg este mes</small>
+                        <h4>Almuerzo</h4>
+                        <small>1:00 PM</small>
                     </div>
+                    <ul>
+                        <li>150g de pollo</li>
+                        <li>1 taza de arroz integral</li>
+                        <li>Ensalada mixta</li>
+                    </ul>
                 </div>
-
-                <div class="card">
-                    <div class="icono"><img src="img/imc.png" alt="Inicio"></div>
+                <div class="comida">
+                    <span><img src="img/snack.png" alt="Inicio" width="30"></span>
                     <div>
-                        <p>IMC</p>
-                        <h2>23.8</h2>
-                        <small class="estado">Normal</small>
+                        <h4>Snack</h4>
+                        <small>4:00 PM</small>
                     </div>
+                    <ul>
+                        <li>1 manzana</li>
+                        <li>1 taza de yogurt griego</li>
+                    </ul>
                 </div>
 
-                <div class="card">
-                    <div class="icono naranja"><img src="img/objetivo.png" alt="Inicio"></div>
+                <div class="comida">
+                    <span><img src="img/cena.png" alt="Inicio" width="30"></span>
                     <div>
-                        <p>Meta</p>
-                        <h2>70%</h2>
-                        <small>5 kg para tu meta</small>
-                        <div class="barra">
-                            <div style="width: 70%"></div>
-                        </div>
+                        <h4>Cena</h4>
+                        <small>7:00 PM</small>
                     </div>
+                    <ul>
+                        <li>150g de salmón</li>
+                        <li>Verduras al vapor</li>
+                        <li>1 camote pequeño</li>
+                    </ul>
                 </div>
 
-                <div class="card">
-                    <div class="icono"><img src="img/citas.png" alt="Inicio"></div>
+                <button class="btn-secundario" onclick="completarPlan(this)"> ✓ Marcar plan como completado</button>
+            </div>
+
+            <div class="panel rutina">
+                <div class="titulo-panel">
+                    <h3>Rutina de hoy</h3>
+
+                </div>
+
+                <div class="rutina-header">
+                    <span><img src="img/ejercicio.png" alt="Inicio" width="30"></span>
                     <div>
-                        <p>Próxima cita</p>
-                        <h2>27 Jun</h2>
-                        <small>Nutricionista</small>
-                        <strong>10:00 AM</strong>
-                    </div>
-                </div>
-            </section>
-
-            <section class="grid-principal">
-
-                <div class="panel grafico">
-                    <div class="titulo-panel">
-                        <h3>Progreso de peso</h3>
-                        <button>Último mes⌄</button>
-                    </div>
-                    <canvas id="graficoPeso"></canvas>
-                </div>
-            
-
-                <div class="panel notificaciones">
-                    <div class="titulo-panel">
-                        <h3>Notificaciones</h3>
-                    </div>
-
-                    <div class="noti">
-                        <span><img src="img/ejercicio.png" alt="Inicio" width="30"></span>
-                        <p>Se ha actualizado tu rutina<br><small>Hace 2 horas</small></p>
-                    </div>
-
-                    <div class="noti">
-                        <span><img src="img/plan.png" alt="Inicio" width="30"></span>
-                        <p>Nuevo plan nutricional disponible<br><small>Hace 1 día</small></p>
-                    </div>
-
-                    <div class="noti">
-                        <span><img src="img/citas.png" alt="Inicio" width="30"></span>
-                        <p>Tienes una cita programada<br><small>Hace 2 días</small></p>
+                        <h4>Pierna y glúteo</h4>
+                        <small>1 hora • 4 ejercicios • Intermedio</small>
                     </div>
                 </div>
 
-                <div class="panel plan">
-                    <div class="titulo-panel">
-                        <h3>Plan nutricional de hoy</h3>
-                        <a>Ver plan completo</a>
-                    </div>
+                <div class="ejercicio">Sentadilla Smith <small>4 series • 12 repeticiones</small></div>
+                <div class="ejercicio">Hip thrust <small>4 series • 10 repeticiones</small></div>
+                <div class="ejercicio">Extensión de cuádriceps <small>5 series • 12 repeticiones</small></div>
+                <div class="ejercicio">Abductores <small>3 series • 12 repeticiones</small></div>
+                <div><button class="btn-principal" onclick="manejarRutina(this)">▶ Comenzar rutina</button></div>
 
-                    <div class="comida">
-                        <span><img src="img/desayuno.png" alt="Inicio" width="30"></span>
-                        <div>
-                            <h4>Desayuno</h4>
-                            <small>8:00 AM</small>
-                        </div>
-                        <ul>
-                            <li>2 huevos revueltos</li>
-                            <li>1 tortilla integral</li>
-                            <li>1 fruta</li>
-                        </ul>
-                    </div>
 
-                    <div class="comida">
-                        <span><img src="img/almuerzo.png" alt="Inicio" width="30"></span>
-                        <div>
-                            <h4>Almuerzo</h4>
-                            <small>1:00 PM</small>
-                        </div>
-                        <ul>
-                            <li>150g de pollo</li>
-                            <li>1 taza de arroz integral</li>
-                            <li>Ensalada mixta</li>
-                        </ul>
-                    </div>
+            </div>
 
-                    <div class="comida">
-                        <span><img src="img/cena.png" alt="Inicio" width="30"></span>
-                        <div>
-                            <h4>Cena</h4>
-                            <small>7:00 PM</small>
-                        </div>
-                        <ul>
-                            <li>150g de salmón</li>
-                            <li>Verduras al vapor</li>
-                            <li>1 camote pequeño</li>
-                        </ul>
-                    </div>
-
-                    <button class="btn-secundario"  onclick= "completarPlan(this)"> ✓ Marcar plan como completado</button>
+            <div class="panel agua">
+                <div class="titulo-panel">
+                    <h3>Hidratación diaria</h3>
+                    <p>2.0 / 2.5 L</p>
                 </div>
 
-                <div class="panel rutina">
-                    <div class="titulo-panel">
-                        <h3>Rutina de hoy</h3>
-
-                    </div>
-
-                    <div class="rutina-header">
-                        <span><img src="img/ejercicio.png" alt="Inicio" width="30"></span>
-                        <div>
-                            <h4>Pierna y glúteo</h4>
-                            <small>1 hora • 4 ejercicios • Intermedio</small>
-                        </div>
-                    </div>
-
-                    <div class="ejercicio">Sentadilla Smith <small>4 series • 12 repeticiones</small></div>
-                    <div class="ejercicio">Hip thrust <small>4 series • 10 repeticiones</small></div>
-                    <div class="ejercicio">Extensión de cuádriceps <small>5 series • 12 repeticiones</small></div>
-                    <div class="ejercicio">Abductores <small>3 series • 12 repeticiones</small></div>
-                    <div><button class="btn-principal" onclick="manejarRutina(this)">▶ Comenzar rutina</button></div>
-
-                
+                <div class="vasos">
+                    <span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img src="img/agua.png"
+                            alt="Inicio" width="40"></span><span><img src="img/agua.png" alt="Inicio"
+                            width="40"></span><span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img
+                            src="img/agua.png" alt="Inicio" width="40"></span><span class="gris"><img src="img/agua.png"
+                            alt="Inicio" width="40"></span>
                 </div>
 
-                <div class="panel agua">
-                    <div class="titulo-panel">
-                        <h3>Hidratación diaria</h3>
-                        <p>2.0 / 2.5 L</p>
-                    </div>
+                <strong>¡Sigue así!</strong>
+            </div>
 
-                    <div class="vasos">
-                        <span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img src="img/agua.png" alt="Inicio" width="40"></span><span><img src="img/agua.png" alt="Inicio" width="40"></span><span
-                            class="gris"><img src="img/agua.png" alt="Inicio" width="40"></span>
-                    </div>
-
-                    <strong>¡Sigue así!</strong>
-                </div>
-
-                 </section>
+        </section>
         <footer>
-    <div class="container text-center">
+            <div class="container text-center">
 
-        <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
+                <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
 
-        
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <img src="img/facebook.png" class="imagen-footer" alt="Facebook">
-        </a>
 
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <img src="img/instagram.png" class="imagen-footer" alt="Instagram">
-        </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/facebook.png" class="imagen-footer" alt="Facebook">
+                </a>
 
-        <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-            <img src="img/x.png" class="imagen-footer" alt="X">
-        </a>
-        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
-            <img src="img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
-        </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/instagram.png" class="imagen-footer" alt="Instagram">
+                </a>
 
-    </div>
-</footer>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/x.png" class="imagen-footer" alt="X">
+                </a>
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
+                </a>
 
-           
+            </div>
+        </footer>
 
-        </main>
 
-        <script src="js/indexPaciente.js"></script>
-    </body>
+
+    </main>
+
+    <script src="js/indexPaciente.js"></script>
+</body>
 
 </html>
