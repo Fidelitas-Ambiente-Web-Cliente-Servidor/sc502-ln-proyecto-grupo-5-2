@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vida Fit | Gestionar Rutinas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/indexPaciente.css" />
+    <link rel="stylesheet" href="css/GestionarRutinas.css" />
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <a class="navbar-brand" href="indexProfesional.html">
+            <img src="img/logo.png" alt="Vida Fit" width="230">
+        </a>
+
+        <nav>
+            <a href="indexProfesional.html"><img src="img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a class="activo" href="GestionarRutinas.html"><img src="img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b></a>
+            <a><img src="img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b></a>
+            <a><img src="img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b></a>
+            <a href="ConfiguracionProfesional.html"><img src="img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
+        </nav>
+
+        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </aside>
+
+    <main class="contenido">
+
+        <header class="header">
+            <div>
+                <h1><b>Gestionar Rutinas</b></h1>
+                <p>Administre pacientes, rutinas, planes alimenticios y citas</p>
+            </div>
+
+            <div class="usuario">
+                <img src="img/usuario.png" alt="Usuario">
+                <div>
+                    <h4 id="nombreProfesionalHeader"><b>Dr. Carlos Mendoza</b></h4>
+                    <p id="especialidadProfesionalHeader">Nutricionista clínico</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="cards-superiores">
+            <div class="card">
+                <div class="icono"><img src="img/usuario.png" alt="Pacientes" width="35"></div>
+                <div>
+                    <p>Total pacientes</p>
+                    <h2 id="totalPacientes">4</h2>
+                    <small>Registrados</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono"><img src="img/imc.png" alt="IMC" width="35"></div>
+                <div>
+                    <p>Paciente seleccionado</p>
+                    <h2 id="nombrePacienteCard">—</h2>
+                    <small id="estadoPacienteCard">Seleccione un paciente</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono naranja"><img src="img/citas.png" alt="Citas" width="35"></div>
+                <div>
+                    <p>Citas pendientes</p>
+                    <h2 id="totalCitasPendientes">3</h2>
+                    <small>Por gestionar</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icono"><img src="img/ejercicio.png" alt="Rutinas" width="35"></div>
+                <div>
+                    <p>Rutinas disponibles</p>
+                    <h2>4</h2>
+                    <small>Para asignar</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid-gestion">
+
+            <div class="panel panel-pacientes">
+                <div class="titulo-panel">
+                    <h3>Gestión de pacientes</h3>
+                </div>
+
+                <div class="buscar-paciente">
+                    <input type="text" id="buscarPaciente" placeholder="Buscar paciente..." oninput="filtrarPacientes()">
+                </div>
+
+                <div id="listaPacientes" class="lista-pacientes"></div>
+            </div>
+
+            <div class="panel panel-detalle" id="panelDetalle">
+                <div class="titulo-panel">
+                    <h3>Detalle del paciente</h3>
+                </div>
+
+                <div id="sinSeleccion" class="mensaje-vacio">
+                    <img src="img/usuario.png" alt="Seleccionar" width="50">
+                    <p>Seleccione un paciente de la lista para ver su información y realizar acciones.</p>
+                </div>
+
+                <div id="detallePaciente" class="detalle-paciente oculto">
+                    <div class="info-paciente">
+                        <div class="avatar-paciente">
+                            <img src="img/usuario.png" alt="Paciente" width="60">
+                        </div>
+                        <div>
+                            <h4 id="detNombre"></h4>
+                            <p id="detInfo"></p>
+                        </div>
+                    </div>
+
+                    <div class="datos-grid">
+                        <div class="dato-item">
+                            <span>Edad</span>
+                            <strong id="detEdad"></strong>
+                        </div>
+                        <div class="dato-item">
+                            <span>Peso</span>
+                            <strong id="detPeso"></strong>
+                        </div>
+                        <div class="dato-item">
+                            <span>Estatura</span>
+                            <strong id="detEstatura"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-imc">
+                <div class="titulo-panel">
+                    <h3>Calcular IMC</h3>
+                </div>
+
+                <div id="imcSinPaciente" class="mensaje-vacio pequeno">
+                    <p>Seleccione un paciente para calcular su IMC.</p>
+                </div>
+
+                <div id="seccionIMC" class="seccion-imc oculto">
+                    <div class="imc-datos">
+                        <div class="campo-imc">
+                            <label>Peso (kg)</label>
+                            <input type="number" id="imcPeso" step="0.1" min="1">
+                        </div>
+                        <div class="campo-imc">
+                            <label>Estatura (m)</label>
+                            <input type="number" id="imcEstatura" step="0.01" min="0.5" max="2.5">
+                        </div>
+                    </div>
+
+                    <button class="btn-principal btn-imc" onclick="calcularIMC()">Calcular IMC</button>
+
+                    <div id="resultadoIMC" class="resultado-imc oculto">
+                        <div class="imc-valor">
+                            <span>Resultado</span>
+                            <h2 id="valorIMC">0</h2>
+                        </div>
+                        <div class="imc-clasificacion">
+                            <span>Clasificación</span>
+                            <strong id="clasificacionIMC" class="estado"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-rutina">
+                <div class="titulo-panel">
+                    <h3>Asignar rutina</h3>
+                </div>
+
+                <div id="rutinaSinPaciente" class="mensaje-vacio pequeno">
+                    <p>Seleccione un paciente para asignar una rutina.</p>
+                </div>
+
+                <div id="seccionRutina" class="seccion-asignar oculto">
+                    <div class="campo-asignar">
+                        <label>Seleccionar rutina</label>
+                        <select id="selectRutina">
+                            <option value="">-- Seleccionar rutina --</option>
+                            <option value="Pierna y Glúteo">Pierna y Glúteo — Intermedio</option>
+                            <option value="Tren Superior">Tren Superior — Intermedio</option>
+                            <option value="Cardio HIIT">Cardio HIIT — Avanzado</option>
+                            <option value="Core y Estabilidad">Core y Estabilidad — Principiante</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-principal" onclick="asignarRutina()">Asignar rutina</button>
+
+                    <div class="asignacion-actual">
+                        <span>Rutina actual:</span>
+                        <strong id="rutinaActual">Sin rutina asignada</strong>
+                    </div>
+
+                    <div id="mensajeRutina" class="mensaje-exito"></div>
+                </div>
+            </div>
+
+            <div class="panel panel-plan">
+                <div class="titulo-panel">
+                    <h3>Asignar plan alimenticio</h3>
+                </div>
+
+                <div id="planSinPaciente" class="mensaje-vacio pequeno">
+                    <p>Seleccione un paciente para asignar un plan.</p>
+                </div>
+
+                <div id="seccionPlan" class="seccion-asignar oculto">
+                    <div class="campo-asignar">
+                        <label>Seleccionar plan nutricional</label>
+                        <select id="selectPlan">
+                            <option value="">-- Seleccionar plan --</option>
+                            <option value="Plan Equilibrio 1800 kcal">Plan Equilibrio 1800 kcal</option>
+                            <option value="Plan Proteico 2200 kcal">Plan Proteico 2200 kcal</option>
+                            <option value="Plan Vegetariano 2000 kcal">Plan Vegetariano 2000 kcal</option>
+                            <option value="Plan Bajo en Carbohidratos 1600 kcal">Plan Bajo en Carbohidratos 1600 kcal</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-principal" onclick="asignarPlan()">Asignar plan</button>
+
+                    <div class="asignacion-actual">
+                        <span>Plan actual:</span>
+                        <strong id="planActual">Sin plan asignado</strong>
+                    </div>
+
+                    <div id="mensajePlan" class="mensaje-exito"></div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="panel panel-profesionales">
+            <div class="titulo-panel">
+                <h3>Profesionales que gestionan rutinas</h3>
+                <span class="contador-citas">Seleccione un profesional para gestionar sus citas</span>
+            </div>
+
+            <div id="gridProfesionales" class="grid-profesionales"></div>
+        </section>
+
+        <section class="panel panel-citas" id="citas">
+            <div class="titulo-panel">
+                <div>
+                    <h3>Gestión de citas</h3>
+                    <p id="subtituloCitasProf" class="subtitulo-citas-prof"></p>
+                </div>
+                <span id="contadorCitas" class="contador-citas"></span>
+            </div>
+
+            <div id="listaCitas" class="lista-citas"></div>
+        </section>
+
+        <div id="modalReagendar" class="modal-overlay oculto">
+            <div class="modal-contenido" onclick="event.stopPropagation()">
+                <div class="titulo-panel">
+                    <h3>Reagendar cita</h3>
+                    <button type="button" class="btn-cerrar" id="btnCerrarModal">&times;</button>
+                </div>
+                <p id="modalPacienteNombre" class="modal-paciente"></p>
+
+                <div class="campo-asignar">
+                    <label for="nuevaFecha">Nueva fecha</label>
+                    <input type="date" id="nuevaFecha">
+                </div>
+
+                <div class="campo-asignar">
+                    <label for="nuevaHora">Nueva hora</label>
+                    <input type="time" id="nuevaHora">
+                </div>
+
+                <div id="errorReagendar" class="error-config"></div>
+                <div id="mensajeReagendar" class="mensaje-exito"></div>
+
+                <button type="button" class="btn-principal" id="btnConfirmarReagendar">Confirmar reagendamiento</button>
+                <button type="button" class="btn-secundario" id="btnCancelarModal">Cancelar</button>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container text-center">
+                <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/facebook.png" class="imagen-footer" alt="Facebook">
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/instagram.png" class="imagen-footer" alt="Instagram">
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/x.png" class="imagen-footer" alt="X">
+                </a>
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+                    <img src="img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="js/cuentas.js"></script>
+    <script src="js/profesionales.js"></script>
+    <script src="js/sesion.js"></script>
+    <script src="js/GestionarRutinas.js"></script>
+</body>
+
+</html>

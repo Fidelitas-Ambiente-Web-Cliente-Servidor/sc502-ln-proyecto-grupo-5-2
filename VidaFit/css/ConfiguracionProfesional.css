@@ -1,0 +1,76 @@
+.oculto {
+    display: none;
+}
+
+.grid-config-prof {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.panel-perfil-prof {
+    position: relative;
+}
+
+.avatar-prof {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #d7f2ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px;
+    border: 3px solid var(--primary);
+    overflow: hidden;
+}
+
+.btn-editar-prof {
+    padding: 8px 16px;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--fuente);
+    transition: 0.2s;
+}
+
+.btn-editar-prof:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.botones-edicion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.botones-edicion .btn-principal {
+    margin-top: 0;
+    height: 50px;
+}
+
+@media (max-width: 1100px) {
+    .grid-config-prof {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .panel-perfil-prof {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-config-prof {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-perfil-prof {
+        grid-column: span 1;
+    }
+}
