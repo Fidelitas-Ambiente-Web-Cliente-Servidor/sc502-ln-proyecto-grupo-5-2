@@ -63,7 +63,6 @@ function iniciarSesion(identificador, contraseña, rol) {
         };
     }
 
-
     let cuenta = cuentas.find(function (item) {
         return coincideIdentificadorCuenta(item, identificador) &&
             item.contraseña === contraseña &&
@@ -100,7 +99,7 @@ function obtenerSesion() {
 function cerrarSesionUsuario() {
     localStorage.removeItem(CLAVE_SESION);
     eliminarDatosLogin();
-    window.location.href = 'inicioSesion.html';
+    window.location.href = '/sc502-ln-proyecto-grupo-5-2/VidaFit/views/inicioSesion.html';
 }
 
 function guardarDatosLogin(identificador, contraseña, rol) {
@@ -142,7 +141,7 @@ function protegerPagina() {
 
     let sesion = obtenerSesion();
     if (!sesion) {
-        window.location.href = 'inicioSesion.html';
+        window.location.href = '/sc502-ln-proyecto-grupo-5-2/VidaFit/views/inicioSesion.html';
         return;
     }
 
@@ -158,15 +157,16 @@ function protegerPagina() {
     let paginasProfesional = [
         'indexProfesional.html',
         'GestionarRutinas.html',
-        'ConfiguracionProfesional.html'
+        'ConfiguracionProfesional.html',
+        'GestionarPlanes.php'
     ];
 
     if (sesion.rol === 'paciente' && paginasProfesional.indexOf(ruta) !== -1) {
-        window.location.href = 'indexPaciente.html';
+        window.location.href = '/sc502-ln-proyecto-grupo-5-2/VidaFit/indexPaciente.html';
         return;
     }
 
     if (sesion.rol === 'profesional' && paginasPaciente.indexOf(ruta) !== -1) {
-        window.location.href = 'indexProfesional.html';
+        window.location.href = '/sc502-ln-proyecto-grupo-5-2/VidaFit/indexProfesional.html';
     }
 }
