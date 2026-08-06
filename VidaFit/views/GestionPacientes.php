@@ -8,23 +8,33 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="c../ss/indexPaciente.css" />
-    <link rel="stylesheet" href="../css/indexProfesional.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexProfesional.css" />
 </head>
 
 <body>
 
     <aside class="sidebar">
-        <a class="navbar-brand" href="indexProfesional.html">
-            <img src="../img/logo.png" alt="Vida Fit" width="230">
+        <a class="navbar-brand" href="index.php?page=indexProfesional">
+            <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
         </a>
 
         <nav>
-            <a href="indexProfesional.html"><img src="../img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
-            <a href="GestionarRutinas.html"><img src="../img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b></a>
-            <a href="GestionarPlanes.html"><img src="../img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b></a>
-            <a class="activo" href="GestionPacientes.html"><img src="../img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b></a>
-            <a href="ConfiguracionProfesional.html"><img src="../img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
+            <a href="index.php?page=indexProfesional">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b>
+            </a>
+            <a href="index.php?page=GestionarRutinas">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b>
+            </a>
+            <a href="index.php?page=GestionarPlanes">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b>
+            </a>
+            <a class="activo" href="index.php?page=GestionPacientes">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b>
+            </a>
+            <a href="index.php?page=ConfiguracionProfesional">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b>
+            </a>
         </nav>
 
         <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
@@ -39,7 +49,7 @@
             </div>
 
             <div class="usuario">
-                <img src="../img/usuario.png" alt="Usuario">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
                     <h4><b>Dr. Carlos Mendoza</b></h4>
                     <p>Profesional de la Salud</p>
@@ -83,8 +93,8 @@
                     <input type="hidden" id="expedienteId" value="">
                     
                     <div class="mb-3">
-                        <label class="form-label"><b>Nombre del Paciente:</b></label>
-                        <input type="text" id="nombrePaciente" class="form-control" placeholder="Ej. Sofia Martínez" required style="border-radius: 10px;">
+                        <label class="form-label"><b>ID del Paciente:</b></label>
+                        <input type="number" id="idPaciente" class="form-control" placeholder="Ej. 4 (ID en BD)" required style="border-radius: 10px;">
                     </div>
 
                     <div class="mb-3">
@@ -113,8 +123,8 @@
                     </div>
 
                     <div class="botones-edicion">
-                        <button type="submit" id="btnGuardar" class="btn-editar-prof" style="background-color: var(--primary); color: white; border: none; height: 45px;">Guardar Expediente</button>
-                        <button type="button" id="btnCancelar" class="btn-editar-prof oculto" onclick="resetearFormulario()" style="height: 45px;">Cancelar Edición</button>
+                        <button type="submit" id="btnGuardar" class="btn-editar-prof" style="background-color: var(--primary); color: white; border: none; height: 45px; width: 100%;">Guardar Expediente</button>
+                        <button type="button" id="btnCancelar" class="btn-editar-prof oculto" onclick="resetearFormulario()" style="height: 45px; width: 100%;">Cancelar Edición</button>
                     </div>
                 </form>
             </div>
@@ -124,18 +134,27 @@
         <footer>
             <div class="container text-center">
                 <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><img src="../img/facebook.png" class="imagen-footer" alt="Facebook"></a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><img src="../img/instagram.png" class="imagen-footer" alt="Instagram"></a>
-                <a href="https://x.com" target="_blank" rel="noopener noreferrer"><img src="../img/x.png" class="imagen-footer" alt="X"></a>
-                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer"><img src="../img/whatsapp.png" class="imagen-footer" alt="Whatsapp"></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/facebook.png" class="imagen-footer" alt="Facebook">
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/instagram.png" class="imagen-footer" alt="Instagram">
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/x.png" class="imagen-footer" alt="X">
+                </a>
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
+                </a>
             </div>
         </footer>
 
     </main>
 
-    <script src="../js/cuentas.js"></script>
-    <script src="../js/sesion.js"></script>
-    <script src="../js/gestionPacientes.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/jquery-4.0.0.min.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/sesion.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionPacientes.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,11 @@
 <?php
 require_once './controllers/PlanNutricionalController.php';
 require_once './controllers/PlanComidaController.php';
+require_once './controllers/ExpedienteController.php'; 
 
 $page = $_GET['page'] ?? 'GestionarPlanes';
 
-// ─── PETICIONES GET ──────────────────────────────────────
+// GET
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if (($_GET['option'] ?? '') === 'listarPlanes') {
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-// ─── PETICIONES POST ─────────────────────────────────────
+// POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (($_POST['option'] ?? '') === 'crearPlan') {
@@ -48,10 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ─── CARGAR VISTAS ──────────────────────────────────────
+// Carga las vistas
 switch ($page) {
     case 'GestionarPlanes':
         $controller = new PlanNutricionalController();
+        $controller->index();
+        break;
+
+    case 'GestionPacientes':
+        $controller = new ExpedienteController();
         $controller->index();
         break;
 

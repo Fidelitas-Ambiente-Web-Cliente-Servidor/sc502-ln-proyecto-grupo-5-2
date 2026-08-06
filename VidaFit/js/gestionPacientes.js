@@ -1,102 +1,117 @@
-let pacientes = [
-    { id: 1, nombre: "Sofía Martínez", historial: "Antecedentes de hipertensión leve", condiciones: "Diabetes Tipo 2", alergias: "Glúten", discapacidades: "Ninguna", observaciones: "Requiere control estricto de carbohidratos" },
-    { id: 2, nombre: "Luis Ramírez", historial: "Sedentarismo prolongado", condiciones: "Obesidad Grado I", alergias: "Ninguna", discapacidades: "Ninguna", observaciones: "Priorizar ejercicios de bajo impacto inicialmente" },
-    { id: 3, nombre: "Ana Torres", historial: "Control nutricional preventivo", condiciones: "Ninguna", alergias: "Mariscos", discapacidades: "Ninguna", observaciones: "Atleta amateur, busca optimizar rendimiento" }
-];
+$(function () {
+    const urlBase = "index.php";
 
-document.addEventListener("DOMContentLoaded", () => {
-    renderizarTabla();
+    // Carga la lista
+    function cargarExpedientes() {
+        $.get(urlBase + '?option=listarExpedientes', function (res) {
+            const data = JSON.parse(res);
+            const $tbody = $('#tablaPacientes').empty();
 
-    document.getElementById("formExpediente").addEventListener("submit", (e) => {
+            if (!data.expedientes || data.expedientes.length === 0) {
+                $tbody.html('<tr><td colspan="4" class="text-center text-muted">No hay expedientes registrados.</td></tr>');
+                return;
+            }
+
+            data.expedientes.forEach(function (exp) {
+                const fila = `
+                    <tr>
+                        <td><b>${exp.nombre_completo}</b><br><small class="text-muted">ID Expediente: #00${exp.id_expediente}</small></td>
+                        <td><span class="badge bg-danger text-wrap">${exp.condiciones_medicas}</span></td>
+                        <td><span class="badge bg-warning text-dark text-wrap">${exp.alergias}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1 editar-exp" data-id="${exp.id_expediente}">Editar</button>
+                            <button class="btn btn-sm btn-outline-danger eliminar-exp" data-id="${exp.id_expediente}">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+                $tbody.append(fila);
+            });
+
+            $('.editar-exp').on('click', function () {
+                const id = $(this).data('id');
+                editarExpediente(id);
+            });
+
+            $('.eliminar-exp').on('click', function () {
+                const id = $(this).data('id');
+                if (confirm('¿Está seguro de eliminar este expediente?')) {
+                    eliminarExpediente(id);
+                }
+            });
+        }, 'json');
+    }
+
+    // Crea o actualiza el expediente
+    $('#formExpediente').on('submit', function (e) {
         e.preventDefault();
-        guardarExpediente();
+        const id = $('#expedienteId').val();
+        const option = id ? 'actualizarExpediente' : 'crearExpediente';
+
+        $.post(urlBase, {
+            option: option,
+            expedienteId: id,
+            id_paciente: $('#idPaciente').val(),
+            historial_medico: $('#historialMedico').val(),
+            condiciones_medicas: $('#condicionesMedicas').val(),
+            alergias: $('#alergias').val(),
+            discapacidades: $('#discapacidades').val(),
+            observaciones: $('#observaciones').val()
+        }, function (res) {
+            if (res.response === '00') {
+                alert(id ? 'Expediente actualizado.' : 'Expediente creado.');
+                resetearFormulario();
+                cargarExpedientes();
+            } else {
+                alert('Error: ' + res.message);
+            }
+        }, 'json');
     });
+
+    // Edita el expediente
+    function editarExpediente(id) {
+        $.get(urlBase + '?option=obtenerExpediente&id=' + id, function (res) {
+            const data = JSON.parse(res);
+            if (data.response !== '00' || !data.expediente) {
+                alert('Error al cargar el expediente.');
+                return;
+            }
+            const exp = data.expediente;
+            $('#expedienteId').val(exp.id_expediente);
+            $('#idPaciente').val(exp.id_paciente);
+            $('#historialMedico').val(exp.historial_medico);
+            $('#condicionesMedicas').val(exp.condiciones_medicas);
+            $('#alergias').val(exp.alergias);
+            $('#discapacidades').val(exp.discapacidades);
+            $('#observaciones').val(exp.observaciones);
+
+            $('#formTitulo').text('Modificar Expediente');
+            $('#btnGuardar').text('Actualizar Cambios');
+            $('#btnCancelar').removeClass('oculto');
+        }, 'json');
+    }
+
+    // Elimina el expediente
+    function eliminarExpediente(id) {
+        $.post(urlBase, {
+            option: 'eliminarExpediente',
+            id_expediente: id
+        }, function (res) {
+            if (res.response === '00') {
+                cargarExpedientes();
+            } else {
+                alert('Error al eliminar.');
+            }
+        }, 'json');
+    }
+
+    // Resetea el formulario
+    function resetearFormulario() {
+        $('#formExpediente')[0].reset();
+        $('#expedienteId').val('');
+        $('#formTitulo').text('Registrar Expediente');
+        $('#btnGuardar').text('Guardar Expediente');
+        $('#btnCancelar').addClass('oculto');
+    }
+
+    cargarExpedientes();
 });
-
-function renderizarTabla() {
-    const tabla = document.getElementById("tablaPacientes");
-    tabla.innerHTML = "";
-
-    pacientes.forEach(p => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td><b>${p.nombre}</b><br><small class="text-muted">ID Expediente: #00${p.id}</small></td>
-            <td><span class="badge bg-danger text-wrap">${p.condiciones}</span></td>
-            <td><span class="badge bg-warning text-dark text-wrap">${p.alergias}</span></td>
-            <td>
-                <button class="btn btn-sm btn-outline-primary me-1" onclick="editarPacientes(${p.id})">Editar</button>
-                <button class="btn btn-sm btn-outline-danger" onclick="eliminarPacientes(${p.id})">Eliminar</button>
-            </td>
-        `;
-        tabla.appendChild(fila);
-    });
-}
-
-function guardarExpediente() {
-    const id = document.getElementById("expedienteId").value;
-    const nombre = document.getElementById("nombrePaciente").value;
-    const historial = document.getElementById("historialMedico").value;
-    const condiciones = document.getElementById("condicionesMedicas").value;
-    const alergias = document.getElementById("alergias").value;
-    const discapacidades = document.getElementById("discapacidades").value;
-    const observaciones = document.getElementById("observaciones").value;
-
-    if (id) {
-        let p = pacientes.find(item => item.id == id);
-        if (p) {
-            p.nombre = nombre;
-            p.historial = historial;
-            p.condiciones = condiciones;
-            p.alergias = alergias;
-            p.discapacidades = discapacidades;
-            p.observaciones = observaciones;
-        }
-    } else {
-        const nuevoId = pacientes.length > 0 ? Math.max(...pacientes.map(item => item.id)) + 1 : 1;
-        pacientes.push({
-            id: nuevoId,
-            nombre,
-            historial,
-            condiciones,
-            alergias,
-            discapacidades,
-            observaciones
-        });
-    }
-
-    resetearFormulario();
-    renderizarTabla();
-}
-
-function editarPacientes(id) {
-    const p = pacientes.find(item => item.id == id);
-    if (!p) return;
-
-    document.getElementById("expedienteId").value = p.id;
-    document.getElementById("nombrePaciente").value = p.nombre;
-    document.getElementById("historialMedico").value = p.historial;
-    document.getElementById("condicionesMedicas").value = p.condiciones;
-    document.getElementById("alergias").value = p.alergias;
-    document.getElementById("discapacidades").value = p.discapacidades;
-    document.getElementById("observaciones").value = p.observaciones;
-
-    document.getElementById("formTitulo").innerText = "Modificar Expediente";
-    document.getElementById("btnGuardar").innerText = "Actualizar Cambios";
-    document.getElementById("btnCancelar").classList.remove("oculto");
-}
-
-function eliminarPacientes(id) {
-    if (confirm("¿Está seguro de que desea eliminar permanentemente este expediente clínico?")) {
-        pacientes = pacientes.filter(item => item.id !== id);
-        renderizarTabla();
-        resetearFormulario();
-    }
-}
-
-function resetearFormulario() {
-    document.getElementById("formExpediente").reset();
-    document.getElementById("expedienteId").value = "";
-    document.getElementById("formTitulo").innerText = "Registrar Expediente";
-    document.getElementById("btnGuardar").innerText = "Guardar Expediente";
-    document.getElementById("btnCancelar").classList.add("oculto");
-}
