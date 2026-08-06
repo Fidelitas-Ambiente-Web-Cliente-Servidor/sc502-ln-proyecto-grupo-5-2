@@ -59,4 +59,8 @@ switch ($page) {
         $controller = new PlanNutricionalController();
         $controller->index();
         break;
+
+    case 'PlanNutricional':
+        require_once __DIR__ . '/views/PlanNutricional.php';
+        break;
 }
