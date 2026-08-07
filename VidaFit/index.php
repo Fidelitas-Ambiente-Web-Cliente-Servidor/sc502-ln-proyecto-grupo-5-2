@@ -1,7 +1,8 @@
 <?php
 require_once './controllers/PlanNutricionalController.php';
 require_once './controllers/PlanComidaController.php';
-require_once './controllers/ExpedienteController.php'; 
+require_once './controllers/ExpedienteController.php';
+require_once './controllers/RutinaController.php';
 
 $page = $_GET['page'] ?? 'GestionarPlanes';
 
@@ -59,6 +60,15 @@ switch ($page) {
     case 'GestionPacientes':
         $controller = new ExpedienteController();
         $controller->index();
+        break;
+        
+    case 'GestionarRutinas':
+        $controller = new RutinaController();
+        $controller->index();
+        break;
+
+    case 'rutinas':
+        require_once __DIR__ . '/views/rutinas.php';
         break;
 
     default:

@@ -1,4 +1,4 @@
-let pacientes = [
+/* let pacientes = [
     {
         id: 1,
         nombre: 'Sofía Martínez',
@@ -469,4 +469,4 @@ function actualizarContadores() {
 
     document.getElementById('totalCitasPendientes').textContent = pendientes;
     document.getElementById('contadorCitas').textContent = citasProfesional.length + ' citas registradas';
-}
+} */
