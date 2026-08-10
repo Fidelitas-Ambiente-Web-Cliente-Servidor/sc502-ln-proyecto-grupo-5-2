@@ -20,6 +20,7 @@ CREATE TABLE roles (
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT,
     nombre_completo VARCHAR(150) NOT NULL,
+    username   VARCHAR(80)  NOT NULL UNIQUE,
     correo VARCHAR(150) NOT NULL,
     contrasenna VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
@@ -138,4 +139,9 @@ CREATE TABLE registro_progreso (
 
 );
 COMMIT;
+
+--Se asignan los roles por defecto.
+INSERT INTO roles (nombre_rol) VALUES ('Paciente');
+INSERT INTO roles (nombre_rol) VALUES ('Profesional');
+
 
