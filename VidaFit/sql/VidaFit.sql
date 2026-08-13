@@ -124,24 +124,41 @@ CREATE TABLE detalle_rutina (
 CREATE TABLE registro_progreso (
     id_progreso INT AUTO_INCREMENT,
     id_paciente INT NOT NULL,
-    peso_kg DECIMAL(5,2),
-    altura_m DECIMAL(3,2),
+    peso_kg DECIMAL(5,2) NOT NULL,
     imc DECIMAL(5,2),
     peso_ideal DECIMAL(5,2),
     estado_nutricional VARCHAR(50),
-    medidas_corporales VARCHAR(150),
-    observaciones_paciente VARCHAR(50),
-    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_registro DATE,
 
     CONSTRAINT pk_registro_progreso PRIMARY KEY (id_progreso),
 
     CONSTRAINT fk_progreso_paciente FOREIGN KEY (id_paciente) REFERENCES usuarios (id_usuario)
 
 );
+
+CREATE TABLE medidas_corporales (
+    id_medida INT AUTO_INCREMENT,
+    id_paciente INT NOT NULL,
+
+    tipo_medida VARCHAR(30) NOT NULL,
+    valor_cm DECIMAL(5,2) NOT NULL,
+
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_medidas_corporales 
+        PRIMARY KEY (id_medida),
+
+    CONSTRAINT fk_medida_paciente 
+        FOREIGN KEY (id_paciente) 
+        REFERENCES usuarios(id_usuario)
+);
+
 COMMIT;
 
---Se asignan los roles por defecto.
+--Se asignan los roles por defecto
 INSERT INTO roles (nombre_rol) VALUES ('Paciente');
 INSERT INTO roles (nombre_rol) VALUES ('Profesional');
+
+
 
 

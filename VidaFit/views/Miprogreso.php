@@ -8,27 +8,27 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/indexPaciente.css" />
-    <link rel="stylesheet" href="../css/miProgreso.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/miProgreso.css" />
 </head>
 
 <body>
 
     <aside class="sidebar">
-        <a class="navbar-brand" href="indexPaciente.html">
-    <img src="img/logo.png" alt="Vida Fit" width="230">
-</a>
+        <a class="navbar-brand" href="index.php?page=indexPaciente">
+            <img src="img/logo.png" alt="Vida Fit" width="230">
+        </a>
         <nav>
-            <a href="indexPaciente.html"><img src="../img/inicio.png" alt="Inicio" width="30"> <b>Inicio</b></a>
-            <a href="PlanNutricional.html"><img src="../img/plan.png" alt="Plan" width="30"> <b>Mi Plan Nutricional</b></a>
-            <a href="rutinas.html"><img src="../img/ejercicio.png" alt="Ejercicio" width="30"> <b>Mi Rutina</b></a>
-            <a class="activo"><img src="../img/progreso.png" alt="Progreso" width="30"> <b>Mi Progreso</b></a>
-            <a href="citas.html"><img src="../img/citas.png" alt="Citas" width="30"> <b>Citas</b></a>
-            <a href="perfil.html"><img src="../img/perfil.png" alt="Perfil" width="30"> <b>Perfil</b></a>
-            <a href="configuracion.html"><img src="../img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
+            <a href="index.php?page=indexPaciente"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a href="index.php?page=PlanNutricional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Inicio" width="30"> <b>Mi Plan Nutricional</b></a>
+            <a href="index.php?page=Rutinas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Inicio" width="30"> <b>Mi Rutina</b></a>
+            <a class="activo" href="index.php?page=Miprogreso"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/progreso.png" alt="Inicio" width="30"> <b>Mi Progreso</b></a>
+            <a href="index.php?page=Citas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Inicio" width="30"> <b>Citas</b></a>
+            <a href="index.php?page=Perfil"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Inicio" width="30"><b>Perfil</b></a>
+            <a href="index.php?page=Configuracion"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Inicio" width="30"> <b>Configuración</b></a>
         </nav>
 
-        <button class="logout">Cerrar sesión</button>
+        <button class="logout" id="btnLogout">Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
@@ -39,51 +39,52 @@
                 <p>Seguimiento de tus avances y resultados</p>
             </div>
             <div class="usuario">
-                <img src="../img/usuario.png" alt="Usuario">
+                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b>Sofía Martínez</b></h4>
-                    <p>Paciente</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
 
         <section class="cards-superiores">
             <div class="card">
-                <div class="icono"><img src="../img/peso.png" alt="Peso" width="35"></div>
+                <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/peso.png" alt="Peso" width="35"></div>
                 <div>
                     <p>Peso inicial</p>
-                    <h2>74.2 <span>kg</span></h2>
-                    <small>Enero 2025</small>
+                    <h2><span id="pesoInicial">0.0</span> <span>kg</span></h2>
+                    <small id="fechaPesoInicial">Sin registros</small>
                 </div>
             </div>
 
             <div class="card">
-                <div class="icono"><img src="../img/peso.png" alt="Peso" width="35"></div>
+                <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/peso.png" alt="Peso" width="35"></div>
                 <div>
                     <p>Peso actual</p>
-                    <h2>69.0 <span>kg</span></h2>
-                    <small class="verde">↓ 5.2 kg perdidos</small>
+                    <h2><span id="pesoActual">0.0</span> <span>kg</span></h2>
+                    <small class="verde" id="pesoPerdido"></small>
                 </div>
             </div>
 
             <div class="card">
-                <div class="icono naranja"><img src="../img/objetivo.png" alt="Objetivo" width="35"></div>
+                <div class="icono naranja"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/objetivo.png" alt="Objetivo" width="35"></div>
                 <div>
                     <p>Meta de peso</p>
-                    <h2>64.0 <span>kg</span></h2>
-                    <small>5 kg restantes</small>
+                    <h2><span id="pesoIdeal">0.0</span> <span>kg</span></h2>
+                    <small id="pesoRestante"></small>
+
                     <div class="barra">
-                        <div style="width: 51%"></div>
+                        <div id="barraProgreso" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <div class="icono"><img src="../img/imc.png" alt="IMC" width="35"></div>
+                <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/imc.png" alt="IMC" width="35"></div>
                 <div>
                     <p>IMC actual</p>
-                    <h2>23.8</h2>
-                    <small class="estado">Normal</small>
+                    <h2 id="imcActual">0.0</h2>
+                    <small class="estado" id="estadoNutricional">Sin datos</small>
                 </div>
             </div>
         </section>
@@ -172,12 +173,7 @@
                 <div id="listaRegistros" class="lista-registros"></div>
             </div>
 
-            <div class="panel">
-                <div class="titulo-panel">
-                    <h3>Mis logros</h3>
-                </div>
-                <div id="listaLogros" class="lista-logros"></div>
-            </div>
+        
 
         </section>
 
@@ -185,23 +181,27 @@
             <div class="container text-center">
                 <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                    <img src="../img/facebook.png" class="imagen-footer" alt="Facebook">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/facebook.png" class="imagen-footer" alt="Facebook">
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                    <img src="../img/instagram.png" class="imagen-footer" alt="Instagram">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/instagram.png" class="imagen-footer" alt="Instagram">
                 </a>
                 <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-                    <img src="../img/x.png" class="imagen-footer" alt="X">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/x.png" class="imagen-footer" alt="X">
                 </a>
                 <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer">
-                    <img src="../img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
+                    <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/whatsapp.png" class="imagen-footer" alt="Whatsapp">
                 </a>
             </div>
         </footer>
 
     </main>
 
-    <script src="../js/miProgreso.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/Miprogreso.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionProgreso.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/indexPaciente.js"></script>
 </body>
 
 </html>

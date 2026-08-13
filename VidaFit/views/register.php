@@ -9,17 +9,14 @@
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <link
-        rel="stylesheet"href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/registro&inicioSesion.css"
-    >
+        rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/registro&inicioSesion.css">
 </head>
 
 
@@ -33,12 +30,10 @@
 
             <div class="contenido-izquierdo">
 
-
+                <div class="logo">
                     <img
                         src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png"
-                        alt="Logo VidaFit"
-                    >
-
+                        alt="Logo VidaFit">
                 </div>
 
 
@@ -120,8 +115,7 @@
                 class="formulario-registro"
                 method="POST"
                 action="index.php"
-                novalidate
-            >
+                novalidate>
 
 
                 <h2>
@@ -130,45 +124,38 @@
 
                 <div
                     id="errorNombre"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
                 <input
                     type="text"
                     id="nombre"
                     name="nombre_completo"
-                    placeholder="Nombre completo"
-                >
+                    placeholder="Nombre completo">
 
                 <div
                     id="errorUser"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
                 <input
                     type="text"
                     id="usernameRegistro"
                     name="username"
-                    placeholder="Usuario"
-                >
+                    placeholder="Usuario">
 
 
                 <div
                     id="errorCorreo"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
                 <input
                     type="email"
                     id="correo"
                     name="correo"
-                    placeholder="Correo electrónico"
-                >
+                    placeholder="Correo electrónico">
 
                 <div
                     id="errorContraseña"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
 
                 <div class="password-container">
@@ -178,13 +165,11 @@
                         id="contraseña"
                         name="password"
                         placeholder="Contraseña"
-                        autocomplete="new-password"
-                    >
+                        autocomplete="new-password">
 
                     <span
                         class="eye-icon"
-                        onclick="togglePassword('contraseña')"
-                    >
+                        onclick="togglePassword('contraseña')">
                         👁️
                     </span>
 
@@ -197,13 +182,11 @@
                         id="confirm_password"
                         name="confirm_password"
                         placeholder="Confirmar contraseña"
-                        autocomplete="new-password"
-                    >
+                        autocomplete="new-password">
 
                     <span
                         class="eye-icon"
-                        onclick="togglePassword('confirm_password')"
-                    >
+                        onclick="togglePassword('confirm_password')">
                         👁️
                     </span>
 
@@ -217,8 +200,7 @@
 
                 <div
                     id="errorRol"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
 
                 <div class="roles">
@@ -231,8 +213,7 @@
                         <input
                             type="radio"
                             name="id_rol"
-                            value="1"
-                        >
+                            value="1">
 
                         <div>
 
@@ -261,8 +242,7 @@
                         <input
                             type="radio"
                             name="id_rol"
-                            value="2"
-                        >
+                            value="2">
 
                         <div>
 
@@ -287,13 +267,11 @@
 
                 <div
                     id="errorRegistro"
-                    class="error-campo"
-                ></div>
+                    class="error-campo"></div>
 
                 <button
                     type="submit"
-                    class="btn-registro"
-                >
+                    class="btn-registro">
                     Registrarte
                 </button>
 
@@ -313,8 +291,7 @@
 
                 <a
                     href="index.php?page=login"
-                    class="btn-login"
-                >
+                    class="btn-login">
                     ¿Ya tienes cuenta? Iniciar sesión
                 </a>
 
@@ -322,23 +299,8 @@
 
                 <footer class="terminos">
 
-                    Al registrarme, acepto los
-
-                    <a href="#">
-                        Términos
-                    </a>,
-
-                    la
-
-                    <a href="#">
-                        Política de privacidad
-                    </a>
-
-                    y la
-
-                    <a href="#">
-                        Política de cookies
-                    </a>.
+                    Al registrarme, acepto los términos, la política de privacidad y la política de cookies.
+         
 
                 </footer>
 
@@ -354,12 +316,10 @@
 
 
     <script
-        src="https://code.jquery.com/jquery-3.7.1.min.js"
-    ></script>
+        src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script
-        src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/auth.js"
-    ></script>
+        src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/auth.js"></script>
 
 
 </body>

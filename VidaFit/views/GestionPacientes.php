@@ -51,8 +51,8 @@
             <div class="usuario">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b>Dr. Carlos Mendoza</b></h4>
-                    <p>Profesional de la Salud</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
@@ -151,10 +151,10 @@
 
     </main>
 
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/jquery-4.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/sesion.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionPacientes.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

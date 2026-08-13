@@ -141,4 +141,101 @@ class UserController
             'message' => 'Sesión cerrada'
         ]);
     }
+
+    public function obtenerUsuarioActual(): void
+{
+    try {
+
+        if (!isset($_SESSION['id_usuario'])) {
+
+            echo json_encode([
+                'response' => '01',
+                'message' => 'No hay una sesión activa'
+            ]);
+
+            return;
+        }
+
+
+        $id_usuario = (int) $_SESSION['id_usuario'];
+
+        $usuario = $this->model->getById($id_usuario);
+
+
+        if (!$usuario) {
+
+            echo json_encode([
+                'response' => '02',
+                'message' => 'Usuario no encontrado'
+            ]);
+
+            return;
+        }
+
+
+        echo json_encode([
+            'response' => '00',
+            'usuario' => $usuario
+        ]);
+
+    } catch (Exception $e) {
+
+        echo json_encode([
+            'response' => '01',
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
+public function cambiarContrasenna(): void
+{
+    try {
+
+        if (!isset($_SESSION['id_usuario'])) {
+            throw new Exception('No hay una sesión activa.');
+        }
+
+        $id_usuario = (int) $_SESSION['id_usuario'];
+
+        $nueva = $_POST['nueva_contrasenna'] ?? '';
+        $confirmar = $_POST['confirmar_contrasenna'] ?? '';
+
+        if ($nueva === '' || $confirmar === '') {
+            throw new Exception('Debe completar ambos campos.');
+        }
+
+        if ($nueva !== $confirmar) {
+            throw new Exception('Las contraseñas no coinciden.');
+        }
+
+        if (strlen($nueva) < 8) {
+            throw new Exception(
+                'La contraseña debe tener al menos 8 caracteres.'
+            );
+        }
+
+        $resultado = $this->model->cambiarContrasenna(
+            $id_usuario,
+            $nueva
+        );
+
+        if (!$resultado) {
+            throw new Exception(
+                'No se pudo actualizar la contraseña.'
+            );
+        }
+
+        echo json_encode([
+            'response' => '00',
+            'message' => 'Contraseña actualizada correctamente.'
+        ]);
+
+    } catch (Exception $e) {
+
+        echo json_encode([
+            'response' => '01',
+            'message' => $e->getMessage()
+        ]);
+    }
+}
 }

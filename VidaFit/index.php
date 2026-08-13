@@ -6,6 +6,7 @@ require_once './controllers/PlanComidaController.php';
 require_once './controllers/ExpedienteController.php';
 require_once './controllers/RutinaController.php';
 require_once './controllers/UserController.php';
+require_once './controllers/RegistroController.php';
 
 $page = $_GET['page'] ?? 'register';
 
@@ -23,6 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $controller->listar();
         exit;
     }
+
+    if (($_GET['option'] ?? '') === 'listarProgreso') {
+
+    $controller = new RegistroController();
+    $controller->listar();
+
+    exit;
+}
+
+if (($_GET['option'] ?? '') === 'obtenerUsuarioActual') {
+
+    $controller = new UserController();
+    $controller->obtenerUsuarioActual();
+
+    exit;
+}
 }
 
 // POST
@@ -47,6 +64,14 @@ if (($_POST['option'] ?? '') === 'login') {
         exit;
     }
 
+    if (($_POST['option'] ?? '') === 'cambiarContrasenna') {
+
+    $controller = new UserController();
+    $controller->cambiarContrasenna();
+
+    exit;
+}
+
     if (($_POST['option'] ?? '') === 'crearPlan') {
         $controller = new PlanNutricionalController();
         $controller->crear();
@@ -70,6 +95,14 @@ if (($_POST['option'] ?? '') === 'login') {
         $controller->eliminar();
         exit;
     }
+
+    if (($_POST['option'] ?? '') === 'crearProgreso') {
+
+    $controller = new RegistroController();
+    $controller->crear();
+
+    exit;
+}
 
     
 }
@@ -118,6 +151,7 @@ switch ($page) {
     case 'GestionarPlanes':
         $controller = new PlanNutricionalController();
         $controller->index();
+        
         break;
 
     case 'GestionPacientes':
@@ -128,18 +162,41 @@ switch ($page) {
     case 'GestionarRutinas':
         $controller = new RutinaController();
         $controller->index();
+
         break;
 
-    case 'rutinas':
-        require_once __DIR__ . '/views/rutinas.php';
+    case 'Rutinas':
+        require_once __DIR__ . '/views/Rutinas.php';
+        break;
+
+      case 'Miprogreso':
+        require_once __DIR__ . '/views/Miprogreso.php';
+        break;
+
+    case 'Configuracion':
+    require_once __DIR__ . '/views/Configuracion.php';
+    break;
+
+    case 'ConfiguracionProfesional':
+    require_once __DIR__ . '/views/ConfiguracionProfesional.php';
+    break;
+
+    case 'Citas':
+    require_once __DIR__ . '/views/Citas.php';
+    break;
+
+    case 'Perfil':
+    require_once __DIR__ . '/views/Perfil.php';
+    break;
+
+      case 'PlanNutricional':
+        require_once __DIR__ . '/views/PlanNutricional.php';
         break;
 
     default:
-        $controller = new PlanNutricionalController();
-        $controller->index();
-        break;
+    
+    header('Location: index.php?page=login');
+    exit;
 
-    case 'PlanNutricional':
-        require_once __DIR__ . '/views/PlanNutricional.php';
-        break;
+
 }

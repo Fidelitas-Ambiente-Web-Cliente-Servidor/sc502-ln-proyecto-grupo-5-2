@@ -1,15 +1,4 @@
-<?php
 
-
-if (!isset($_SESSION['id_usuario'])) {
-    header('Location: index.php?page=login');
-    exit;
-}
-$username = $_SESSION['username'] ?? 'Usuario';
-$idRol = $_SESSION['id_rol'] ?? null;
-$nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
-
-?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -32,17 +21,17 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
 
 
     <aside class="sidebar">
-         <a class="navbar-brand" href="indexPaciente.html">
+         <a class="navbar-brand" href="index.php?page=indexPaciente">
     <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
 </a>
 
         <nav>
-            <a href="index.php?page=indexPaciente"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a class="activo"href="index.php?page=indexPaciente"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
             <a href="index.php?page=PlanNutricional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Inicio" width="30"> <b>Mi Plan Nutricional</b></a>
-            <a class="activo"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Inicio" width="30"> <b>Mi Rutina</b></a>
+            <a href="index.php?page=Rutinas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Inicio" width="30"> <b>Mi Rutina</b></a>
             <a href="index.php?page=Miprogreso"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/progreso.png" alt="Inicio" width="30"> <b>Mi Progreso</b></a>
             <a href="index.php?page=Citas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Inicio" width="30"> <b>Citas</b></a>
-            <a href="index.php?page=perfil"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Inicio" width="30"><b>Perfil</b></a>
+            <a href="index.php?page=Perfil"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Inicio" width="30"><b>Perfil</b></a>
             <a href="index.php?page=Configuracion"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Inicio" width="30"> <b>Configuración</b></a>
         </nav>
 
@@ -54,15 +43,15 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
 
         <header class="header">
             <div>
-               <h1><b>¡Hola, <?= htmlspecialchars($username) ?>!</b></h1>
+               <h1> <b>¡Hola, <span id="nombreUsuario">Usuario</span>!</b></h1>
                 <p>Bienvenido(a) de nuevo a VidaFit</p>
             </div>
 
             <div class="usuario">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b><?=htmlspecialchars($nombreCompleto)?></b></h4>
-                    <p>Paciente</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
@@ -271,6 +260,7 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/indexPaciente.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

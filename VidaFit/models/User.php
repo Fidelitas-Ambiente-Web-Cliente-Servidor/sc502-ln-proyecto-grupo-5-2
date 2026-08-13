@@ -48,5 +48,46 @@ class User
             $id_usuario
         ]);
     }
+
+    public function getById(int $id_usuario): array|false
+{
+    $stmt = $this->conn->prepare(
+        'SELECT 
+            id_usuario,
+            nombre_completo,
+            username,
+            correo,
+            id_rol
+         FROM usuarios
+         WHERE id_usuario = ?
+         LIMIT 1'
+    );
+
+    $stmt->execute([$id_usuario]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function cambiarContrasenna(
+    int $id_usuario,
+    string $nuevaContrasenna
+): bool {
+
+    $hash = password_hash(
+        $nuevaContrasenna,
+        PASSWORD_DEFAULT
+    );
+
+    $stmt = $this->conn->prepare(
+        'UPDATE usuarios
+         SET contrasenna = ?
+         WHERE id_usuario = ?'
+    );
+
+    return $stmt->execute([
+        $hash,
+        $id_usuario
+    ]);
+}
 }
 

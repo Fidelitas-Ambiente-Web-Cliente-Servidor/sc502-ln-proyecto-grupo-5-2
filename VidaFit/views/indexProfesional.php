@@ -1,15 +1,3 @@
-<?php
-
-
-if (!isset($_SESSION['id_usuario'])) {
-    header('Location: index.php?page=login');
-    exit;
-}
-$username = $_SESSION['username'] ?? 'Usuario';
-$idRol = $_SESSION['id_rol'] ?? null;
-$nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
-
-?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -28,34 +16,34 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
 <body>
 
     <aside class="sidebar">
-        <a class="navbar-brand" href="indexProfesional.html">
+        <a class="navbar-brand" href="index.php?page=indexProfesional">
             <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
         </a>
 
         <nav>
-            <a class="activo" href="indexProfesional.html"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
-            <a href="GestionarRutinas.html"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b></a>
-            <a href="GestionarPlanes.html"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b></a>
-            <a href="GestionPacientes.html"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b></a>
-            <a href="ConfiguracionProfesional.html"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
+            <a class="activo" href="index.php?page=indexProfesional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a href="index.php?page=GestionarRutinas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b></a>
+            <a href="index.php?page=GestionarPlanes"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b></a>
+            <a href="index.php?page=GestionPacientes"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b></a>
+            <a href="index.php?page=ConfiguracionProfesional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
         </nav>
 
-        <button class="logout" id="btnLogout" >Cerrar sesión</button>
+         <button class="logout" id="btnLogout" >Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
 
         <header class="header">
             <div>
-                <h1><b>¡Hola, <?= htmlspecialchars($username) ?>!</b></h1>
-                <p>Panel de gestión profesional — VidaFit</p>
+                <h1> <b>¡Hola, <span id="nombreUsuario"></span>!</b></h1>
+                <p>Panel de gestión profesional de VidaFit</p>
             </div>
 
             <div class="usuario">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b><?= htmlspecialchars($nombreCompleto) ?></b></h4>
-                    <p>Profesional de la Salud</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
@@ -105,21 +93,21 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
             </div>
 
             <div class="grid-acciones">
-                <a href="GestionarRutinas.html" class="accion-card accion-activa">
+                <a href="index.php?page=GestionarRutinas" class="accion-card accion-activa">
                     <div class="accion-icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="40"></div>
                     <h4>Gestionar Rutinas</h4>
                     <p>Administre pacientes, calcule IMC, asigne rutinas, planes alimenticios y gestione citas.</p>
                     <span class="badge-disponible">Disponible</span>
                 </a>
 
-                <a href="GestionarPlanes.html" class="accion-card accion-activa">
+                <a href="index.php?page=GestionarPlanes" class="accion-card accion-activa">
                     <div class="accion-icono naranja"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="40"></div>
                     <h4>Gestionar Planes Alimenticios</h4>
                     <p>Cree y administre planes nutricionales personalizados para sus pacientes.</p>
                     <span class="badge-disponible">Disponible</span>
                 </a>
 
-                <a href="GestionPacientes.html" class="accion-card accion-activa">
+                <a href="index.php?page=GestionPacientes" class="accion-card accion-activa">
                     <div class="accion-icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="40"></div>
                     <h4>Gestionar Pacientes</h4>
                     <p>Consulte el historial clínico, progreso y datos generales de sus pacientes.</p>
@@ -197,6 +185,7 @@ $nombreCompleto = $_SESSION['nombre_completo'] ?? 'Usuario';
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/indexProfesional.js"></script>
+        <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

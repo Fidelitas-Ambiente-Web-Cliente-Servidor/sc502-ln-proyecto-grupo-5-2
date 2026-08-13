@@ -1,23 +1,13 @@
-let registrosPeso = [
-    { fecha: '2025-05-20', peso: 72.1 },
-    { fecha: '2025-05-27', peso: 71.7 },
-    { fecha: '2025-06-03', peso: 71.0 },
-    { fecha: '2025-06-10', peso: 70.3 },
-    { fecha: '2025-06-17', peso: 69.9 },
-    { fecha: '2025-06-24', peso: 69.1 },
-    { fecha: '2025-06-28', peso: 69.0 }
-];
-
-let logros = [
-    { icono: '🥇', titulo: 'Primera semana', descripcion: 'Completaste tu primera semana', desbloqueado: true },
-    { icono: '⚖️', titulo: 'Primer kilo', descripcion: 'Perdiste tu primer kilogramo', desbloqueado: true },
-    { icono: '💪', titulo: '5 rutinas', descripcion: 'Completaste 5 rutinas de ejercicio', desbloqueado: true },
-    { icono: '🥗', titulo: 'Plan completo', descripcion: 'Completaste un plan nutricional', desbloqueado: true },
-    { icono: '🏆', titulo: 'Meta a la mitad', descripcion: 'Alcanzaste el 50% de tu meta', desbloqueado: false },
-    { icono: '🎯', titulo: 'Meta lograda', descripcion: 'Alcanzaste tu peso objetivo', desbloqueado: false }
-];
-
+let registrosPeso = [];
 let periodoActual = 'mes';
+
+function establecerRegistrosPeso(registros) {
+
+    registrosPeso = registros;
+
+    dibujarGrafico();
+}
+
 
 function dibujarGrafico() {
     const canvas = document.getElementById('graficoPeso');
@@ -108,7 +98,7 @@ function cambiarPeriodo() {
     }
     dibujarGrafico();
 }
-
+/*
 function registrarPeso() {
     let inputPeso = document.getElementById('nuevoPeso');
     let inputFecha = document.getElementById('fechaPeso');
@@ -170,7 +160,7 @@ function renderListaRegistros() {
         lista.appendChild(div);
     });
 }
-
+*/
 function registrarMedida() {
     let select = document.getElementById('selectMedida');
     let input = document.getElementById('valorMedida');
@@ -201,46 +191,10 @@ function registrarMedida() {
     }, 3000);
 }
 
-function renderLogros() {
-    let lista = document.getElementById('listaLogros');
-    lista.innerHTML = '';
-
-    logros.forEach(function (logro) {
-        let div = document.createElement('div');
-        div.className = 'logro-item';
-
-        let iconoDiv = document.createElement('div');
-        iconoDiv.className = 'logro-icono';
-        if (!logro.desbloqueado) {
-            iconoDiv.classList.add('bloqueado');
-        }
-        iconoDiv.textContent = logro.icono;
-
-        let textoDiv = document.createElement('div');
-        textoDiv.className = 'logro-texto';
-
-        let h4 = document.createElement('h4');
-        h4.textContent = logro.titulo;
-        if (!logro.desbloqueado) {
-            h4.textContent = '🔒 ' + logro.titulo;
-        }
-
-        let p = document.createElement('p');
-        p.textContent = logro.descripcion;
-
-        textoDiv.appendChild(h4);
-        textoDiv.appendChild(p);
-
-        div.appendChild(iconoDiv);
-        div.appendChild(textoDiv);
-        lista.appendChild(div);
-    });
-}
 
 document.addEventListener('DOMContentLoaded', function () {
     dibujarGrafico();
-    renderListaRegistros();
-    renderLogros();
+
 });
 
 window.addEventListener('resize', function () {

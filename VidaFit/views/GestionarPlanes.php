@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     
-    <!-- RUTAS ABSOLUTAS -->
+    
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexProfesional.css" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/ConfiguracionProfesional.css" />
@@ -17,36 +17,26 @@
 
 <body>
 
-    <!-- Sidebar -->
+   
     <aside class="sidebar">
-        <a class="navbar-brand" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/indexProfesional.html">
+        <a class="navbar-brand" href="index.php?page=indexProfesional">
             <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
         </a>
 
         <nav>
-            <a href="/sc502-ln-proyecto-grupo-5-2/VidaFit/indexProfesional.html">
-                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b>
-            </a>
-            <a href="/sc502-ln-proyecto-grupo-5-2/VidaFit/GestionarRutinas.html">
-                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b>
-            </a>
-            <a class="activo" href="GestionarPlanes.php">
-                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b>
-            </a>
-            <a href="/sc502-ln-proyecto-grupo-5-2/VidaFit/GestionPacientes.html">
-                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b>
-            </a>
-            <a href="/sc502-ln-proyecto-grupo-5-2/VidaFit/ConfiguracionProfesional.html">
-                <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b>
-            </a>
+            <a href="index.php?page=indexProfesional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
+            <a href="index.php?page=GestionarRutinas"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="30"> <b>Gestionar Rutinas</b></a>
+            <a class="activo"  href="index.php?page=GestionarPlanes"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="30"> <b>Gestionar Planes Alimenticios</b></a>
+            <a href="index.php?page=GestionPacientes"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/perfil.png" alt="Pacientes" width="30"> <b>Gestionar Pacientes</b></a>
+            <a href="index.php?page=ConfiguracionProfesional"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/configuracion.png" alt="Configuración" width="30"> <b>Configuración</b></a>
         </nav>
 
-        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+       <button class="logout" id="btnLogout" >Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
 
-        <!-- Header -->
+   
         <header class="header">
             <div>
                 <h1><b>Asignación de Planes Nutricionales</b></h1>
@@ -56,16 +46,15 @@
             <div class="usuario">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b>Dr. Carlos Mendoza</b></h4>
-                    <p>Profesional de la Salud</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
 
-        <!-- Principal -->
+       
         <section class="grid-config-prof">
             
-            <!-- Panel Izquierdo -->
             <div class="panel panel-perfil-prof" style="grid-column: span 2;">
                 <div class="titulo-panel mb-3">
                     <h3>Historial de Planes Nutricionales</h3>
@@ -89,7 +78,7 @@
                 </div>
             </div>
 
-            <!-- Panel Derecho -->
+            
             <div class="panel">
                 <div class="titulo-panel mb-3">
                     <h3 id="formPlanTitulo">Crear Plan Nutricional</h3>
@@ -178,10 +167,10 @@
 
     </main>
 
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/jquery-4.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/sesion.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionPlanes.js"></script>
+     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

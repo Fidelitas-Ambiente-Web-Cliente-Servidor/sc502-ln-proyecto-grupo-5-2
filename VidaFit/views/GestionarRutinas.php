@@ -37,7 +37,7 @@
             </a>
         </nav>
 
-        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+         <button class="logout" id="btnLogout" >Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
@@ -51,8 +51,8 @@
             <div class="usuario">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario">
                 <div>
-                    <h4><b>Dr. Carlos Mendoza</b></h4>
-                    <p>Profesional de la Salud</p>
+                    <h4><b class="nombreCompletoUsuario"></b></h4>
+                    <p id="rolUsuario"></p>
                 </div>
             </div>
         </header>
@@ -81,7 +81,7 @@
                 </form>
             </div>
 
-            <!-- Panel central: Lista de rutinas -->
+            
             <div class="panel" style="grid-column: span 2;">
                 <div class="titulo-panel">
                     <h3>Rutinas Registradas</h3>
@@ -91,7 +91,7 @@
 
         </section>
 
-        <!-- Modal para gestionar ejercicios de una rutina -->
+   
         <div class="modal fade" id="modalEjercicios" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -149,10 +149,10 @@
 
     </main>
 
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/jquery-4.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/sesion.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionRutinas.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

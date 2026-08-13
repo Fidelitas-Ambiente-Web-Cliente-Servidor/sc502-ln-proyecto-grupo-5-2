@@ -1,49 +1,5 @@
 
 
-$(function () {
-
-    $("#btnLogout").on("click", function () {
-
-        console.log("Click en cerrar sesión");
-
-        $.ajax({
-            url: "index.php",
-            type: "POST",
-            dataType: "json",
-
-            data: {
-                option: "logout"
-            },
-
-            success: function (data) {
-
-                console.log("Respuesta logout:", data);
-
-                if (data.response === "00") {
-
-                    window.location.href =
-                        "index.php?page=login";
-
-                } else {
-
-                    alert(data.message || "No se pudo cerrar la sesión.");
-                }
-            },
-
-            error: function (xhr, status, error) {
-
-                console.log("Error AJAX:", error);
-                console.log("Estado:", status);
-                console.log("Respuesta PHP:", xhr.responseText);
-
-                alert("Ocurrió un error al cerrar sesión.");
-            }
-        });
-
-    });
-
-});
-
 const canvas = document.getElementById("graficoPeso");
 const ctx = canvas.getContext("2d");
 let rutinaIniciada = false;
@@ -109,22 +65,22 @@ function dibujarGrafico() {
 }
 
 function completarPlan(boton) {
-    boton.innerHTML = "✅ Plan completado";
-    boton.setAttribute("onclick", "finalizarRutina(this)");
-    boton.disabled = true;
+  boton.innerHTML = "✅ Plan completado";
+  boton.setAttribute("onclick", "finalizarRutina(this)");
+  boton.disabled = true;
 }
 
 
 function manejarRutina(boton) {
-    if (!rutinaIniciada) {
-        rutinaIniciada = true;
-        boton.innerHTML = "⏹ Finalizar rutina";
-        boton.classList.add("rutina-iniciada");
-    } else {
-        boton.innerHTML = "✅ Rutina finalizada";
-        boton.classList.remove("rutina-iniciada");
-        boton.disabled = true;
-    }
+  if (!rutinaIniciada) {
+    rutinaIniciada = true;
+    boton.innerHTML = "⏹ Finalizar rutina";
+    boton.classList.add("rutina-iniciada");
+  } else {
+    boton.innerHTML = "✅ Rutina finalizada";
+    boton.classList.remove("rutina-iniciada");
+    boton.disabled = true;
+  }
 }
 
 dibujarGrafico();
