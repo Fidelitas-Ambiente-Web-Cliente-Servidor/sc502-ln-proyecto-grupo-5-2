@@ -95,7 +95,7 @@ class Cita
         return $stmt->execute([$estado, $id_cita]);
     }
 
-    // Obtiene una cita y valida permisos en dado caso de que el usuario quiera cancelarla.
+    // Obtiene una cita puntual (En resumen, esto lo que hace es validar si tiene permisos antes de cancelar)
     public function getById(int $id_cita): array|false
     {
         $stmt = $this->conn->prepare(
@@ -107,7 +107,36 @@ class Cita
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Profesionales disponibles 
+    // Indica si un paciente y un profesional ya tuvieron alguna cita entre ellos
+    public function tieneRelacion(int $id_paciente, int $id_profesional): bool
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT COUNT(*) FROM citas WHERE id_paciente = ? AND id_profesional = ?'
+        );
+
+        $stmt->execute([$id_paciente, $id_profesional]);
+
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
+    // Pacientes que ya agendaron al menos una cita con este profesional
+    public function getPacientesDeProfesional(int $id_profesional): array
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT DISTINCT u.id_usuario, u.nombre_completo, u.correo
+             FROM usuarios u
+             INNER JOIN citas c ON c.id_paciente = u.id_usuario
+             WHERE u.id_rol = 1 AND c.id_profesional = ?
+             ORDER BY u.nombre_completo ASC'
+        );
+
+        $stmt->execute([$id_profesional]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Profesionales disponibles para que un paciente agende una cita
+
     public function getProfesionalesDisponibles(): array
     {
         $stmt = $this->conn->prepare(

@@ -83,7 +83,7 @@ class UserController
             return;
         }
 
-        // Valida confirmacion de contraseña
+        // Valida confirmación de contraseña
         if ($password !== $confirm) {
             echo json_encode([
                 'response' => '02',
@@ -92,7 +92,7 @@ class UserController
             return;
         }
 
-        // Valida usuario existente
+        // Valida un usuario existente
         if ($this->model->usernameExists($username)) {
             echo json_encode([
                 'response' => '03',
@@ -101,7 +101,7 @@ class UserController
             return;
         }
 
-        // Roles permitidos en el registro publico. (1: paciente, 2: profesional)
+        // Roles permitidos en el registro público. (1: paciente, 2: profesional)
        
         if (!in_array($id_rol, [1, 2], true)) {
             echo json_encode([
@@ -313,9 +313,11 @@ public function cambiarContrasenna(): void
             $database = new Database();
             $conn = $database->connect();
 
-            $pacientesActivos = (int) $conn->query(
-                'SELECT COUNT(*) FROM usuarios WHERE id_rol = 1'
-            )->fetchColumn();
+            $stmtPacientes = $conn->prepare(
+                'SELECT COUNT(DISTINCT id_paciente) FROM citas WHERE id_profesional = ?'
+            );
+            $stmtPacientes->execute([$id_profesional]);
+            $pacientesActivos = (int) $stmtPacientes->fetchColumn();
 
             $stmtCitasHoy = $conn->prepare(
                 'SELECT COUNT(*) FROM citas WHERE id_profesional = ? AND fecha = CURDATE() AND estado != "Cancelada"'

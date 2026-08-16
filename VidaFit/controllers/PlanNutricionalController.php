@@ -1,21 +1,26 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/PlanNutricional.php';
+require_once __DIR__ . '/../models/Cita.php';
 
 class PlanNutricionalController
 {
     private PlanNutricional $model;
+    private Cita $modelCita;
 
     public function __construct()
     {
         $database = new Database();
-        $this->model = new PlanNutricional($database->connect());
+        $conn = $database->connect();
+        $this->model = new PlanNutricional($conn);
+        $this->modelCita = new Cita($conn);
     }
 
     public function index(): void
     {
         require __DIR__ . '/../views/GestionarPlanes.php';
     }
+
     public function listar(): void
     {
         try {
@@ -46,24 +51,20 @@ class PlanNutricionalController
         }
     }
 
+    // Lista los pacientes
     public function listarPacientes(): void
     {
         try {
 
-            $database = new Database();
-            $conn = $database->connect();
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede consultar esta lista.');
+            }
 
-            $stmt = $conn->prepare(
-                'SELECT id_usuario, nombre_completo, correo
-                 FROM usuarios
-                 WHERE id_rol = 1
-                 ORDER BY nombre_completo ASC'
-            );
-            $stmt->execute();
+            $id_profesional = (int) $_SESSION['id_usuario'];
 
             echo json_encode([
                 "response" => "00",
-                "pacientes" => $stmt->fetchAll(PDO::FETCH_ASSOC)
+                "pacientes" => $this->modelCita->getPacientesDeProfesional($id_profesional)
             ]);
 
         } catch (Exception $e) {
@@ -74,6 +75,7 @@ class PlanNutricionalController
     public function crear(): void
     {
         try {
+
             if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
                 throw new Exception('Solo un profesional puede crear planes nutricionales.');
             }
@@ -92,6 +94,10 @@ class PlanNutricionalController
 
             if ($id_paciente <= 0) {
                 throw new Exception('Debe seleccionar un paciente.');
+            }
+
+            if (!$this->modelCita->tieneRelacion($id_paciente, $id_profesional)) {
+                throw new Exception('Este paciente no ha agendado ninguna cita con usted todavía.');
             }
 
             if ($recomendaciones === '') {
@@ -137,6 +143,7 @@ class PlanNutricionalController
         }
     }
 
+    // Trae el plan nutricional vigente del paciente logueado
     public function obtenerActual(): void
     {
         try {

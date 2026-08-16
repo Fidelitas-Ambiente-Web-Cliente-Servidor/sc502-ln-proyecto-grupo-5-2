@@ -3,19 +3,23 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/Ejercicio.php';
 require_once __DIR__ . '/../models/Rutina.php';
 require_once __DIR__ . '/../models/DetalleRutina.php';
+require_once __DIR__ . '/../models/Cita.php';
 
 class RutinaController
 {
     private Ejercicio $modelEjercicio;
     private Rutina $modelRutina;
     private DetalleRutina $modelDetalle;
+    private Cita $modelCita;
 
     public function __construct()
     {
         $database = new Database();
-        $this->modelEjercicio = new Ejercicio($database->connect());
-        $this->modelRutina = new Rutina($database->connect());
-        $this->modelDetalle = new DetalleRutina($database->connect());
+        $conn = $database->connect();
+        $this->modelEjercicio = new Ejercicio($conn);
+        $this->modelRutina = new Rutina($conn);
+        $this->modelDetalle = new DetalleRutina($conn);
+        $this->modelCita = new Cita($conn);
     }
 
     // Carga la vista
@@ -61,6 +65,7 @@ class RutinaController
     }
 
     // Rutinas
+
     public function listarRutinas(): void
     {
         try {
@@ -90,6 +95,7 @@ class RutinaController
     public function crearRutina(): void
     {
         try {
+
             if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
                 throw new Exception('Solo un profesional puede crear rutinas.');
             }
@@ -101,6 +107,10 @@ class RutinaController
 
             if ($id_paciente <= 0) {
                 throw new Exception('Debe seleccionar un paciente.');
+            }
+
+            if (!$this->modelCita->tieneRelacion($id_paciente, $id_profesional)) {
+                throw new Exception('Este paciente no ha agendado ninguna cita con usted todavía.');
             }
 
             if ($frecuencia <= 0) {

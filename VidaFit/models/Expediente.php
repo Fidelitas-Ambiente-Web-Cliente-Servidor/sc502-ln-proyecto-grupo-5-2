@@ -19,6 +19,22 @@ class Expediente
         return $stmt->fetchAll();
     }
 
+    // Expedientes de "mis pacientes": solo los de pacientes que ya agendaron
+    public function getAllDeProfesional(int $id_profesional): array
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT DISTINCT e.*, u.nombre_completo
+             FROM expedientes e
+             JOIN usuarios u ON e.id_paciente = u.id_usuario
+             INNER JOIN citas c ON c.id_paciente = e.id_paciente
+             WHERE c.id_profesional = ?
+             ORDER BY e.fecha_creacion DESC'
+        );
+        $stmt->execute([$id_profesional]);
+        return $stmt->fetchAll();
+    }
+
+    // Buscar el expediente de un paciente
     public function getByPaciente(int $id_paciente): array|false
     {
         $stmt = $this->conn->prepare(

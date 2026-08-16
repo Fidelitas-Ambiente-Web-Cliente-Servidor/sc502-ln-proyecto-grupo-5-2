@@ -1,15 +1,19 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/Expediente.php';
+require_once __DIR__ . '/../models/Cita.php';
 
 class ExpedienteController
 {
     private Expediente $model;
+    private Cita $modelCita;
 
     public function __construct()
     {
         $database = new Database();
-        $this->model = new Expediente($database->connect());
+        $conn = $database->connect();
+        $this->model = new Expediente($conn);
+        $this->modelCita = new Cita($conn);
     }
 
     // Carga la vista
@@ -18,20 +22,31 @@ class ExpedienteController
         require __DIR__ . '/../views/GestionPacientes.php';
     }
 
-    // Lista todos los expedientes (GET)
+    // Lista los expedientes de "mis pacientes" (GET).
     public function listar(): void
     {
         try {
-            $expedientes = $this->model->getAll();
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede consultar expedientes.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            $expedientes = $this->model->getAllDeProfesional($id_profesional);
             echo json_encode(["response" => "00", "expedientes" => $expedientes]);
         } catch (Exception $e) {
             echo json_encode(["response" => "01", "message" => $e->getMessage()]);
         }
     }
 
+    // Buscar un expediente puntual por su propio id_expediente
     public function obtener(): void
     {
         try {
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede consultar expedientes.');
+            }
+
             $id_expediente = (int) ($_GET['id'] ?? 0);
 
             if ($id_expediente <= 0) {
@@ -44,19 +59,36 @@ class ExpedienteController
                 throw new Exception('El expediente no existe.');
             }
 
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            if (!$this->modelCita->tieneRelacion((int) $expediente['id_paciente'], $id_profesional)) {
+                throw new Exception('Este expediente no pertenece a uno de sus pacientes.');
+            }
+
             echo json_encode(["response" => "00", "expediente" => $expediente]);
         } catch (Exception $e) {
             echo json_encode(["response" => "01", "message" => $e->getMessage()]);
         }
     }
 
+    // Buscar el expediente de un paciente
     public function porPaciente(): void
     {
         try {
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede consultar expedientes.');
+            }
+
             $id_paciente = (int) ($_GET['id_paciente'] ?? 0);
 
             if ($id_paciente <= 0) {
                 throw new Exception('Paciente inválido.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            if (!$this->modelCita->tieneRelacion($id_paciente, $id_profesional)) {
+                throw new Exception('Este paciente no ha agendado ninguna cita con usted todavía.');
             }
 
             $expediente = $this->model->getByPaciente($id_paciente);
@@ -67,10 +99,14 @@ class ExpedienteController
         }
     }
 
-    // Crear expediente (POST)
+    // Crea expediente (POST).
     public function crear(): void
     {
         try {
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede registrar expedientes.');
+            }
+
             $id_paciente    = (int) ($_POST['id_paciente'] ?? 0);
             $historial      = trim($_POST['historial_medico'] ?? '');
             $condiciones    = trim($_POST['condiciones_medicas'] ?? '');
@@ -80,6 +116,12 @@ class ExpedienteController
 
             if ($id_paciente <= 0) {
                 throw new Exception('Debe seleccionar un paciente.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            if (!$this->modelCita->tieneRelacion($id_paciente, $id_profesional)) {
+                throw new Exception('Este paciente no ha agendado ninguna cita con usted todavía.');
             }
 
             if ($historial === '' || $condiciones === '' || $alergias === '' || $discapacidades === '' || $observaciones === '') {
@@ -98,10 +140,14 @@ class ExpedienteController
         }
     }
 
-    // Actualizar expediente (POST)
+    // Actualiza expediente (POST).
     public function actualizar(): void
     {
         try {
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede actualizar expedientes.');
+            }
+
             $id_expediente  = (int) ($_POST['expedienteId'] ?? 0);
             $historial      = trim($_POST['historial_medico'] ?? '');
             $condiciones    = trim($_POST['condiciones_medicas'] ?? '');
@@ -111,6 +157,18 @@ class ExpedienteController
 
             if ($id_expediente <= 0) {
                 throw new Exception('Expediente inválido.');
+            }
+
+            $expediente = $this->model->getById($id_expediente);
+
+            if (!$expediente) {
+                throw new Exception('El expediente no existe.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            if (!$this->modelCita->tieneRelacion((int) $expediente['id_paciente'], $id_profesional)) {
+                throw new Exception('Este expediente no pertenece a uno de sus pacientes.');
             }
 
             if ($historial === '' || $condiciones === '' || $alergias === '' || $discapacidades === '' || $observaciones === '') {
@@ -125,14 +183,30 @@ class ExpedienteController
         }
     }
 
-    // Eliminar expediente (POST)
+    // Elimina expediente (POST).
     public function eliminar(): void
     {
         try {
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede eliminar expedientes.');
+            }
+
             $id_expediente = (int) ($_POST['id_expediente'] ?? 0);
 
             if ($id_expediente <= 0) {
                 throw new Exception('Expediente inválido.');
+            }
+
+            $expediente = $this->model->getById($id_expediente);
+
+            if (!$expediente) {
+                throw new Exception('El expediente no existe.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            if (!$this->modelCita->tieneRelacion((int) $expediente['id_paciente'], $id_profesional)) {
+                throw new Exception('Este expediente no pertenece a uno de sus pacientes.');
             }
 
             $this->model->delete($id_expediente);
