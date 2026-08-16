@@ -37,7 +37,7 @@
             </a>
         </nav>
 
-        <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+        <button class="logout" id="btnLogout">Cerrar sesión</button>
     </aside>
 
     <main class="contenido">
@@ -58,7 +58,7 @@
         </header>
 
         <section class="grid-config-prof">
-            
+
             <div class="panel panel-perfil-prof" style="grid-column: span 2;">
                 <div class="titulo-panel d-flex justify-content-between align-items-center mb-3">
                     <div>
@@ -66,7 +66,7 @@
                         <p class="subtitulo-panel">Expedientes registrados en el sistema</p>
                     </div>
                 </div>
-                
+
                 <div class="table-responsive">
                     <table class="table align-middle" style="font-family: var(--fuente);">
                         <thead>
@@ -88,39 +88,43 @@
                     <h3 id="formTitulo">Registrar Expediente</h3>
                     <p class="subtitulo-panel">Complete los datos clínicos obligatorios</p>
                 </div>
-                
+
                 <form id="formExpediente">
                     <input type="hidden" id="expedienteId" value="">
-                    
+
                     <div class="mb-3">
-                        <label class="form-label"><b>ID del Paciente:</b></label>
-                        <input type="number" id="idPaciente" class="form-control" placeholder="Ej. 4 (ID en BD)" required style="border-radius: 10px;">
+                        <label class="form-label"><b>Paciente:</b></label>
+                        <select id="idPaciente" class="form-select" required style="border-radius: 10px;">
+                            <option value="">-- Seleccionar --</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Historial Médico:</b></label>
-                        <textarea id="historialMedico" class="form-control" rows="2" placeholder="Antecedentes familiares, cirugías..." style="border-radius: 10px;"></textarea>
+                        <textarea id="historialMedico" class="form-control" rows="2" placeholder="Antecedentes familiares, cirugías..." required style="border-radius: 10px;"></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Condiciones Médicas:</b></label>
-                        <input type="text" id="condicionesMedicas" class="form-control" placeholder="Ej. Diabetes Tipo 2, Obesidad" required style="border-radius: 10px;">
+                        <input type="text" id="condicionesMedicas" class="form-control" placeholder="Ej. Diabetes Tipo 2, Obesidad (o 'Ninguna')" required style="border-radius: 10px;">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Alergias:</b></label>
-                        <input type="text" id="alergias" class="form-control" placeholder="Ej. Glúten, Mariscos, Ninguna" style="border-radius: 10px;">
+                        <input type="text" id="alergias" class="form-control" placeholder="Ej. Glúten, Mariscos (o 'Ninguna')" required style="border-radius: 10px;">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Discapacidades:</b></label>
-                        <input type="text" id="discapacidades" class="form-control" placeholder="Ej. Ninguna" style="border-radius: 10px;">
+                        <input type="text" id="discapacidades" class="form-control" placeholder="Ej. Ninguna" required style="border-radius: 10px;">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Observaciones Adicionales:</b></label>
-                        <textarea id="observaciones" class="form-control" rows="2" placeholder="Notas sobre el seguimiento..." style="border-radius: 10px;"></textarea>
+                        <textarea id="observaciones" class="form-control" rows="2" placeholder="Notas sobre el seguimiento..." required style="border-radius: 10px;"></textarea>
                     </div>
+
+                    <div id="expedienteMensaje" class="mensaje-exito"></div>
 
                     <div class="botones-edicion">
                         <button type="submit" id="btnGuardar" class="btn-editar-prof" style="background-color: var(--primary); color: white; border: none; height: 45px; width: 100%;">Guardar Expediente</button>

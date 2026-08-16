@@ -68,7 +68,7 @@ class UserController
         $confirm         = $_POST['confirm_password'] ?? '';
         $id_rol          = (int) ($_POST['id_rol'] ?? 0);
 
-        // Validar campos obligatorios
+        // Valida campos obligatorios
         if (
             empty($nombre_completo) ||
             empty($username) ||
@@ -83,7 +83,7 @@ class UserController
             return;
         }
 
-        // Validar confirmación de contraseña
+        // Valida confirmacion de contraseña
         if ($password !== $confirm) {
             echo json_encode([
                 'response' => '02',
@@ -92,7 +92,7 @@ class UserController
             return;
         }
 
-        // Validar usuario existente
+        // Valida usuario existente
         if ($this->model->usernameExists($username)) {
             echo json_encode([
                 'response' => '03',
@@ -101,7 +101,7 @@ class UserController
             return;
         }
 
-        // Roles permitidos en el registro público. (1: paciente, 2: profesional)
+        // Roles permitidos en el registro publico. (1: paciente, 2: profesional)
        
         if (!in_array($id_rol, [1, 2], true)) {
             echo json_encode([
@@ -172,6 +172,7 @@ class UserController
             return;
         }
 
+        unset($usuario['contrasenna']);
 
         echo json_encode([
             'response' => '00',
@@ -197,11 +198,12 @@ public function cambiarContrasenna(): void
 
         $id_usuario = (int) $_SESSION['id_usuario'];
 
+        $actual = $_POST['contrasenna_actual'] ?? '';
         $nueva = $_POST['nueva_contrasenna'] ?? '';
         $confirmar = $_POST['confirmar_contrasenna'] ?? '';
 
-        if ($nueva === '' || $confirmar === '') {
-            throw new Exception('Debe completar ambos campos.');
+        if ($actual === '' || $nueva === '' || $confirmar === '') {
+            throw new Exception('Debe completar todos los campos.');
         }
 
         if ($nueva !== $confirmar) {
@@ -212,6 +214,12 @@ public function cambiarContrasenna(): void
             throw new Exception(
                 'La contraseña debe tener al menos 8 caracteres.'
             );
+        }
+
+        $usuario = $this->model->getById($id_usuario);
+
+        if (!$usuario || !password_verify($actual, $usuario['contrasenna'])) {
+            throw new Exception('La contraseña actual no es correcta.');
         }
 
         $resultado = $this->model->cambiarContrasenna(
@@ -238,4 +246,109 @@ public function cambiarContrasenna(): void
         ]);
     }
 }
+
+    public function actualizarPerfil(): void
+    {
+        try {
+
+            if (!isset($_SESSION['id_usuario'])) {
+                throw new Exception('No hay una sesión activa.');
+            }
+
+            $id_usuario = (int) $_SESSION['id_usuario'];
+            $nombre_completo = trim($_POST['nombre_completo'] ?? '');
+            $correo = trim($_POST['correo'] ?? '');
+
+            if ($nombre_completo === '') {
+                throw new Exception('El nombre completo es obligatorio.');
+            }
+
+            if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception('Ingrese un correo electrónico válido.');
+            }
+
+            $database = new Database();
+            $conn = $database->connect();
+
+            $stmtCheck = $conn->prepare(
+                'SELECT id_usuario FROM usuarios WHERE correo = ? AND id_usuario != ?'
+            );
+            $stmtCheck->execute([$correo, $id_usuario]);
+
+            if ($stmtCheck->fetch()) {
+                throw new Exception('Ese correo ya está en uso por otro usuario.');
+            }
+
+            $stmt = $conn->prepare(
+                'UPDATE usuarios SET nombre_completo = ?, correo = ? WHERE id_usuario = ?'
+            );
+            $stmt->execute([$nombre_completo, $correo, $id_usuario]);
+
+            $_SESSION['nombre_completo'] = $nombre_completo;
+
+            echo json_encode([
+                'response' => '00',
+                'message' => 'Perfil actualizado correctamente.'
+            ]);
+
+        } catch (Exception $e) {
+
+            echo json_encode([
+                'response' => '01',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function estadisticasProfesional(): void
+    {
+        try {
+
+            if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
+                throw new Exception('Solo un profesional puede ver estas estadísticas.');
+            }
+
+            $id_profesional = (int) $_SESSION['id_usuario'];
+
+            $database = new Database();
+            $conn = $database->connect();
+
+            $pacientesActivos = (int) $conn->query(
+                'SELECT COUNT(*) FROM usuarios WHERE id_rol = 1'
+            )->fetchColumn();
+
+            $stmtCitasHoy = $conn->prepare(
+                'SELECT COUNT(*) FROM citas WHERE id_profesional = ? AND fecha = CURDATE() AND estado != "Cancelada"'
+            );
+            $stmtCitasHoy->execute([$id_profesional]);
+            $citasHoy = (int) $stmtCitasHoy->fetchColumn();
+
+            $stmtRutinas = $conn->prepare(
+                'SELECT COUNT(*) FROM rutinas WHERE id_profesional = ?'
+            );
+            $stmtRutinas->execute([$id_profesional]);
+            $rutinasAsignadas = (int) $stmtRutinas->fetchColumn();
+
+            $stmtPlanes = $conn->prepare(
+                'SELECT COUNT(*) FROM planes_nutricionales WHERE id_profesional = ?'
+            );
+            $stmtPlanes->execute([$id_profesional]);
+            $planesActivos = (int) $stmtPlanes->fetchColumn();
+
+            echo json_encode([
+                'response' => '00',
+                'pacientesActivos' => $pacientesActivos,
+                'citasHoy' => $citasHoy,
+                'rutinasAsignadas' => $rutinasAsignadas,
+                'planesActivos' => $planesActivos
+            ]);
+
+        } catch (Exception $e) {
+
+            echo json_encode([
+                'response' => '01',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

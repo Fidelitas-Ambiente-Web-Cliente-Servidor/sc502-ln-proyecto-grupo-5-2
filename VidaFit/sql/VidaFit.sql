@@ -55,6 +55,10 @@ CREATE TABLE planes_nutricionales (
     id_profesional INT NOT NULL,
     id_paciente INT NOT NULL,
     calorias_diarias INT,
+    proteinas_g INT,
+    carbohidratos_g INT,
+    grasas_g INT,
+    agua_litros DECIMAL(3,1),
     recomendaciones  VARCHAR(150) NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE,
@@ -66,11 +70,12 @@ CREATE TABLE planes_nutricionales (
     CONSTRAINT fk_planes_paciente FOREIGN KEY (id_paciente) REFERENCES usuarios (id_usuario)
 );
 
+
 CREATE TABLE plan_comidas (
     id_comida INT AUTO_INCREMENT,
     id_plan INT NOT NULL,
+    dia_semana VARCHAR(10),
     nombre_comida VARCHAR(100) NOT NULL,
-    imagen  VARCHAR(150),
     horario TIME,
     descripcion_alimentos TEXT NOT NULL,
 
@@ -98,7 +103,7 @@ CREATE TABLE ejercicios (
     id_ejercicio INT AUTO_INCREMENT,
     nombre_ejercicio VARCHAR(100) NOT NULL,
     descripcion TEXT,
-    video  VARCHAR(150),
+    video_url  VARCHAR(255),
 
     CONSTRAINT pk_ejercicios PRIMARY KEY (id_ejercicio)
 
@@ -107,9 +112,13 @@ CREATE TABLE ejercicios (
 CREATE TABLE detalle_rutina (
     id_detalle INT AUTO_INCREMENT,
     id_rutina INT NOT NULL,
+    dia_rutina VARCHAR(50),
     id_ejercicio INT NOT NULL,
     series INT NOT NULL,
     repeticiones INT NOT NULL,
+    descanso_segundos INT,
+    nivel_dificultad VARCHAR(20),
+    calorias_por_sesion INT,
 
     CONSTRAINT pk_detalle_rutina PRIMARY KEY (id_detalle),
 
@@ -121,13 +130,34 @@ CREATE TABLE detalle_rutina (
 
 );
 
+
+CREATE TABLE citas (
+    id_cita INT AUTO_INCREMENT,
+    id_profesional INT NOT NULL,
+    id_paciente INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    motivo VARCHAR(150),
+    estado VARCHAR(20) NOT NULL DEFAULT 'Programada',
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_citas PRIMARY KEY (id_cita),
+
+    CONSTRAINT fk_citas_profesional FOREIGN KEY (id_profesional) REFERENCES usuarios (id_usuario),
+
+    CONSTRAINT fk_citas_paciente FOREIGN KEY (id_paciente) REFERENCES usuarios (id_usuario)
+);
+
 CREATE TABLE registro_progreso (
     id_progreso INT AUTO_INCREMENT,
     id_paciente INT NOT NULL,
     peso_kg DECIMAL(5,2) NOT NULL,
+    altura_m DECIMAL(3,2),
     imc DECIMAL(5,2),
     peso_ideal DECIMAL(5,2),
     estado_nutricional VARCHAR(50),
+    medidas_corporales VARCHAR(255),
+    observaciones_paciente VARCHAR(255),
     fecha_registro DATE,
 
     CONSTRAINT pk_registro_progreso PRIMARY KEY (id_progreso),
@@ -136,29 +166,8 @@ CREATE TABLE registro_progreso (
 
 );
 
-CREATE TABLE medidas_corporales (
-    id_medida INT AUTO_INCREMENT,
-    id_paciente INT NOT NULL,
-
-    tipo_medida VARCHAR(30) NOT NULL,
-    valor_cm DECIMAL(5,2) NOT NULL,
-
-    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT pk_medidas_corporales 
-        PRIMARY KEY (id_medida),
-
-    CONSTRAINT fk_medida_paciente 
-        FOREIGN KEY (id_paciente) 
-        REFERENCES usuarios(id_usuario)
-);
-
 COMMIT;
 
 --Se asignan los roles por defecto
 INSERT INTO roles (nombre_rol) VALUES ('Paciente');
 INSERT INTO roles (nombre_rol) VALUES ('Profesional');
-
-
-
-

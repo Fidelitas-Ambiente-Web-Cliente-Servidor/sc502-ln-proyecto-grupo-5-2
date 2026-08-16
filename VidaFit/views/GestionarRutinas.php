@@ -65,8 +65,10 @@
                 </div>
                 <form id="formCrearRutina">
                     <div class="campo-asignar">
-                        <label>ID del Paciente</label>
-                        <input type="number" id="idPacienteRutina" class="form-control" required>
+                        <label>Paciente</label>
+                        <select id="idPacienteRutina" class="form-select" required>
+                            <option value="">-- Seleccionar --</option>
+                        </select>
                     </div>
                     <div class="campo-asignar">
                         <label>Frecuencia (días/semana)</label>
@@ -81,8 +83,29 @@
                 </form>
             </div>
 
-            
-            <div class="panel" style="grid-column: span 2;">
+            <div class="panel">
+                <div class="titulo-panel">
+                    <h3>Agregar Ejercicio al Catálogo</h3>
+                </div>
+                <form id="formCrearEjercicio">
+                    <div class="campo-asignar">
+                        <label>Nombre del ejercicio</label>
+                        <input type="text" id="nuevoEjercicioNombre" class="form-control" required>
+                    </div>
+                    <div class="campo-asignar">
+                        <label>Descripción</label>
+                        <input type="text" id="nuevoEjercicioDescripcion" class="form-control">
+                    </div>
+                    <div class="campo-asignar">
+                        <label>URL del video (opcional)</label>
+                        <input type="url" id="nuevoEjercicioVideo" class="form-control" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn-principal">Agregar al Catálogo</button>
+                    <div id="mensajeEjercicio" class="mensaje-exito"></div>
+                </form>
+            </div>
+
+            <div class="panel" style="grid-column: span 3;">
                 <div class="titulo-panel">
                     <h3>Rutinas Registradas</h3>
                 </div>
@@ -112,6 +135,10 @@
                                 <label>Ejercicio</label>
                                 <select id="selectEjercicio" class="form-select" required></select>
                             </div>
+                            <div class="mb-2">
+                                <label>Día / sesión (ej: Día 1, Cardio)</label>
+                                <input type="text" id="ejercicioDia" class="form-control" placeholder="Día 1" required>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <label>Series</label>
@@ -121,6 +148,25 @@
                                     <label>Repeticiones</label>
                                     <input type="number" id="ejercicioRepeticiones" class="form-control" min="1" required>
                                 </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <label>Descanso (segundos)</label>
+                                    <input type="number" id="ejercicioDescanso" class="form-control" min="1">
+                                </div>
+                                <div class="col">
+                                    <label>Nivel de dificultad</label>
+                                    <select id="ejercicioNivel" class="form-select">
+                                        <option value="">-- Sin especificar --</option>
+                                        <option value="Principiante">Principiante</option>
+                                        <option value="Intermedio">Intermedio</option>
+                                        <option value="Avanzado">Avanzado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2 mt-2">
+                                <label>Calorías quemadas (estimado)</label>
+                                <input type="number" id="ejercicioCalorias" class="form-control" min="1">
                             </div>
                             <button type="submit" class="btn btn-success mt-2">Agregar ejercicio</button>
                         </form>
@@ -150,6 +196,7 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionRutinas.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>

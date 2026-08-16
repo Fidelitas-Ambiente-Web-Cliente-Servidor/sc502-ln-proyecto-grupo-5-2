@@ -98,74 +98,86 @@ function cambiarPeriodo() {
     }
     dibujarGrafico();
 }
-/*
-function registrarPeso() {
-    let inputPeso = document.getElementById('nuevoPeso');
-    let inputFecha = document.getElementById('fechaPeso');
-    let errorDiv = document.getElementById('errorPeso');
+// Nombre de cada medida en el orden en que se muestran en el panel.
 
-    errorDiv.textContent = '';
+const ORDEN_MEDIDAS = ['Cintura', 'Cadera', 'Brazo', 'Muslo', 'Pecho'];
 
-    let peso = parseFloat(inputPeso.value);
-    let fecha = inputFecha.value;
+// Guarda y parsea medidas corporales
 
-    if (isNaN(peso) || peso < 30 || peso > 300) {
-        errorDiv.textContent = 'Ingrese un peso válido entre 30 y 300 kg.';
+function parsearMedidas(texto) {
+    let medidas = {};
+    if (!texto) return medidas;
+
+    texto.split(',').forEach(function (par) {
+        let partes = par.split(':');
+        if (partes.length === 2) {
+            let tipo = partes[0].trim();
+            let valor = parseFloat(partes[1]);
+            if (tipo !== '' && !isNaN(valor)) {
+                medidas[tipo] = valor;
+            }
+        }
+    });
+
+    return medidas;
+}
+
+// Dibuja el panel "Mis medidas" con los valores reales del paciente
+
+function renderMedidas(medidas) {
+    let contenedor = document.getElementById('listaMedidas');
+    contenedor.innerHTML = '';
+
+    let tipos = ORDEN_MEDIDAS.filter(function (tipo) {
+        return medidas[tipo] !== undefined;
+    });
+
+    if (tipos.length === 0) {
+        contenedor.innerHTML = '<p class="text-muted">Aún no hay medidas registradas.</p>';
         return;
     }
 
-    if (fecha === '') {
-        errorDiv.textContent = 'Seleccione una fecha.';
-        return;
-    }
+    tipos.forEach(function (tipo) {
+        let valor = medidas[tipo];
 
-    registrosPeso.push({ fecha: fecha, peso: peso });
+        let ancho = Math.max(0, Math.min(100, (valor / 150) * 100));
 
-    registrosPeso.sort(function (a, b) {
-        if (a.fecha < b.fecha) return -1;
-        if (a.fecha > b.fecha) return 1;
-        return 0;
-    });
+        let fila = document.createElement('div');
+        fila.className = 'medida-fila';
+        fila.innerHTML =
+            '<span class="medida-nombre">' + tipo + '</span>' +
+            '<div class="medida-barra-wrap">' +
+            '<div class="medida-barra">' +
+            '<div class="medida-relleno" style="width: ' + ancho + '%"></div>' +
+            '</div>' +
+            '</div>' +
+            '<span class="medida-valor">' + valor + ' cm</span>';
 
-    inputPeso.value = '';
-    inputFecha.value = '';
-
-    dibujarGrafico();
-    renderListaRegistros();
-}
-
-function renderListaRegistros() {
-    let lista = document.getElementById('listaRegistros');
-    lista.innerHTML = '';
-
-    let recientes = registrosPeso.slice(-5).reverse();
-
-    recientes.forEach(function (r) {
-        let div = document.createElement('div');
-        div.className = 'registro-peso';
-
-        let partes = r.fecha.split('-');
-        let fechaLegible = partes[2] + '/' + partes[1] + '/' + partes[0];
-
-        let spanFecha = document.createElement('span');
-        spanFecha.className = 'reg-fecha';
-        spanFecha.textContent = fechaLegible;
-
-        let spanValor = document.createElement('span');
-        spanValor.className = 'reg-valor';
-        spanValor.textContent = r.peso + ' kg';
-
-        div.appendChild(spanFecha);
-        div.appendChild(spanValor);
-        lista.appendChild(div);
+        contenedor.appendChild(fila);
     });
 }
-*/
+
+// Carga las medidas guardadas en el registro de progreso
+
+function cargarMedidas() {
+    $.get('index.php?option=obtenerProgresoActual', function (res) {
+        if (res.response !== '00' || !res.registro) {
+            renderMedidas({});
+            return;
+        }
+
+        renderMedidas(parsearMedidas(res.registro.medidas_corporales));
+    }, 'json');
+}
+
+// Envia la medida al backend (endpoint actualizarMedida)
+
 function registrarMedida() {
     let select = document.getElementById('selectMedida');
     let input = document.getElementById('valorMedida');
     let errorDiv = document.getElementById('errorMedida');
 
+    errorDiv.style.color = '';
     errorDiv.textContent = '';
 
     if (select.value === '') {
@@ -179,22 +191,34 @@ function registrarMedida() {
         return;
     }
 
-    errorDiv.style.color = 'var(--primary)';
-    errorDiv.textContent = '✓ Medida de ' + select.value + ' (' + valor + ' cm) registrada.';
+    $.post('index.php', {
+        option: 'actualizarMedida',
+        tipo_medida: select.value,
+        valor_cm: valor
+    }, function (res) {
+        if (res.response === '00') {
+            errorDiv.style.color = 'var(--primary)';
+            errorDiv.textContent = '✓ Medida de ' + select.value + ' (' + valor + ' cm) registrada.';
 
-    select.value = '';
-    input.value = '';
+            select.value = '';
+            input.value = '';
 
-    setTimeout(function () {
-        errorDiv.style.color = '';
-        errorDiv.textContent = '';
-    }, 3000);
+            renderMedidas(res.medidas || {});
+
+            setTimeout(function () {
+                errorDiv.style.color = '';
+                errorDiv.textContent = '';
+            }, 3000);
+        } else {
+            errorDiv.textContent = res.message || 'Error al registrar la medida.';
+        }
+    }, 'json');
 }
 
 
 document.addEventListener('DOMContentLoaded', function () {
     dibujarGrafico();
-
+    cargarMedidas();
 });
 
 window.addEventListener('resize', function () {

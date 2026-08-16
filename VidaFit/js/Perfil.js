@@ -1,91 +1,143 @@
-let modoEdicion = false;
+$(function () {
 
-function toggleEdicion() {
-    modoEdicion = !modoEdicion;
+    const urlBase = 'index.php';
 
-    let campos = document.querySelectorAll('#nombre, #correo, #fechaNacimiento, #telefono, #peso, #talla, #objetivo, #condiciones');
-    let botonesEdicion = document.getElementById('botonesEdicion');
-    let btnEditar = document.getElementById('btnEditar');
-    let mensajePerfil = document.getElementById('mensajePerfil');
+    let modoEdicion = false;
+    let valoresOriginales = { nombre: '', correo: '' };
 
-    mensajePerfil.textContent = '';
+    function cargarStats() {
+        $.get(
+            urlBase + '?option=obtenerProgresoActual',
 
-    if (modoEdicion) {
-        campos.forEach(function (campo) {
-            campo.disabled = false;
-        });
-        botonesEdicion.style.display = 'flex';
-        btnEditar.textContent = '← Volver';
-    } else {
-        campos.forEach(function (campo) {
-            campo.disabled = true;
-        });
-        botonesEdicion.style.display = 'none';
-        btnEditar.textContent = '✏️ Editar';
-    }
-}
+            function (res) {
+                if (res.response !== '00' || !res.registro) {
+                    $('#perfilPesoStat').text('--');
+                    $('#perfilImcStat').text('--');
+                    return;
+                }
 
-function guardarPerfil() {
-    document.getElementById('errorNombre').textContent = '';
-    document.getElementById('errorCorreo').textContent = '';
-    document.getElementById('errorFecha').textContent = '';
-    document.getElementById('errorTelefono').textContent = '';
-    document.getElementById('mensajePerfil').textContent = '';
+                $('#perfilPesoStat').text(parseFloat(res.registro.peso_kg).toFixed(1));
+                $('#perfilImcStat').text(
+                    res.registro.imc !== null ? parseFloat(res.registro.imc).toFixed(1) : '--'
+                );
+            },
 
-    let nombre = document.getElementById('nombre').value.trim();
-    let correo = document.getElementById('correo').value.trim();
-    let fecha = document.getElementById('fechaNacimiento').value;
-    let telefono = document.getElementById('telefono').value.trim();
-
-    let valido = true;
-    let regexNombre = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{5,}$/;
-
-    if (nombre === '') {
-        document.getElementById('errorNombre').textContent = 'El nombre es obligatorio.';
-        valido = false;
-    } else if (!regexNombre.test(nombre)) {
-        document.getElementById('errorNombre').textContent = 'El nombre solo puede contener letras y espacios (mínimo 5).';
-        valido = false;
+            'json'
+        );
     }
 
-    let regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (correo === '') {
-        document.getElementById('errorCorreo').textContent = 'El correo es obligatorio.';
-        valido = false;
-    } else if (!regexCorreo.test(correo)) {
-        document.getElementById('errorCorreo').textContent = 'Ingrese un correo electrónico válido.';
-        valido = false;
+    function cargarRol() {
+        $.get(
+            urlBase + '?option=obtenerUsuarioActual',
+
+            function (res) {
+                if (res.response !== '00' || !res.usuario) return;
+
+                const rol = parseInt(res.usuario.id_rol, 10) === 2 ? 'Profesional' : 'Paciente';
+                $('#perfilRol').text(rol);
+            },
+
+            'json'
+        );
     }
 
-    if (fecha === '') {
-        document.getElementById('errorFecha').textContent = 'La fecha de nacimiento es obligatoria.';
-        valido = false;
-    } else {
-        let hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        let fechaNac = new Date(fecha + 'T00:00:00');
-        if (fechaNac > hoy) {
-            document.getElementById('errorFecha').textContent = 'La fecha de nacimiento no puede ser futura.';
+    window.toggleEdicion = function () {
+        modoEdicion = !modoEdicion;
+
+        const nombreInput = document.getElementById('nombreCompletoInput');
+        const correoInput = document.getElementById('correoUsuarioInput');
+        const botonesEdicion = document.getElementById('botonesEdicion');
+        const btnEditar = document.getElementById('btnEditar');
+        const mensajePerfil = document.getElementById('mensajePerfil');
+
+        mensajePerfil.textContent = '';
+        document.getElementById('errorNombre').textContent = '';
+        document.getElementById('errorCorreo').textContent = '';
+
+        if (modoEdicion) {
+            valoresOriginales = {
+                nombre: nombreInput.value,
+                correo: correoInput.value
+            };
+
+            nombreInput.disabled = false;
+            correoInput.disabled = false;
+            botonesEdicion.style.display = 'flex';
+            btnEditar.textContent = '← Volver';
+        } else {
+            nombreInput.disabled = true;
+            correoInput.disabled = true;
+            botonesEdicion.style.display = 'none';
+            btnEditar.textContent = 'Editar';
+        }
+    };
+
+    window.guardarPerfil = function () {
+        document.getElementById('errorNombre').textContent = '';
+        document.getElementById('errorCorreo').textContent = '';
+        document.getElementById('mensajePerfil').textContent = '';
+
+        const nombre = document.getElementById('nombreCompletoInput').value.trim();
+        const correo = document.getElementById('correoUsuarioInput').value.trim();
+
+        let valido = true;
+        const regexNombre = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{5,}$/;
+
+        if (nombre === '') {
+            document.getElementById('errorNombre').textContent = 'El nombre es obligatorio.';
+            valido = false;
+        } else if (!regexNombre.test(nombre)) {
+            document.getElementById('errorNombre').textContent = 'El nombre solo puede contener letras y espacios (mínimo 5).';
             valido = false;
         }
-    }
 
-    let regexTel = /^[\d\-]{8,12}$/;
-    if (telefono !== '' && !regexTel.test(telefono)) {
-        document.getElementById('errorTelefono').textContent = 'Formato de teléfono inválido (ej: 8888-1234).';
-        valido = false;
-    }
+        const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (correo === '') {
+            document.getElementById('errorCorreo').textContent = 'El correo es obligatorio.';
+            valido = false;
+        } else if (!regexCorreo.test(correo)) {
+            document.getElementById('errorCorreo').textContent = 'Ingrese un correo electrónico válido.';
+            valido = false;
+        }
 
-    if (!valido) return;
+        if (!valido) return;
 
-    document.getElementById('nombreMostrado').textContent = nombre;
-    document.getElementById('mensajePerfil').textContent = '✅ Cambios guardados correctamente.';
+        $.post(
+            urlBase,
 
-    toggleEdicion();
-}
+            {
+                option: 'actualizarPerfil',
+                nombre_completo: nombre,
+                correo: correo
+            },
 
-function cancelarEdicion() {
-    modoEdicion = true;
-    toggleEdicion();
-    document.getElementById('mensajePerfil').textContent = '';
-}
+            function (res) {
+                if (res.response === '00') {
+                    document.getElementById('mensajePerfil').textContent = '✅ Cambios guardados correctamente.';
+
+                    $('#nombreUsuario').text(nombre);
+                    $('.nombreCompletoUsuario').text(nombre);
+
+                    window.toggleEdicion();
+                } else {
+                    document.getElementById('errorNombre').textContent = res.message || 'No se pudo guardar el perfil.';
+                }
+            },
+
+            'json'
+        );
+    };
+
+    window.cancelarEdicion = function () {
+        document.getElementById('nombreCompletoInput').value = valoresOriginales.nombre;
+        document.getElementById('correoUsuarioInput').value = valoresOriginales.correo;
+        document.getElementById('mensajePerfil').textContent = '';
+
+        modoEdicion = true;
+        window.toggleEdicion();
+    };
+
+    cargarStats();
+    cargarRol();
+
+});

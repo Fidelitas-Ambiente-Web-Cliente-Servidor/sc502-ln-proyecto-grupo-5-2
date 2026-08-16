@@ -17,7 +17,7 @@
 
     <aside class="sidebar">
         <a class="navbar-brand" href="index.php?page=indexProfesional">
-            <img src="img/logo.png" alt="Vida Fit" width="230">
+            <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
         </a>
 
         <nav>
@@ -71,17 +71,9 @@
                     <input type="email" id="correoUsuarioInput" value="">
                 </div>
 
-
                 <div class="campo-config">
                     <label>Especialidad</label>
-                    <span class="error-config" id="errorEspecialidad"></span>
-                    <select id="campoEspecialidad">
-                        <option value="Nutricionista clínico" selected>Nutricionista clínico</option>
-                        <option value="Médico general">Médico general</option>
-                        <option value="Endocrinólogo">Endocrinólogo</option>
-                        <option value="Fisioterapeuta">Fisioterapeuta</option>
-                        <option value="Psicólogo de la salud">Psicólogo de la salud</option>
-                    </select>
+                    <input type="text" value="Nutricionista" disabled>
                 </div>
 
                 <div id="mensajePerfil" class="mensaje-exito"></div>
@@ -135,57 +127,6 @@
             <div id="mensajePass" class="mensaje-exito"></div>
 
             <button type="button" class="btn-principal" onclick="cambiarContrasena()"> Actualizar contraseña</button>
-            </div>
-
-            <div class="panel">
-                <div class="titulo-panel">
-                    <h3>Preferencias</h3>
-                </div>
-
-                <div class="config-fila">
-                    <div class="config-info">
-                        <h4>Notificaciones de citas</h4>
-                        <p>Recibir alertas de citas próximas con pacientes</p>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" id="notifCitas" checked onchange="guardarPreferencias()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="config-fila">
-                    <div class="config-info">
-                        <h4>Alertas de pacientes</h4>
-                        <p>Notificaciones cuando un paciente actualice su progreso</p>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" id="notifPacientes" checked onchange="guardarPreferencias()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="config-fila">
-                    <div class="config-info">
-                        <h4>Recordatorios de rutinas</h4>
-                        <p>Avisos de rutinas pendientes por asignar</p>
-                    </div>
-                    <label class="toggle">
-                        <input type="checkbox" id="notifRutinas" onchange="guardarPreferencias()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="campo-config" style="margin-top: 18px;">
-                    <label>Idioma</label>
-                    <select id="idioma" onchange="guardarPreferencias()">
-                        <option value="es" selected>Español</option>
-                        <option value="en">English</option>
-                    </select>
-                </div>
-
-                <div id="mensajeConfig" class="mensaje-exito"></div>
-
-
             </div>
 
         </section>

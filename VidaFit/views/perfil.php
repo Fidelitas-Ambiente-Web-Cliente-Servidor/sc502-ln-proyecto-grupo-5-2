@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
-    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/perfil.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/Perfil.css" />
 </head>
 
 <body>
@@ -54,19 +54,15 @@
             <div class="panel perfil-avatar-panel">
                 <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Avatar" class="perfil-foto">
                 <h2 class="nombreCompletoUsuario"></h2>
-                <p class="perfil-rol">Paciente</p>
+                <p class="perfil-rol" id="perfilRol">Paciente</p>
 
                 <div class="perfil-stats">
                     <div class="stat">
-                        <h3>12</h3>
-                        <small>Reservas</small>
+                        <h3 id="perfilPesoStat">--</h3>
+                        <small>Peso (kg)</small>
                     </div>
                     <div class="stat">
-                        <h3>69kg</h3>
-                        <small>Peso</small>
-                    </div>
-                    <div class="stat">
-                        <h3>23.8</h3>
+                        <h3 id="perfilImcStat">--</h3>
                         <small>IMC</small>
                     </div>
                 </div>
@@ -87,70 +83,24 @@
                 <div class="campo-perfil">
                     <label>Nombre completo</label>
                     <span class="error-perfil" id="errorNombre"></span>
-                    <input type="text" id="nombreCompletoInput">
+                    <input type="text" id="nombreCompletoInput" disabled>
                 </div>
 
                 <div class="campo-perfil">
                     <label>Correo electrónico</label>
                     <span class="error-perfil" id="errorCorreo"></span>
-                    <input type="email" id="correoUsuarioInput">
+                    <input type="email" id="correoUsuarioInput" disabled>
                 </div>
 
-                
-
-                <div class="fila-dos-campos">
-                    <div class="campo-perfil">
-                        <label>Peso (kg)</label>
-                        <input type="number" id="peso" value="69.0" disabled>
-                    </div>
-                    <div class="campo-perfil">
-                        <label>Talla (cm)</label>
-                        <input type="number" id="talla" value="168" disabled>
-                    </div>
-                </div>
-
-                <div class="campo-perfil">
-                    <label>Objetivo</label>
-                    <select id="objetivo" disabled>
-                        <option value="Perder peso" selected>Perder peso</option>
-                        <option value="Mantener peso">Mantener peso</option>
-                        <option value="Aumentar masa muscular">Aumentar masa muscular</option>
-                    </select>
-                </div>
-
-                <div class="campo-perfil">
-                    <label>Condiciones médicas</label>
-                    <textarea id="condiciones" rows="2" disabled>Ninguna</textarea>
-                </div>
+                <p class="texto-ayuda">
+                    Tu peso, talla y avances se registran y editan desde
+                    <a href="index.php?page=Miprogreso">Mi Progreso</a>, no aquí.
+                </p>
 
                 <div id="botonesEdicion" style="display: none;">
                     <div class="botones-edicion">
                         <button class="btn-principal" onclick="guardarPerfil()">Guardar cambios</button>
                         <button class="btn-secundario" onclick="cancelarEdicion()">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="titulo-panel">
-                    <h3>Mi equipo de salud</h3>
-                </div>
-
-                <div class="profesional-card">
-                    <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Profesional" width="35"></div>
-                    <div>
-                        <h4>Dra. Laura Sánchez</h4>
-                        <p>Nutricionista</p>
-                        <small>Próxima cita: 27 Jun, 10:00 AM</small>
-                    </div>
-                </div>
-
-                <div class="profesional-card">
-                    <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Profesional" width="35"></div>
-                    <div>
-                        <h4>Lic. Carlos Mora</h4>
-                        <p>Entrenador</p>
-                        <small>Próxima cita: 04 Jul, 8:00 AM</small>
                     </div>
                 </div>
             </div>
@@ -178,8 +128,8 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/indexPaciente.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/Perfil.js"></script>
 </body>
 
 </html>

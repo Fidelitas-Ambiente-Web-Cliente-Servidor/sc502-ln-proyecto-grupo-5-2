@@ -1,20 +1,20 @@
 let modoEdicion = false;
 let valoresOriginales = {};
 
+const urlBaseConfigProf = 'index.php';
+
 function toggleEdicion() {
     modoEdicion = !modoEdicion;
 
-    let campos = ['campoNombre', 'campoCorreo', 'campoTelefono', 'campoEspecialidad'];
+    let campos = ['nombreCompletoInput', 'correoUsuarioInput'];
     campos.forEach(function (id) {
         document.getElementById(id).disabled = !modoEdicion;
     });
 
     if (modoEdicion) {
         valoresOriginales = {
-            nombre: document.getElementById('campoNombre').value,
-            correo: document.getElementById('campoCorreo').value,
-            telefono: document.getElementById('campoTelefono').value,
-            especialidad: document.getElementById('campoEspecialidad').value
+            nombre: document.getElementById('nombreCompletoInput').value,
+            correo: document.getElementById('correoUsuarioInput').value
         };
         document.getElementById('btnEditar').textContent = 'Cancelar edición';
         document.getElementById('botonesEdicion').classList.remove('oculto');
@@ -26,10 +26,8 @@ function toggleEdicion() {
 }
 
 function cancelarEdicion() {
-    document.getElementById('campoNombre').value = valoresOriginales.nombre;
-    document.getElementById('campoCorreo').value = valoresOriginales.correo;
-    document.getElementById('campoTelefono').value = valoresOriginales.telefono;
-    document.getElementById('campoEspecialidad').value = valoresOriginales.especialidad;
+    document.getElementById('nombreCompletoInput').value = valoresOriginales.nombre;
+    document.getElementById('correoUsuarioInput').value = valoresOriginales.correo;
 
     modoEdicion = true;
     toggleEdicion();
@@ -39,22 +37,17 @@ function cancelarEdicion() {
 function limpiarErroresPerfil() {
     document.getElementById('errorNombre').textContent = '';
     document.getElementById('errorCorreo').textContent = '';
-    document.getElementById('errorTelefono').textContent = '';
-    document.getElementById('errorEspecialidad').textContent = '';
 }
 
 function guardarPerfil() {
     limpiarErroresPerfil();
 
-    let nombre = document.getElementById('campoNombre').value.trim();
-    let correo = document.getElementById('campoCorreo').value.trim();
-    let telefono = document.getElementById('campoTelefono').value.trim();
-    let especialidad = document.getElementById('campoEspecialidad').value;
+    let nombre = document.getElementById('nombreCompletoInput').value.trim();
+    let correo = document.getElementById('correoUsuarioInput').value.trim();
 
     let valido = true;
     let regexNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\.]+$/;
     let regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    let regexTelefono = /^[\d\s\-\+]{7,15}$/;
 
     if (nombre === '') {
         document.getElementById('errorNombre').textContent = 'El nombre es obligatorio.';
@@ -75,30 +68,34 @@ function guardarPerfil() {
         valido = false;
     }
 
-    if (telefono === '') {
-        document.getElementById('errorTelefono').textContent = 'El teléfono es obligatorio.';
-        valido = false;
-    } else if (!regexTelefono.test(telefono)) {
-        document.getElementById('errorTelefono').textContent = 'Teléfono inválido.';
-        valido = false;
-    }
-
-    if (especialidad === '') {
-        document.getElementById('errorEspecialidad').textContent = 'Seleccione una especialidad.';
-        valido = false;
-    }
-
     if (!valido) return;
 
-    document.getElementById('nombreHeader').innerHTML = '<b>' + nombre + '</b>';
-    document.getElementById('mensajePerfil').textContent = 'Perfil actualizado correctamente.';
+    $.post(
+        urlBaseConfigProf,
+        {
+            option: 'actualizarPerfil',
+            nombre_completo: nombre,
+            correo: correo
+        },
+        function (res) {
+            if (res.response === '00') {
+                $('.nombreCompletoUsuario').text(nombre);
+                document.getElementById('mensajePerfil').textContent = res.message || 'Perfil actualizado correctamente.';
 
-    modoEdicion = true;
-    toggleEdicion();
+                modoEdicion = true;
+                toggleEdicion();
 
-    setTimeout(function () {
-        document.getElementById('mensajePerfil').textContent = '';
-    }, 3000);
+                setTimeout(function () {
+                    document.getElementById('mensajePerfil').textContent = '';
+                }, 3000);
+            } else {
+                document.getElementById('errorCorreo').textContent = res.message || 'No se pudo actualizar el perfil.';
+            }
+        },
+        'json'
+    ).fail(function () {
+        document.getElementById('errorCorreo').textContent = 'Ocurrió un error al actualizar el perfil.';
+    });
 }
 
 function togglePass(idCampo) {
@@ -108,14 +105,4 @@ function togglePass(idCampo) {
     } else {
         input.type = 'password';
     }
-}
-
-
-function guardarPreferencias() {
-    let msg = document.getElementById('mensajeConfig');
-    msg.textContent = 'Preferencias guardadas.';
-
-    setTimeout(function () {
-        msg.textContent = '';
-    }, 2500);
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -53,8 +52,7 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Pacientes" width="35"></div>
                 <div>
                     <p>Pacientes activos</p>
-                    <h2>12</h2>
-                    <small class="verde">4 nuevos este mes</small>
+                    <h2 id="valPacientesActivos">--</h2>
                 </div>
             </div>
 
@@ -62,8 +60,7 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Citas" width="35"></div>
                 <div>
                     <p>Citas hoy</p>
-                    <h2>3</h2>
-                    <small>Próxima: 09:30 AM</small>
+                    <h2 id="valCitasHoy">--</h2>
                 </div>
             </div>
 
@@ -71,7 +68,7 @@
                 <div class="icono naranja"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutinas" width="35"></div>
                 <div>
                     <p>Rutinas asignadas</p>
-                    <h2>8</h2>
+                    <h2 id="valRutinasAsignadas">--</h2>
                     <small>En seguimiento</small>
                 </div>
             </div>
@@ -80,7 +77,7 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Planes" width="35"></div>
                 <div>
                     <p>Planes alimenticios</p>
-                    <h2>10</h2>
+                    <h2 id="valPlanesActivos">--</h2>
                     <small>Activos</small>
                 </div>
             </div>
@@ -117,51 +114,15 @@
         </section>
 
         <section class="grid-resumen">
-            <div class="panel">
+            <div class="panel" style="grid-column: 1 / -1;">
                 <div class="titulo-panel">
                     <h3>Próximas citas</h3>
-                    <a href="GestionarRutinas.html#citas">Ver todas</a>
                 </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Cita" width="30"></span>
-                    <p>Sofía Martínez<br><small>27 Jun • 10:00 AM • Confirmada</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Cita" width="30"></span>
-                    <p>Luis Ramírez<br><small>28 Jun • 11:30 AM • Pendiente</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Cita" width="30"></span>
-                    <p>Ana Torres<br><small>29 Jun • 09:00 AM • Confirmada</small></p>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="titulo-panel">
-                    <h3>Actividad reciente</h3>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Rutina" width="30"></span>
-                    <p>Rutina asignada a Miguel Herrera<br><small>Hace 1 hora</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Plan" width="30"></span>
-                    <p>Plan nutricional actualizado para Sofía Martínez<br><small>Hace 3 hours</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/imc.png" alt="IMC" width="30"></span>
-                    <p>IMC calculado para Luis Ramírez<br><small>Ayer</small></p>
+                <div id="listaCitasProximas">
+                    <p class="text-muted">Cargando citas...</p>
                 </div>
             </div>
         </section>
-
-        <div id="toastProximamente" class="toast-proximamente"></div>
 
         <footer>
             <div class="container text-center">

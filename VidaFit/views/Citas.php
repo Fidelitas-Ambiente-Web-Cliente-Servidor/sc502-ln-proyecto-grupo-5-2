@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
-    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/citas.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/Citas.css" />
 </head>
 
 <body>
@@ -53,8 +53,8 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Citas" width="35"></div>
                 <div>
                     <p>Próxima cita</p>
-                    <h2>27 Jun</h2>
-                    <small>10:00 AM</small>
+                    <h2 id="proximaCitaFecha">Sin citas</h2>
+                    <small id="proximaCitaHora"></small>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
                 <div class="icono naranja"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Citas" width="35"></div>
                 <div>
                     <p>Citas pendientes</p>
-                    <h2 id="totalPendientes">2</h2>
+                    <h2 id="totalPendientes">0</h2>
                     <small>Este mes</small>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Citas" width="35"></div>
                 <div>
                     <p>Citas completadas</p>
-                    <h2 id="totalCompletadas">8</h2>
+                    <h2 id="totalCompletadas">0</h2>
                     <small>En total</small>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/usuario.png" alt="Usuario" width="35"></div>
                 <div>
                     <p>Profesionales</p>
-                    <h2>2</h2>
+                    <h2 id="totalProfesionales">0</h2>
                     <small>Asignados</small>
                 </div>
             </div>
@@ -97,8 +97,6 @@
                     <label>Profesional</label>
                     <select id="profesional">
                         <option value="">-- Seleccionar profesional --</option>
-                        <option value="Dra. Laura Sánchez - Nutricionista">Dra. Laura Sánchez - Nutricionista</option>
-                        <option value="Lic. Carlos Mora - Entrenador">Lic. Carlos Mora - Entrenador</option>
                     </select>
                     <span class="error-cita" id="errorProfesional"></span>
                 </div>
@@ -113,13 +111,13 @@
                     <label>Hora</label>
                     <select id="horaCita">
                         <option value="">-- Seleccionar hora --</option>
-                        <option value="8:00 AM">8:00 AM</option>
-                        <option value="9:00 AM">9:00 AM</option>
-                        <option value="10:00 AM">10:00 AM</option>
-                        <option value="11:00 AM">11:00 AM</option>
-                        <option value="2:00 PM">2:00 PM</option>
-                        <option value="3:00 PM">3:00 PM</option>
-                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="08:00">8:00 AM</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
                     </select>
                     <span class="error-cita" id="errorHora"></span>
                 </div>
@@ -170,7 +168,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/citas.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/Citas.js"></script>
 </body>
 
 </html>

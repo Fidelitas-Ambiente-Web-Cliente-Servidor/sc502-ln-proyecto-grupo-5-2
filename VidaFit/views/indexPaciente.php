@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -61,8 +59,8 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/peso.png" alt="Inicio"></div>
                 <div>
                     <p>Peso actual</p>
-                    <h2>69.0 <span>kg</span></h2>
-                    <small class="verde">↓ 1.2 kg este mes</small>
+                    <h2 id="pesoActualValor">-- <span>kg</span></h2>
+                    <small class="verde" id="pesoTendencia"></small>
                 </div>
             </div>
 
@@ -70,20 +68,8 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/imc.png" alt="Inicio"></div>
                 <div>
                     <p>IMC</p>
-                    <h2>23.8</h2>
-                    <small class="estado">Normal</small>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="icono naranja"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/objetivo.png" alt="Inicio"></div>
-                <div>
-                    <p>Meta</p>
-                    <h2>70%</h2>
-                    <small>5 kg para tu meta</small>
-                    <div class="barra">
-                        <div style="width: 70%"></div>
-                    </div>
+                    <h2 id="imcValor">--</h2>
+                    <small class="estado" id="imcEstado"></small>
                 </div>
             </div>
 
@@ -91,9 +77,9 @@
                 <div class="icono"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Inicio"></div>
                 <div>
                     <p>Próxima cita</p>
-                    <h2>27 Jun</h2>
-                    <small>Nutricionista</small>
-                    <strong>10:00 AM</strong>
+                    <h2 id="citaFecha">Sin citas</h2>
+                    <small id="citaProfesional"></small>
+                    <strong id="citaHora"></strong>
                 </div>
             </div>
         </section>
@@ -109,124 +95,26 @@
             </div>
 
 
-            <div class="panel notificaciones">
-                <div class="titulo-panel">
-                    <h3>Notificaciones</h3>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Inicio" width="30"></span>
-                    <p>Se ha actualizado tu rutina<br><small>Hace 2 horas</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/plan.png" alt="Inicio" width="30"></span>
-                    <p>Nuevo plan nutricional disponible<br><small>Hace 1 día</small></p>
-                </div>
-
-                <div class="noti">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/citas.png" alt="Inicio" width="30"></span>
-                    <p>Tienes una cita programada<br><small>Hace 2 días</small></p>
-                </div>
-            </div>
-
             <div class="panel plan">
                 <div class="titulo-panel">
-                    <h3>Plan nutricional de hoy</h3>
-                    <a>Ver plan completo</a>
+                    <h3>Plan nutricional</h3>
+                    <a href="index.php?page=PlanNutricional">Ver plan completo</a>
                 </div>
 
-                <div class="comida">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/desayuno.png" alt="Inicio" width="30"></span>
-                    <div>
-                        <h4>Desayuno</h4>
-                        <small>8:00 AM</small>
-                    </div>
-                    <ul>
-                        <li>2 huevos revueltos</li>
-                        <li>1 tortilla integral</li>
-                        <li>1/2 aguacate</li>
-                    </ul>
+                <div id="listaComidas">
+                    <p class="sin-datos">Cargando...</p>
                 </div>
-
-                <div class="comida">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/almuerzo.png" alt="Inicio" width="30"></span>
-                    <div>
-                        <h4>Almuerzo</h4>
-                        <small>1:00 PM</small>
-                    </div>
-                    <ul>
-                        <li>150g de pollo</li>
-                        <li>1 taza de arroz integral</li>
-                        <li>Ensalada mixta</li>
-                    </ul>
-                </div>
-                <div class="comida">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/snack.png" alt="Inicio" width="30"></span>
-                    <div>
-                        <h4>Snack</h4>
-                        <small>4:00 PM</small>
-                    </div>
-                    <ul>
-                        <li>1 manzana</li>
-                        <li>1 taza de yogurt griego</li>
-                    </ul>
-                </div>
-
-                <div class="comida">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/cena.png" alt="Inicio" width="30"></span>
-                    <div>
-                        <h4>Cena</h4>
-                        <small>7:00 PM</small>
-                    </div>
-                    <ul>
-                        <li>150g de salmón</li>
-                        <li>Verduras al vapor</li>
-                        <li>1 camote pequeño</li>
-                    </ul>
-                </div>
-
-                <button class="btn-secundario" onclick="completarPlan(this)"> ✓ Marcar plan como completado</button>
             </div>
 
             <div class="panel rutina">
                 <div class="titulo-panel">
-                    <h3>Rutina de hoy</h3>
-
+                    <h3>Mi rutina</h3>
                 </div>
 
-                <div class="rutina-header">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/ejercicio.png" alt="Inicio" width="30"></span>
-                    <div>
-                        <h4>Pierna y glúteo</h4>
-                        <small>1 hora • 4 ejercicios • Intermedio</small>
-                    </div>
+                <div id="rutinaResumen"></div>
+                <div id="listaEjercicios">
+                    <p class="sin-datos">Cargando...</p>
                 </div>
-
-                <div class="ejercicio">Sentadilla Smith <small>4 series • 12 repeticiones</small></div>
-                <div class="ejercicio">Hip thrust <small>4 series • 10 repeticiones</small></div>
-                <div class="ejercicio">Extensión de cuádriceps <small>5 series • 12 repeticiones</small></div>
-                <div class="ejercicio">Abductores <small>3 series • 12 repeticiones</small></div>
-                <div><button class="btn-principal" onclick="manejarRutina(this)">▶ Comenzar rutina</button></div>
-
-
-            </div>
-
-            <div class="panel agua">
-                <div class="titulo-panel">
-                    <h3>Hidratación diaria</h3>
-                    <p>2.0 / 2.5 L</p>
-                </div>
-
-                <div class="vasos">
-                    <span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png" alt="Inicio" width="40"></span><span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png"
-                            alt="Inicio" width="40"></span><span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png" alt="Inicio"
-                            width="40"></span><span><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png" alt="Inicio" width="40"></span><span><img
-                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png" alt="Inicio" width="40"></span><span class="gris"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/agua.png"
-                            alt="Inicio" width="40"></span>
-                </div>
-
-                <strong>¡Sigue así!</strong>
             </div>
 
         </section>

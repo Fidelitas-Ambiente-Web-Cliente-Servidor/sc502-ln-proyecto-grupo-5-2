@@ -11,12 +11,24 @@ class Expediente
     public function getAll(): array
     {
         $stmt = $this->conn->query(
-            'SELECT e.*, u.nombre_completo 
+            'SELECT e.*, u.nombre_completo
              FROM expedientes e
              JOIN usuarios u ON e.id_paciente = u.id_usuario
              ORDER BY e.fecha_creacion DESC'
         );
         return $stmt->fetchAll();
+    }
+
+    public function getByPaciente(int $id_paciente): array|false
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT e.*, u.nombre_completo
+             FROM expedientes e
+             JOIN usuarios u ON e.id_paciente = u.id_usuario
+             WHERE e.id_paciente = ?'
+        );
+        $stmt->execute([$id_paciente]);
+        return $stmt->fetch();
     }
 
 // Logica CRUD aqui
@@ -32,7 +44,7 @@ class Expediente
     public function getById(int $id_expediente): array|false
     {
         $stmt = $this->conn->prepare(
-            'SELECT e.*, u.nombre_completo 
+            'SELECT e.*, u.nombre_completo
              FROM expedientes e
              JOIN usuarios u ON e.id_paciente = u.id_usuario
              WHERE e.id_expediente = ?'
@@ -44,7 +56,7 @@ class Expediente
     public function update(int $id_expediente, string $historial, string $condiciones, string $alergias, string $discapacidades, string $observaciones): bool
     {
         $stmt = $this->conn->prepare(
-            'UPDATE expedientes 
+            'UPDATE expedientes
              SET historial_medico = ?, condiciones_medicas = ?, alergias = ?, discapacidades = ?, observaciones = ?
              WHERE id_expediente = ?'
         );

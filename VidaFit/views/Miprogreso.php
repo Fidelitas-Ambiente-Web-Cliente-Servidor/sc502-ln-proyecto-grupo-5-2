@@ -9,14 +9,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
-    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/miProgreso.css" />
+    <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/Miprogreso.css" />
 </head>
 
 <body>
 
     <aside class="sidebar">
         <a class="navbar-brand" href="index.php?page=indexPaciente">
-            <img src="img/logo.png" alt="Vida Fit" width="230">
+            <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
         </a>
         <nav>
             <a href="index.php?page=indexPaciente"><img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/inicio.png" alt="Inicio" width="30"><b>Inicio</b></a>
@@ -104,44 +104,8 @@
                     <h3>Mis medidas</h3>
                 </div>
 
-                <div class="medida-fila">
-                    <span class="medida-nombre">Cintura</span>
-                    <div class="medida-barra-wrap">
-                        <div class="medida-barra">
-                            <div class="medida-relleno" style="width: 68%"></div>
-                        </div>
-                    </div>
-                    <span class="medida-valor">72 cm</span>
-                </div>
-
-                <div class="medida-fila">
-                    <span class="medida-nombre">Cadera</span>
-                    <div class="medida-barra-wrap">
-                        <div class="medida-barra">
-                            <div class="medida-relleno" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <span class="medida-valor">95 cm</span>
-                </div>
-
-                <div class="medida-fila">
-                    <span class="medida-nombre">Brazo</span>
-                    <div class="medida-barra-wrap">
-                        <div class="medida-barra">
-                            <div class="medida-relleno" style="width: 40%"></div>
-                        </div>
-                    </div>
-                    <span class="medida-valor">30 cm</span>
-                </div>
-
-                <div class="medida-fila">
-                    <span class="medida-nombre">Muslo</span>
-                    <div class="medida-barra-wrap">
-                        <div class="medida-barra">
-                            <div class="medida-relleno" style="width: 60%"></div>
-                        </div>
-                    </div>
-                    <span class="medida-valor">55 cm</span>
+                <div id="listaMedidas">
+                    <p class="text-muted">Aún no hay medidas registradas.</p>
                 </div>
 
                 <div class="form-medida">
@@ -165,8 +129,9 @@
                     <h3>Registrar peso</h3>
                 </div>
                 <div id="errorPeso" class="error-progreso"></div>
-                <input type="number" id="nuevoPeso" placeholder="Peso en kg (ej: 68.5)" step="0.1" min="30" max="300" />
-                <input type="date" id="fechaPeso" />
+                <input type="number" id="nuevoPeso" placeholder="Peso en kg (ej: 68.5)" step="0.1" min="30" max="300" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
+                <input type="number" id="alturaPeso" placeholder="Altura en metros (ej: 1.70) — solo la primera vez" step="0.01" min="1" max="2.5" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
+                <input type="date" id="fechaPeso" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
                 <button class="btn-principal" style="margin-top: 12px;" onclick="registrarPeso()">+ Agregar registro</button>
 
                 <h4 style="margin-top: 24px; margin-bottom: 12px;">Últimos registros</h4>
@@ -201,7 +166,6 @@
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/Miprogreso.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionProgreso.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
-    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/indexPaciente.js"></script>
 </body>
 
 </html>

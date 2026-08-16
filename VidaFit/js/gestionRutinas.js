@@ -1,156 +1,235 @@
 $(function () {
-    const urlBase = "index.php";
+    const urlBase = 'index.php';
 
-    // Carga la lista de rutinas
-    function cargarRutinas() {
-        $.get(urlBase + '?option=listarRutinas', function (res) {
-            const data = JSON.parse(res);
-            const $contenedor = $('#listaRutinas').empty();
+    const modalEjercicios = new bootstrap.Modal(document.getElementById('modalEjercicios'));
 
-            if (!data.rutinas || data.rutinas.length === 0) {
-                $contenedor.html('<p class="text-muted">No hay rutinas registradas.</p>');
+    // Carga los pacientes
+    function cargarPacientes() {
+        $.get(urlBase + '?option=listarPacientes', function (res) {
+            const select = $('#idPacienteRutina');
+            if (res.response !== '00') return;
+
+            select.html('<option value="">-- Seleccionar --</option>');
+
+            (res.pacientes || []).forEach(function (paciente) {
+                select.append(
+                    $('<option></option>')
+                        .attr('value', paciente.id_usuario)
+                        .text(paciente.nombre_completo)
+                );
+            });
+        }, 'json');
+    }
+
+    // Carga el catalogo de ejercicios para el select del modal.
+    function cargarEjerciciosCatalogo() {
+        $.get(urlBase + '?option=listarEjercicios', function (res) {
+            const select = $('#selectEjercicio');
+            select.empty();
+
+            if (res.response !== '00' || !res.ejercicios || res.ejercicios.length === 0) {
+                select.append('<option value="">No hay ejercicios en el catálogo</option>');
                 return;
             }
 
-            data.rutinas.forEach(function (rutina) {
-                const card = `
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Rutina #${rutina.id_rutina}</h5>
-                            <p><strong>Paciente:</strong> ${rutina.nombre_completo}</p>
-                            <p><strong>Frecuencia:</strong> ${rutina.frecuencia_semanal} días/semana</p>
-                            <p><strong>Duración:</strong> ${rutina.duracion_total || 'No especificada'} min</p>
-                            <button class="btn btn-sm btn-info ver-ejercicios" data-id="${rutina.id_rutina}">Ver / Gestionar Ejercicios</button>
-                            <button class="btn btn-sm btn-danger eliminar-rutina" data-id="${rutina.id_rutina}">Eliminar</button>
+            res.ejercicios.forEach(function (ejercicio) {
+                select.append(
+                    $('<option></option>')
+                        .attr('value', ejercicio.id_ejercicio)
+                        .text(ejercicio.nombre_ejercicio)
+                );
+            });
+        }, 'json');
+    }
+
+    // Carga y pinta las rutinas creadas por este profesional.
+    function cargarRutinas() {
+        $.get(urlBase + '?option=listarRutinas', function (res) {
+            const $lista = $('#listaRutinas');
+            $lista.empty();
+
+            if (res.response !== '00' || !res.rutinas || res.rutinas.length === 0) {
+                $lista.html('<p class="text-muted">No hay rutinas registradas.</p>');
+                return;
+            }
+
+            res.rutinas.forEach(function (rutina) {
+                const $card = $(`
+                    <div class="rutina-card mb-3 p-3" style="border:1px solid #e1e5ea; border-radius:10px;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <b>${rutina.nombre_paciente}</b>
+                                <br>
+                                <small class="text-muted">
+                                    ${rutina.frecuencia_semanal} días/semana
+                                    ${rutina.duracion_total ? ' · ' + rutina.duracion_total + ' min totales' : ''}
+                                </small>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary btn-gestionar-ejercicios" data-id="${rutina.id_rutina}">Gestionar ejercicios</button>
+                                <button class="btn btn-sm btn-outline-danger btn-eliminar-rutina" data-id="${rutina.id_rutina}">Eliminar</button>
+                            </div>
                         </div>
                     </div>
-                `;
-                $contenedor.append(card);
-            });
+                `);
 
-            $('.ver-ejercicios').on('click', function () {
-                const idRutina = $(this).data('id');
-                $('#idRutinaActual').val(idRutina);
-                cargarEjerciciosDisponibles();
-                cargarDetallesRutina(idRutina);
-                $('#modalEjercicios').modal('show');
-            });
+                $card.find('.btn-gestionar-ejercicios').on('click', function () {
+                    abrirGestionEjercicios(rutina.id_rutina);
+                });
 
-            $('.eliminar-rutina').on('click', function () {
-                if (confirm('¿Eliminar esta rutina? (se eliminarán sus ejercicios)')) {
-                    const idRutina = $(this).data('id');
-                    $.post(urlBase, {
-                        option: 'eliminarRutina',
-                        id_rutina: idRutina
-                    }, function (res) {
-                        if (res.response === '00') {
-                            cargarRutinas();
-                        } else {
-                            alert('Error al eliminar.');
-                        }
-                    }, 'json');
-                }
+                $card.find('.btn-eliminar-rutina').on('click', function () {
+                    if (confirm('¿Está seguro de eliminar esta rutina?')) {
+                        eliminarRutina(rutina.id_rutina);
+                    }
+                });
+
+                $lista.append($card);
             });
+        }, 'json');
+    }
+
+    function eliminarRutina(id_rutina) {
+        $.post(urlBase, { option: 'eliminarRutina', id_rutina: id_rutina }, function (res) {
+            if (res.response === '00') {
+                cargarRutinas();
+            } else {
+                alert('Error al eliminar: ' + (res.message || ''));
+            }
+        }, 'json');
+    }
+
+    function abrirGestionEjercicios(id_rutina) {
+        $('#idRutinaActual').val(id_rutina);
+        $('#formAgregarEjercicio')[0].reset();
+        cargarDetalles(id_rutina);
+        modalEjercicios.show();
+    }
+
+    // Carga los ejercicios ya asignados a la rutina abierta en el modal.
+    function cargarDetalles(id_rutina) {
+        $.get(urlBase + '?option=listarDetalles&id_rutina=' + id_rutina, function (res) {
+            const $lista = $('#listaEjerciciosRutina');
+            $lista.empty();
+
+            if (res.response !== '00' || !res.detalles || res.detalles.length === 0) {
+                $lista.append('<li class="list-group-item text-muted">Aún no hay ejercicios asignados.</li>');
+                return;
+            }
+
+            res.detalles.forEach(function (detalle) {
+                const extras = [];
+                if (detalle.descanso_segundos) extras.push(detalle.descanso_segundos + 's descanso');
+                if (detalle.nivel_dificultad) extras.push(detalle.nivel_dificultad);
+                if (detalle.calorias_por_sesion) extras.push(detalle.calorias_por_sesion + ' kcal');
+
+                const $item = $(`
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <b>${detalle.dia_rutina || 'Sin día asignado'}</b> — ${detalle.nombre_ejercicio}
+                            <br>
+                            <small class="text-muted">${detalle.series} series x ${detalle.repeticiones} repeticiones${extras.length ? ' · ' + extras.join(' · ') : ''}</small>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger btn-eliminar-detalle" data-id="${detalle.id_detalle}">Quitar</button>
+                    </li>
+                `);
+
+                $item.find('.btn-eliminar-detalle').on('click', function () {
+                    eliminarDetalle(detalle.id_detalle, id_rutina);
+                });
+
+                $lista.append($item);
+            });
+        }, 'json');
+    }
+
+    function eliminarDetalle(id_detalle, id_rutina) {
+        $.post(urlBase, { option: 'eliminarDetalle', id_detalle: id_detalle }, function (res) {
+            if (res.response === '00') {
+                cargarDetalles(id_rutina);
+            } else {
+                alert('Error al quitar el ejercicio: ' + (res.message || ''));
+            }
         }, 'json');
     }
 
     // Crea una rutina
     $('#formCrearRutina').on('submit', function (e) {
         e.preventDefault();
+        $('#mensajeRutina').removeClass('text-danger').text('');
+
+        const id_paciente = $('#idPacienteRutina').val();
+
+        if (!id_paciente) {
+            $('#mensajeRutina').addClass('text-danger').text('Seleccione un paciente.');
+            return;
+        }
 
         $.post(urlBase, {
             option: 'crearRutina',
-            id_profesional: 1, // Temporal (Dr. Carlos Mendoza)
-            id_paciente: $('#idPacienteRutina').val(),
+            id_paciente: id_paciente,
             frecuencia_semanal: $('#frecuenciaSemanal').val(),
             duracion_total: $('#duracionTotal').val()
         }, function (res) {
             if (res.response === '00') {
-                $('#mensajeRutina').text('✅ Rutina #' + res.id_rutina + ' creada.');
+                $('#mensajeRutina').removeClass('text-danger').text('✅ Rutina creada correctamente.');
                 $('#formCrearRutina')[0].reset();
                 cargarRutinas();
             } else {
-                $('#mensajeRutina').text('❌ ' + res.message).css('color', 'red');
+                $('#mensajeRutina').addClass('text-danger').text(res.message || 'No se pudo crear la rutina.');
             }
         }, 'json');
     });
 
-    // Carga ejercicios disponibles
-    function cargarEjerciciosDisponibles() {
-        $.get(urlBase + '?option=listarEjercicios', function (res) {
-            const data = JSON.parse(res);
-            const $select = $('#selectEjercicio').empty().append('<option value="">-- Seleccionar --</option>');
+    // Agrega un ejercicio nuevo al catalogo
 
-            if (data.ejercicios) {
-                data.ejercicios.forEach(function (ej) {
-                    $select.append(`<option value="${ej.id_ejercicio}">${ej.nombre_ejercicio}</option>`);
-                });
+    $('#formCrearEjercicio').on('submit', function (e) {
+        e.preventDefault();
+        $('#mensajeEjercicio').removeClass('text-danger').text('');
+
+        $.post(urlBase, {
+            option: 'crearEjercicio',
+            nombre_ejercicio: $('#nuevoEjercicioNombre').val(),
+            descripcion: $('#nuevoEjercicioDescripcion').val(),
+            video_url: $('#nuevoEjercicioVideo').val()
+        }, function (res) {
+            if (res.response === '00') {
+                $('#mensajeEjercicio').removeClass('text-danger').text('✅ Ejercicio agregado al catálogo.');
+                $('#formCrearEjercicio')[0].reset();
+                cargarEjerciciosCatalogo();
+            } else {
+                $('#mensajeEjercicio').addClass('text-danger').text(res.message || 'No se pudo agregar el ejercicio.');
             }
         }, 'json');
-    }
+    });
 
-    // Carga detalles de una rutina
-    function cargarDetallesRutina(idRutina) {
-        $.get(urlBase + '?option=listarDetalles&id_rutina=' + idRutina, function (res) {
-            const data = JSON.parse(res);
-            const $lista = $('#listaEjerciciosRutina').empty();
-
-            if (!data.detalles || data.detalles.length === 0) {
-                $lista.html('<li class="list-group-item text-muted">Sin ejercicios asignados.</li>');
-                return;
-            }
-
-            data.detalles.forEach(function (det) {
-                const item = `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>${det.nombre_ejercicio}</strong><br>
-                            <small>${det.series} series × ${det.repeticiones} repeticiones</small>
-                        </div>
-                        <button class="btn btn-sm btn-danger eliminar-detalle" data-id="${det.id_detalle}">✕</button>
-                    </li>
-                `;
-                $lista.append(item);
-            });
-
-            $('.eliminar-detalle').on('click', function () {
-                if (confirm('Eliminar este ejercicio de la rutina?')) {
-                    const idDetalle = $(this).data('id');
-                    $.post(urlBase, {
-                        option: 'eliminarDetalle',
-                        id_detalle: idDetalle
-                    }, function (res) {
-                        if (res.response === '00') {
-                            cargarDetallesRutina($('#idRutinaActual').val());
-                        } else {
-                            alert('Error al eliminar.');
-                        }
-                    }, 'json');
-                }
-            });
-        }, 'json');
-    }
-
-    // Agrega un ejercicio a la rutina
+    // Agrega ejercicio a la rutina abierta en el modal
+    
     $('#formAgregarEjercicio').on('submit', function (e) {
         e.preventDefault();
 
+        const id_rutina = $('#idRutinaActual').val();
+
         $.post(urlBase, {
             option: 'crearDetalle',
-            id_rutina: $('#idRutinaActual').val(),
+            id_rutina: id_rutina,
             id_ejercicio: $('#selectEjercicio').val(),
+            dia_rutina: $('#ejercicioDia').val(),
             series: $('#ejercicioSeries').val(),
-            repeticiones: $('#ejercicioRepeticiones').val()
+            repeticiones: $('#ejercicioRepeticiones').val(),
+            descanso_segundos: $('#ejercicioDescanso').val(),
+            nivel_dificultad: $('#ejercicioNivel').val(),
+            calorias_por_sesion: $('#ejercicioCalorias').val()
         }, function (res) {
             if (res.response === '00') {
                 $('#formAgregarEjercicio')[0].reset();
-                cargarDetallesRutina($('#idRutinaActual').val());
+                cargarDetalles(id_rutina);
             } else {
-                alert('Error al agregar: ' + res.message);
+                alert(res.message || 'No se pudo agregar el ejercicio.');
             }
         }, 'json');
     });
 
-    // Carga al inicio
+    cargarPacientes();
+    cargarEjerciciosCatalogo();
     cargarRutinas();
 });

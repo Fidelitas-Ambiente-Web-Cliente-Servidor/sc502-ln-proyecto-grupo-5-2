@@ -12,11 +12,39 @@ class Rutina
     public function getAll(): array
     {
         $stmt = $this->conn->query(
-            'SELECT r.*, u.nombre_completo 
+            'SELECT r.*, u.nombre_completo
              FROM rutinas r
              JOIN usuarios u ON r.id_paciente = u.id_usuario
              ORDER BY r.id_rutina DESC'
         );
+        return $stmt->fetchAll();
+    }
+
+    // Rutinas asignadas a un paciente especifico (la mas reciente es la que usa primero)
+    public function getByPaciente(int $id_paciente): array
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT r.*, u.nombre_completo AS nombre_profesional
+             FROM rutinas r
+             JOIN usuarios u ON r.id_profesional = u.id_usuario
+             WHERE r.id_paciente = ?
+             ORDER BY r.id_rutina DESC'
+        );
+        $stmt->execute([$id_paciente]);
+        return $stmt->fetchAll();
+    }
+
+    // Rutinas creadas por un profesional
+    public function getByProfesional(int $id_profesional): array
+    {
+        $stmt = $this->conn->prepare(
+            'SELECT r.*, u.nombre_completo AS nombre_paciente
+             FROM rutinas r
+             JOIN usuarios u ON r.id_paciente = u.id_usuario
+             WHERE r.id_profesional = ?
+             ORDER BY r.id_rutina DESC'
+        );
+        $stmt->execute([$id_profesional]);
         return $stmt->fetchAll();
     }
 
@@ -31,7 +59,7 @@ class Rutina
         return (int) $this->conn->lastInsertId();
     }
 
-    // Eliminar una rutina
+    // Elimina una rutina
     public function delete(int $id_rutina): bool
     {
         $stmt = $this->conn->prepare('DELETE FROM rutinas WHERE id_rutina = ?');

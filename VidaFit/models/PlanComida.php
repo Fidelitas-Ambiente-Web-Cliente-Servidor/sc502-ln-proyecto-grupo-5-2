@@ -17,13 +17,18 @@ class PlanComida
         return $stmt->fetchAll();
     }
 
-    public function create(int $id_plan, string $nombre_comida, ?string $horario, string $descripcion_alimentos): bool
-    {
+    public function create(
+        int $id_plan,
+        string $nombre_comida,
+        ?string $horario,
+        string $descripcion_alimentos,
+        ?string $dia_semana = null
+    ): bool {
         $stmt = $this->conn->prepare(
-            'INSERT INTO plan_comidas (id_plan, nombre_comida, horario, descripcion_alimentos)
-             VALUES (?, ?, ?, ?)'
+            'INSERT INTO plan_comidas (id_plan, dia_semana, nombre_comida, horario, descripcion_alimentos)
+             VALUES (?, ?, ?, ?, ?)'
         );
-        return $stmt->execute([$id_plan, $nombre_comida, $horario, $descripcion_alimentos]);
+        return $stmt->execute([$id_plan, $dia_semana, $nombre_comida, $horario, $descripcion_alimentos]);
     }
 
     public function delete(int $id_comida): bool

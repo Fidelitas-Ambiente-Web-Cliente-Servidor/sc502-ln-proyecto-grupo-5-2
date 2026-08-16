@@ -1,18 +1,41 @@
 $(function () {
     const urlBase = "index.php";
 
+    function cargarPacientes() {
+        $.get(
+            urlBase + '?option=listarPacientes',
+
+            function (res) {
+                const select = $('#idPaciente');
+                if (res.response !== '00') return;
+
+                select.html('<option value="">-- Seleccionar --</option>');
+
+                (res.pacientes || []).forEach(function (paciente) {
+                    select.append(
+                        $('<option></option>')
+                            .attr('value', paciente.id_usuario)
+                            .text(paciente.nombre_completo)
+                    );
+                });
+            },
+
+            'json'
+        );
+    }
+
     // Carga la lista
+
     function cargarExpedientes() {
         $.get(urlBase + '?option=listarExpedientes', function (res) {
-            const data = JSON.parse(res);
             const $tbody = $('#tablaPacientes').empty();
 
-            if (!data.expedientes || data.expedientes.length === 0) {
+            if (res.response !== '00' || !res.expedientes || res.expedientes.length === 0) {
                 $tbody.html('<tr><td colspan="4" class="text-center text-muted">No hay expedientes registrados.</td></tr>');
                 return;
             }
 
-            data.expedientes.forEach(function (exp) {
+            res.expedientes.forEach(function (exp) {
                 const fila = `
                     <tr>
                         <td><b>${exp.nombre_completo}</b><br><small class="text-muted">ID Expediente: #00${exp.id_expediente}</small></td>
@@ -44,6 +67,8 @@ $(function () {
     // Crea o actualiza el expediente
     $('#formExpediente').on('submit', function (e) {
         e.preventDefault();
+        $('#expedienteMensaje').removeClass('text-danger').text('');
+
         const id = $('#expedienteId').val();
         const option = id ? 'actualizarExpediente' : 'crearExpediente';
 
@@ -58,24 +83,24 @@ $(function () {
             observaciones: $('#observaciones').val()
         }, function (res) {
             if (res.response === '00') {
-                alert(id ? 'Expediente actualizado.' : 'Expediente creado.');
+                $('#expedienteMensaje').removeClass('text-danger').text(
+                    id ? '✅ Expediente actualizado.' : '✅ Expediente creado.'
+                );
                 resetearFormulario();
                 cargarExpedientes();
             } else {
-                alert('Error: ' + res.message);
+                $('#expedienteMensaje').addClass('text-danger').text(res.message || 'No se pudo guardar el expediente.');
             }
         }, 'json');
     });
 
-    // Edita el expediente
     function editarExpediente(id) {
         $.get(urlBase + '?option=obtenerExpediente&id=' + id, function (res) {
-            const data = JSON.parse(res);
-            if (data.response !== '00' || !data.expediente) {
+            if (res.response !== '00' || !res.expediente) {
                 alert('Error al cargar el expediente.');
                 return;
             }
-            const exp = data.expediente;
+            const exp = res.expediente;
             $('#expedienteId').val(exp.id_expediente);
             $('#idPaciente').val(exp.id_paciente);
             $('#historialMedico').val(exp.historial_medico);
@@ -99,19 +124,21 @@ $(function () {
             if (res.response === '00') {
                 cargarExpedientes();
             } else {
-                alert('Error al eliminar.');
+                alert('Error al eliminar: ' + (res.message || ''));
             }
         }, 'json');
     }
 
     // Resetea el formulario
-    function resetearFormulario() {
+    window.resetearFormulario = function () {
         $('#formExpediente')[0].reset();
         $('#expedienteId').val('');
         $('#formTitulo').text('Registrar Expediente');
         $('#btnGuardar').text('Guardar Expediente');
         $('#btnCancelar').addClass('oculto');
-    }
+        $('#expedienteMensaje').removeClass('text-danger').text('');
+    };
 
+    cargarPacientes();
     cargarExpedientes();
 });

@@ -219,6 +219,8 @@ $(function () {
 
         const inputPeso = $('#nuevoPeso');
 
+        const inputAltura = $('#alturaPeso');
+
         const inputFecha = $('#fechaPeso');
 
         const errorDiv = $('#errorPeso');
@@ -227,7 +229,11 @@ $(function () {
         errorDiv.text('');
 
 
-        const peso = parseFloat(inputPeso.val());
+        const peso = parseFloat(inputPeso.val()); // Toma el peso
+
+        const alturaTexto = inputAltura.val(); // Toma la altura
+
+        const altura = alturaTexto === '' ? null : parseFloat(alturaTexto);
 
         const fecha = inputFecha.val();
 
@@ -236,6 +242,15 @@ $(function () {
 
             errorDiv.text(
                 'Ingrese un peso válido entre 30 y 300 kg.'
+            );
+
+            return;
+        }
+
+        if (altura !== null && (isNaN(altura) || altura < 1 || altura > 2.5)) {
+
+            errorDiv.text(
+                'Ingrese una altura válida en metros (entre 1.00 y 2.50).'
             );
 
             return;
@@ -251,15 +266,21 @@ $(function () {
             return;
         }
 
+        const datosPost = {
+            option: 'crearProgreso',
+            peso_kg: peso,
+            fecha_registro: fecha
+        };
+
+        if (altura !== null) {
+            datosPost.altura_m = altura;
+        }
+
         $.post(
 
             urlBase,
 
-            {
-                option: 'crearProgreso',
-                peso_kg: peso,
-                fecha_registro: fecha
-            },
+            datosPost,
 
             function (res) {
 
@@ -269,6 +290,7 @@ $(function () {
                 if (res.response === '00') {
 
                     inputPeso.val('');
+                    inputAltura.val('');
                     inputFecha.val('');
 
                     cargarProgreso();

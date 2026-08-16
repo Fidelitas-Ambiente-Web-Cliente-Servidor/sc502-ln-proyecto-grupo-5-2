@@ -144,7 +144,11 @@
                     id="errorLogin"
                     class="error-campo"
                 ></div>
-
+                
+                <p style="text-align: center; margin: 14px 0; font-size: 14px; color: #5d6880;">
+                    ¿No tienes cuenta? Crea una aquí:
+                    <a href="index.php?page=register" style="color: #009688; font-weight: 600; text-decoration: none;">Regístrate</a>
+                </p>
 
                 <button
                     type="submit"

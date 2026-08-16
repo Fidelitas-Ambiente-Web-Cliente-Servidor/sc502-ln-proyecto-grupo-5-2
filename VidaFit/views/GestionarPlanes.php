@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vida Fit | Planes Nutricionales</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-    
-    
+
+
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexPaciente.css" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/indexProfesional.css" />
     <link rel="stylesheet" href="/sc502-ln-proyecto-grupo-5-2/VidaFit/css/ConfiguracionProfesional.css" />
@@ -17,7 +17,7 @@
 
 <body>
 
-   
+
     <aside class="sidebar">
         <a class="navbar-brand" href="index.php?page=indexProfesional">
             <img src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/logo.png" alt="Vida Fit" width="230">
@@ -36,7 +36,7 @@
 
     <main class="contenido">
 
-   
+
         <header class="header">
             <div>
                 <h1><b>Asignación de Planes Nutricionales</b></h1>
@@ -52,15 +52,15 @@
             </div>
         </header>
 
-       
+
         <section class="grid-config-prof">
-            
+
             <div class="panel panel-perfil-prof" style="grid-column: span 2;">
                 <div class="titulo-panel mb-3">
                     <h3>Historial de Planes Nutricionales</h3>
                     <p class="subtitulo-panel">Planes de alimentación activos asignados a pacientes</p>
                 </div>
-                
+
                 <div class="table-responsive">
                     <table class="table align-middle" style="font-family: var(--fuente);">
                         <thead>
@@ -78,29 +78,48 @@
                 </div>
             </div>
 
-            
+
             <div class="panel">
                 <div class="titulo-panel mb-3">
                     <h3 id="formPlanTitulo">Crear Plan Nutricional</h3>
                     <p class="subtitulo-panel">Defina las metas y desglose de alimentos</p>
                 </div>
-                
+
                 <form id="formPlanNutricional">
                     <input type="hidden" id="planId" value="">
-                    
+
                     <div class="mb-3">
                         <label class="form-label"><b>Seleccionar Paciente:</b></label>
                         <select id="selectPacientePlan" class="form-select" required style="border-radius: 10px;">
                             <option value="">-- Seleccionar --</option>
-                            <option value="Sofía Martínez">Sofía Martínez</option>
-                            <option value="Luis Ramírez">Luis Ramírez</option>
-                            <option value="Ana Torres">Ana Torres</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label"><b>Calorías Diarias (kcal):</b></label>
                         <input type="number" id="caloriasDiarias" class="form-control" placeholder="Ej. 2000" required style="border-radius: 10px;">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label"><b>Proteínas (g):</b></label>
+                            <input type="number" id="proteinasG" class="form-control" style="border-radius: 10px;">
+                        </div>
+                        <div class="col">
+                            <label class="form-label"><b>Carbohidratos (g):</b></label>
+                            <input type="number" id="carbohidratosG" class="form-control" style="border-radius: 10px;">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label"><b>Grasas (g):</b></label>
+                            <input type="number" id="grasasG" class="form-control" style="border-radius: 10px;">
+                        </div>
+                        <div class="col">
+                            <label class="form-label"><b>Agua (litros):</b></label>
+                            <input type="number" id="aguaLitros" class="form-control" step="0.1" style="border-radius: 10px;">
+                        </div>
                     </div>
 
                     <div class="row mb-3">
@@ -116,12 +135,27 @@
 
                     <div class="mb-3">
                         <label class="form-label"><b>Recomendaciones Generales:</b></label>
-                        <textarea id="recomendaciones" class="form-control" rows="2" placeholder="Ej. Tomar 2L de agua, evitar sodio..." style="border-radius: 10px;"></textarea>
+                        <textarea id="recomendaciones" class="form-control" rows="2" placeholder="Ej. Tomar 2L de agua, evitar sodio..." required style="border-radius: 10px;"></textarea>
                     </div>
 
                     <hr>
                     <p class="text-muted mb-2"><b>Estructura de Comidas Base:</b></p>
-                    
+
+                    <div class="mb-2">
+                        <label class="form-label"><b>Día de la semana:</b></label>
+                        <select id="comidaDia" class="form-select form-select-sm">
+                            <option value="">Todos los días</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                        <small class="text-muted">Estas 3 comidas se crean para el día elegido. Para armar otros días, cree el plan y use "Agregar comida" en la tabla.</small>
+                    </div>
+
                     <div class="mb-2 p-2 border style-dashed" style="border-radius: 8px; background: #fafafa;">
                         <small><b>Desayuno:</b></small>
                         <input type="text" id="comidaDesayuno" class="form-control form-control-sm" placeholder="Ej. 3 huevos, 100g avena..." required>
@@ -137,16 +171,16 @@
                         <input type="text" id="comidaCena" class="form-control form-control-sm" placeholder="Ej. 150g salmón, ensalada verde..." required>
                     </div>
 
+                    <div id="planMensaje" class="mensaje-exito"></div>
+
                     <div class="botones-edicion">
                         <button type="submit" id="btnGuardarPlan" class="btn-editar-prof" style="background-color: var(--primary); color: white; border: none; height: 45px; width: 100%;">Guardar Plan</button>
-                        <button type="button" id="btnCancelarPlan" class="btn-editar-prof oculto" onclick="resetearFormularioPlan()" style="height: 45px; width: 100%;">Cancelar Edición</button>
                     </div>
                 </form>
             </div>
 
         </section>
 
-        <!-- FOOTER -->
         <footer>
             <div class="container text-center">
                 <p><b>© 2026 Vida Fit | Todos los derechos reservados.</b></p>
@@ -170,7 +204,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/cuentas.js"></script>
     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/gestionPlanes.js"></script>
-     <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
+    <script src="/sc502-ln-proyecto-grupo-5-2/VidaFit/js/GestionUsuarios.js"></script>
 </body>
 
 </html>

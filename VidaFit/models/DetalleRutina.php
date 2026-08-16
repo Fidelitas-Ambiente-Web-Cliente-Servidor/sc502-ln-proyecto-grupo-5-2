@@ -8,11 +8,10 @@ class DetalleRutina
         $this->conn = $db;
     }
 
-    // Obtiene todos los ejercicios de una rutina especifica
     public function getByRutina(int $id_rutina): array
     {
         $stmt = $this->conn->prepare(
-            'SELECT d.*, e.nombre_ejercicio, e.descripcion
+            'SELECT d.*, e.nombre_ejercicio, e.descripcion, e.video_url
              FROM detalle_rutina d
              JOIN ejercicios e ON d.id_ejercicio = e.id_ejercicio
              WHERE d.id_rutina = ?
@@ -22,14 +21,31 @@ class DetalleRutina
         return $stmt->fetchAll();
     }
 
-    // Agrega un ejercicio a una rutina
-    public function create(int $id_rutina, int $id_ejercicio, int $series, int $repeticiones): bool
-    {
+    public function create(
+        int $id_rutina,
+        int $id_ejercicio,
+        int $series,
+        int $repeticiones,
+        ?string $dia_rutina = null,
+        ?int $descanso_segundos = null,
+        ?string $nivel_dificultad = null,
+        ?int $calorias_por_sesion = null
+    ): bool {
         $stmt = $this->conn->prepare(
-            'INSERT INTO detalle_rutina (id_rutina, id_ejercicio, series, repeticiones)
-             VALUES (?, ?, ?, ?)'
+            'INSERT INTO detalle_rutina
+                (id_rutina, id_ejercicio, series, repeticiones, dia_rutina, descanso_segundos, nivel_dificultad, calorias_por_sesion)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         );
-        return $stmt->execute([$id_rutina, $id_ejercicio, $series, $repeticiones]);
+        return $stmt->execute([
+            $id_rutina,
+            $id_ejercicio,
+            $series,
+            $repeticiones,
+            ($dia_rutina !== null && $dia_rutina !== '') ? $dia_rutina : null,
+            $descanso_segundos,
+            ($nivel_dificultad !== null && $nivel_dificultad !== '') ? $nivel_dificultad : null,
+            $calorias_por_sesion
+        ]);
     }
 
     // Elimina un detalle
