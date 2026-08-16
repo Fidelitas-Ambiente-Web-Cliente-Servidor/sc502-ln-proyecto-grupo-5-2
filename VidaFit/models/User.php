@@ -56,6 +56,7 @@ class User
             id_usuario,
             nombre_completo,
             username,
+            contrasenna,
             correo,
             id_rol
          FROM usuarios

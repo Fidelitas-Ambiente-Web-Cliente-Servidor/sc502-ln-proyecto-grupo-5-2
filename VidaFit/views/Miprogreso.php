@@ -129,16 +129,25 @@
                     <h3>Registrar peso</h3>
                 </div>
                 <div id="errorPeso" class="error-progreso"></div>
-                <input type="number" id="nuevoPeso" placeholder="Peso en kg (ej: 68.5)" step="0.1" min="30" max="300" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
-                <input type="number" id="alturaPeso" placeholder="Altura en metros (ej: 1.70) — solo la primera vez" step="0.01" min="1" max="2.5" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
-                <input type="date" id="fechaPeso" style="display: block; width: 100%; box-sizing: border-box; margin-bottom: 10px;" />
-                <button class="btn-principal" style="margin-top: 12px;" onclick="registrarPeso()">+ Agregar registro</button>
+                <input type="number" id="nuevoPeso"
+                    placeholder="Peso en kg (ej: 68.5)"
+                    step="0.1" min="30" max="300" />
+
+                <input type="number" id="alturaPeso"
+                    placeholder="Altura en metros (ej: 1.70) — solo la primera vez"
+                    step="0.01" min="1" max="2.5" />
+
+                <input type="date" id="fechaPeso" />
+
+                <button class="btn-principal" style="margin-top: 12px;" onclick="registrarPeso()">
+                    + Agregar registro
+                </button>
 
                 <h4 style="margin-top: 24px; margin-bottom: 12px;">Últimos registros</h4>
                 <div id="listaRegistros" class="lista-registros"></div>
             </div>
 
-        
+
 
         </section>
 

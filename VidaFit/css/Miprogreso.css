@@ -93,26 +93,47 @@
     box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
 }
 
+
 /* Registro de peso */
 #nuevoPeso,
+#alturaPeso,
 #fechaPeso {
+    display: block;
     width: 100%;
     height: 46px;
+    box-sizing: border-box;
+
     border: 1px solid #d1d5db;
     border-radius: 10px;
+
     padding: 0 14px;
-    font-size: 15px;
     margin-bottom: 10px;
-    outline: none;
+
+    font-size: 15px;
     font-family: var(--fuente);
     color: var(--text);
+
+    background-color: #ffffff;
+
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 #nuevoPeso:focus,
+#alturaPeso:focus,
 #fechaPeso:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
 }
+
+
+#nuevoPeso:focus,
+#fechaPeso:focus,
+#alturaPeso:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+} 
 
 /* Lista de registros de peso */
 .lista-registros {
