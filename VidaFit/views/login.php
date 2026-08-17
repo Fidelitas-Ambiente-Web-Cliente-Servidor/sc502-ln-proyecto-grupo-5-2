@@ -134,7 +134,10 @@
                         class="eye-icon"
                         onclick="togglePassword('password')"
                     >
-                        👁️
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon">
                     </span>
 
                 </div>

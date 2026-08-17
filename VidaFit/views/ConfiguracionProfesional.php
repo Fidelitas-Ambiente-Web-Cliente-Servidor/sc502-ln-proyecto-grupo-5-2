@@ -98,7 +98,12 @@
 
                 <div class="password-container">
                     <input type="password" id="passActual" placeholder="Tu contraseña actual">
-                    <span class="eye-icon" onclick="togglePass('passActual')"> 👁️</span>
+                    <span class="eye-icon" onclick="togglePass('passActual')"> 
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon">
+                    </span>
                 </div>
             </div>
 
@@ -109,7 +114,11 @@
 
                 <div class="password-container">
                     <input type="password" id="nuevaContrasenna" placeholder="Mínimo 8 caracteres">
-                    <span class="eye-icon" onclick="togglePass('nuevaContrasenna')">👁️ </span>
+                    <span class="eye-icon" onclick="togglePass('nuevaContrasenna')">
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon"> </span>
                 </div>
             </div>
 
@@ -120,7 +129,11 @@
 
                 <div class="password-container">
                     <input type="password" id="confirmarContrasenna" placeholder="Repite la nueva contraseña">
-                    <span class="eye-icon" onclick="togglePass('confirmarContrasenna')"> 👁️ </span>
+                    <span class="eye-icon" onclick="togglePass('confirmarContrasenna')"> 
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon"> </span>
                 </div>
             </div>
 

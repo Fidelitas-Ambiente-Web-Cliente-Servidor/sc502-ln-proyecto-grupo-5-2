@@ -170,7 +170,10 @@
                     <span
                         class="eye-icon"
                         onclick="togglePassword('contraseña')">
-                        👁️
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon">
                     </span>
 
                 </div>
@@ -187,7 +190,10 @@
                     <span
                         class="eye-icon"
                         onclick="togglePassword('confirm_password')">
-                        👁️
+                        <img
+                            src="/sc502-ln-proyecto-grupo-5-2/VidaFit/img/view.png"
+                            alt="Mostrar contraseña"
+                            class="password-icon">
                     </span>
 
                 </div>
@@ -300,7 +306,7 @@
                 <footer class="terminos">
 
                     Al registrarme, acepto los términos, la política de privacidad y la política de cookies.
-         
+
 
                 </footer>
 
