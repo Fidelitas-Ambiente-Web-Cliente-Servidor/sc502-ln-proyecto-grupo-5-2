@@ -126,7 +126,7 @@
 
             <div class="panel">
                 <div class="titulo-panel">
-                    <h3>Registrar peso</h3>
+                    <h3>Registrar altura y peso</h3>
                 </div>
                 <div id="errorPeso" class="error-progreso"></div>
                 <input type="number" id="nuevoPeso"
