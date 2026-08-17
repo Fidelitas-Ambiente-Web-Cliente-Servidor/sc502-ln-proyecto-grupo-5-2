@@ -35,7 +35,6 @@ class RutinaController
         echo json_encode(["response" => "00", "ejercicios" => $ejercicios]);
     }
 
-    // Agrega un ejercicio nuevo al catalogo
     public function crearEjercicio(): void
     {
         try {
@@ -46,7 +45,6 @@ class RutinaController
 
             $nombre = trim($_POST['nombre_ejercicio'] ?? '');
             $descripcion = trim($_POST['descripcion'] ?? '');
-            $video_url = trim($_POST['video_url'] ?? '');
 
             if ($nombre === '') {
                 throw new Exception('El nombre del ejercicio es obligatorio.');
@@ -54,8 +52,7 @@ class RutinaController
 
             $id_ejercicio = $this->modelEjercicio->create(
                 $nombre,
-                $descripcion !== '' ? $descripcion : null,
-                $video_url !== '' ? $video_url : null
+                $descripcion !== '' ? $descripcion : null
             );
 
             echo json_encode(["response" => "00", "message" => "Ejercicio agregado al catálogo.", "id_ejercicio" => $id_ejercicio]);
@@ -65,7 +62,6 @@ class RutinaController
     }
 
     // Rutinas
-
     public function listarRutinas(): void
     {
         try {
@@ -95,7 +91,6 @@ class RutinaController
     public function crearRutina(): void
     {
         try {
-
             if (!isset($_SESSION['id_usuario']) || (int) $_SESSION['id_rol'] !== 2) {
                 throw new Exception('Solo un profesional puede crear rutinas.');
             }

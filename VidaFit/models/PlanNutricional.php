@@ -7,16 +7,19 @@ class PlanNutricional
     {
         $this->conn = $db;
     }
-
+    
     public function getAll(): array
     {
         $stmt = $this->conn->query(
-            'SELECT * FROM planes_nutricionales ORDER BY fecha_inicio DESC'
+            'SELECT p.*, u.nombre_completo
+             FROM planes_nutricionales p
+             JOIN usuarios u ON p.id_paciente = u.id_usuario
+             ORDER BY p.fecha_inicio DESC'
         );
         return $stmt->fetchAll();
     }
 
-    // Trae el plan mas reciente del paciente
+    // Trae el plan mas reciente de un paciente
     public function getUltimoPorPaciente(int $id_paciente): ?array
     {
         $stmt = $this->conn->prepare(

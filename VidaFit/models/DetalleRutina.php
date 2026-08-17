@@ -8,10 +8,11 @@ class DetalleRutina
         $this->conn = $db;
     }
 
+    // Obtiene todos los ejercicios de una rutina
     public function getByRutina(int $id_rutina): array
     {
         $stmt = $this->conn->prepare(
-            'SELECT d.*, e.nombre_ejercicio, e.descripcion, e.video_url
+            'SELECT d.*, e.nombre_ejercicio, e.descripcion
              FROM detalle_rutina d
              JOIN ejercicios e ON d.id_ejercicio = e.id_ejercicio
              WHERE d.id_rutina = ?
@@ -21,6 +22,7 @@ class DetalleRutina
         return $stmt->fetchAll();
     }
 
+    // Agrega un ejercicio a una rutina
     public function create(
         int $id_rutina,
         int $id_ejercicio,

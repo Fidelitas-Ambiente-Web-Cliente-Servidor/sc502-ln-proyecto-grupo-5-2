@@ -181,7 +181,6 @@ $(function () {
     });
 
     // Agrega un ejercicio nuevo al catalogo
-
     $('#formCrearEjercicio').on('submit', function (e) {
         e.preventDefault();
         $('#mensajeEjercicio').removeClass('text-danger').text('');
@@ -189,8 +188,7 @@ $(function () {
         $.post(urlBase, {
             option: 'crearEjercicio',
             nombre_ejercicio: $('#nuevoEjercicioNombre').val(),
-            descripcion: $('#nuevoEjercicioDescripcion').val(),
-            video_url: $('#nuevoEjercicioVideo').val()
+            descripcion: $('#nuevoEjercicioDescripcion').val()
         }, function (res) {
             if (res.response === '00') {
                 $('#mensajeEjercicio').removeClass('text-danger').text('✅ Ejercicio agregado al catálogo.');
@@ -203,7 +201,6 @@ $(function () {
     });
 
     // Agrega ejercicio a la rutina abierta en el modal
-    
     $('#formAgregarEjercicio').on('submit', function (e) {
         e.preventDefault();
 

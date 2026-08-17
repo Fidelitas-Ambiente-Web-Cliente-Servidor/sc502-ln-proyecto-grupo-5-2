@@ -10,7 +10,6 @@ $(function () {
                 mostrarSinRutina();
                 return;
             }
-
             const rutina = res.rutinas[0];
 
             $('#valDuracion').text(rutina.duracion_total ? rutina.duracion_total : 'Sin dato');
@@ -38,6 +37,8 @@ $(function () {
                 return;
             }
 
+            // Agrupa los ejercicios por día/sesión (dia_rutina), en el orden
+            // en que aparecen (que ya viene ordenado por id_detalle).
             detallesPorDia = {};
             res.detalles.forEach(function (detalle) {
                 const dia = detalle.dia_rutina || 'Sin día asignado';
@@ -84,6 +85,9 @@ $(function () {
         renderResumen(detalles);
     }
 
+    // Con nivel/calorías guardados por ejercicio (no por día completo), se
+    // resume el día sumando las calorías y mostrando el nivel más frecuente
+    // entre sus ejercicios.
     function renderResumen(detalles) {
         const totalCalorias = detalles.reduce(function (suma, d) {
             return suma + (parseInt(d.calorias_por_sesion) || 0);
@@ -124,7 +128,6 @@ $(function () {
                     <strong>Series</strong>
                     <strong>Repeticiones</strong>
                     <strong>Descanso</strong>
-                    <strong>Video del ejercicio</strong>
                 </div>
             </div>
         `);
@@ -140,16 +143,6 @@ $(function () {
                     <div class="dato">${detalle.descanso_segundos ? detalle.descanso_segundos + ' s' : '--'}</div>
                 </div>
             `);
-
-            if (detalle.video_url) {
-                $fila.append(`
-                    <video class="videoEjercicio" controls muted title="${detalle.nombre_ejercicio}">
-                        <source src="${detalle.video_url}" type="video/mp4">
-                    </video>
-                `);
-            } else {
-                $fila.append('<span class="text-muted">Sin video</span>');
-            }
 
             $bloque.append($fila);
         });

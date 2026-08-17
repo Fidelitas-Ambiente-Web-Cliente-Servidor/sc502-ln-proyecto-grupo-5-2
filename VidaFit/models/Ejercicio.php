@@ -15,14 +15,14 @@ class Ejercicio
         return $stmt->fetchAll();
     }
 
-    // Agrega un ejercicio nuevo al catalogo.
-    public function create(string $nombre_ejercicio, ?string $descripcion, ?string $video_url): int
+    // Agrega un ejercicio nuevo al catalogo
+    public function create(string $nombre_ejercicio, ?string $descripcion): int
     {
         $stmt = $this->conn->prepare(
-            'INSERT INTO ejercicios (nombre_ejercicio, descripcion, video_url)
-             VALUES (?, ?, ?)'
+            'INSERT INTO ejercicios (nombre_ejercicio, descripcion)
+             VALUES (?, ?)'
         );
-        $stmt->execute([$nombre_ejercicio, $descripcion, $video_url]);
+        $stmt->execute([$nombre_ejercicio, $descripcion]);
         return (int) $this->conn->lastInsertId();
     }
 }

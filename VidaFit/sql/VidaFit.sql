@@ -70,7 +70,6 @@ CREATE TABLE planes_nutricionales (
     CONSTRAINT fk_planes_paciente FOREIGN KEY (id_paciente) REFERENCES usuarios (id_usuario)
 );
 
-
 CREATE TABLE plan_comidas (
     id_comida INT AUTO_INCREMENT,
     id_plan INT NOT NULL,
@@ -103,7 +102,6 @@ CREATE TABLE ejercicios (
     id_ejercicio INT AUTO_INCREMENT,
     nombre_ejercicio VARCHAR(100) NOT NULL,
     descripcion TEXT,
-    video_url  VARCHAR(255),
 
     CONSTRAINT pk_ejercicios PRIMARY KEY (id_ejercicio)
 
@@ -129,7 +127,6 @@ CREATE TABLE detalle_rutina (
     CONSTRAINT uk_rutina_ejercicio UNIQUE (id_rutina, id_ejercicio)
 
 );
-
 
 CREATE TABLE citas (
     id_cita INT AUTO_INCREMENT,

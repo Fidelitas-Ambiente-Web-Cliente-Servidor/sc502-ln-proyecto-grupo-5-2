@@ -96,10 +96,6 @@
                         <label>Descripción</label>
                         <input type="text" id="nuevoEjercicioDescripcion" class="form-control">
                     </div>
-                    <div class="campo-asignar">
-                        <label>URL del video (opcional)</label>
-                        <input type="url" id="nuevoEjercicioVideo" class="form-control" placeholder="https://...">
-                    </div>
                     <button type="submit" class="btn-principal">Agregar al Catálogo</button>
                     <div id="mensajeEjercicio" class="mensaje-exito"></div>
                 </form>
